@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --medieval-gold: 41 73 55%;
+    --medieval-bronze: 30 62 50%;
+    --medieval-stone: 40 7 54%;
+    --medieval-parchment: 40 43 94%;
+    --medieval-ink: 34 29 14%;
+  }
+
+  body {
+    @apply bg-medieval-ink text-medieval-parchment;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+}
+
+@layer utilities {
+  .pixel-border {
+    border: 4px solid;
+    border-image: repeating-linear-gradient(
+      90deg,
+      #D4AF37 0,
+      #D4AF37 4px,
+      transparent 4px,
+      transparent 8px
+    ) 4;
+  }
+
+  .medieval-shadow {
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.5);
+  }
+
+  .pixel-text {
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+  }
+}
