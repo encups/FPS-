@@ -1,303 +1,302 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
+import { useState, useEffect } from 'react';
+import { Job, JobCriteria } from '@/lib/types';
+import Link from 'next/link';
 
-export default function Home() {
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+export default function JobScraperHome() {
+  const [keywords, setKeywords] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [stats, setStats] = useState({ totalScraped: 0, totalMatched: 0 });
+  const [savedJobs, setSavedJobs] = useState<string[]>([]);
+  const [criteria, setCriteria] = useState<JobCriteria>({
+    keywords: [],
+    remoteOnly: false,
+    postedWithinDays: 30
+  });
 
-  const features = [
-    {
-      icon: "⚔️",
-      title: "Social Media Quests",
-      description: "Generate epic social media posts that engage your followers",
-    },
-    {
-      icon: "📜",
-      title: "Scroll of Emails",
-      description: "Craft compelling email campaigns with storytelling magic",
-    },
-    {
-      icon: "🏰",
-      title: "Ad Campaign Castle",
-      description: "Build fortress-strong ad copy that converts",
-    },
-    {
-      icon: "🎨",
-      title: "Banner Creation",
-      description: "Design pixel-perfect marketing visuals",
-    },
-    {
-      icon: "📖",
-      title: "Blog Chronicles",
-      description: "Write engaging blog posts with medieval flair",
-    },
-    {
-      icon: "🎯",
-      title: "Strategy Guild",
-      description: "AI-powered marketing strategies for your kingdom",
-    },
-  ];
+  // Load saved jobs on mount
+  useEffect(() => {
+    loadSavedJobs();
+    loadCriteria();
+  }, []);
 
-  const pricingPlans = [
-    {
-      name: "Squire",
-      price: "$29",
-      period: "/month",
-      features: [
-        "10 AI-generated posts/month",
-        "Basic email campaigns",
-        "Medieval-themed templates",
-        "Community support",
-      ],
-      cta: "Start Your Quest",
-    },
-    {
-      name: "Knight",
-      price: "$79",
-      period: "/month",
-      popular: true,
-      features: [
-        "50 AI-generated posts/month",
-        "Advanced email automation",
-        "Custom brand storytelling",
-        "Priority support",
-        "Ad copy generation",
-        "Analytics dashboard",
-      ],
-      cta: "Join the Order",
-    },
-    {
-      name: "King",
-      price: "$199",
-      period: "/month",
-      features: [
-        "Unlimited AI content",
-        "Full marketing automation",
-        "Dedicated account manager",
-        "Custom integrations",
-        "White-label options",
-        "24/7 Royal support",
-      ],
-      cta: "Rule Your Market",
-    },
-  ];
+  const loadSavedJobs = async () => {
+    try {
+      const res = await fetch('/api/jobs/saved');
+      const data = await res.json();
+      setSavedJobs(data.jobs.map((j: Job) => j.id));
+    } catch (err) {
+      console.error('Failed to load saved jobs:', err);
+    }
+  };
+
+  const loadCriteria = async () => {
+    try {
+      const res = await fetch('/api/criteria');
+      const data = await res.json();
+      if (data.criteria) {
+        setCriteria(data.criteria);
+      }
+    } catch (err) {
+      console.error('Failed to load criteria:', err);
+    }
+  };
+
+  const handleSearch = async () => {
+    if (!keywords.trim()) {
+      setError('Please enter at least one keyword');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const keywordArray = keywords.split(',').map(k => k.trim()).filter(k => k);
+
+      const response = await fetch('/api/jobs/scrape', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          keywords: keywordArray,
+          location: location || undefined,
+          criteria
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to scrape jobs');
+      }
+
+      const data = await response.json();
+      setJobs(data.jobs);
+      setStats({
+        totalScraped: data.totalScraped,
+        totalMatched: data.totalMatched
+      });
+
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const saveJob = async (job: Job) => {
+    try {
+      const response = await fetch('/api/jobs/saved', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ job })
+      });
+
+      if (response.ok) {
+        setSavedJobs([...savedJobs, job.id]);
+      } else {
+        const data = await response.json();
+        alert(data.error || 'Failed to save job');
+      }
+    } catch (err) {
+      console.error('Failed to save job:', err);
+      alert('Failed to save job');
+    }
+  };
+
+  const formatSalary = (salary?: Job['salary']) => {
+    if (!salary) return 'Not specified';
+    const { min, max, currency, period } = salary;
+    const formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currency || 'USD',
+      minimumFractionDigits: 0
+    });
+
+    if (min && max) {
+      return `${formatter.format(min)} - ${formatter.format(max)} ${period}`;
+    } else if (min) {
+      return `${formatter.format(min)} ${period}`;
+    }
+    return 'Not specified';
+  };
+
+  const formatDate = (date: Date) => {
+    const d = new Date(date);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - d.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0) return 'Today';
+    if (diffDays === 1) return 'Yesterday';
+    if (diffDays < 7) return `${diffDays} days ago`;
+    if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+    return `${Math.floor(diffDays / 30)} months ago`;
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-medieval-ink via-gray-900 to-medieval-forest">
-      {/* Hero Section */}
-      <nav className="border-b-4 border-medieval-gold bg-black/50 backdrop-blur">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-3xl">🏰</span>
-              <h1 className="pixel-text text-xl text-medieval-gold">Frame Fables</h1>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center">
+            <h1 className="text-3xl font-bold text-gray-900">
+              🎯 Job Board Scraper
+            </h1>
             <div className="flex gap-4">
               <Link
-                href="/login"
-                className="pixel-text text-sm text-medieval-parchment hover:text-medieval-gold transition-colors"
+                href="/criteria"
+                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition"
               >
-                Login
+                ⚙️ Settings
               </Link>
               <Link
-                href="/signup"
-                className="pixel-border pixel-text bg-medieval-gold text-medieval-ink px-4 py-2 text-sm hover:bg-medieval-bronze transition-colors"
+                href="/saved"
+                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
               >
-                Start Free
+                💾 Saved Jobs ({savedJobs.length})
               </Link>
             </div>
           </div>
         </div>
-      </nav>
+      </header>
 
-      <main>
-        {/* Hero */}
-        <section className="container mx-auto px-4 py-20 text-center">
-          <div className="mb-8">
-            <div className="inline-block pixel-border bg-medieval-gold/10 px-4 py-2 mb-6">
-              <span className="pixel-text text-sm text-medieval-gold">
-                ⚡ AI-Powered Marketing Magic ⚡
-              </span>
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        {/* Search Section */}
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+          <h2 className="text-xl font-semibold mb-4 text-gray-800">Search for Jobs</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Keywords (comma-separated)
+              </label>
+              <input
+                type="text"
+                value={keywords}
+                onChange={(e) => setKeywords(e.target.value)}
+                placeholder="e.g., react, python, data science"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Location (optional)
+              </label>
+              <input
+                type="text"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="e.g., San Francisco, Remote"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
             </div>
           </div>
-          <h2 className="pixel-text text-4xl md:text-6xl text-medieval-gold mb-6 leading-relaxed">
-            Conquer Your Market
-            <br />
-            <span className="text-medieval-parchment">One Fable at a Time</span>
-          </h2>
-          <p className="font-pixel text-2xl text-medieval-stone max-w-3xl mx-auto mb-12 leading-relaxed">
-            Automated AI marketing tools for small businesses, wrapped in medieval charm.
-            Generate content, run campaigns, and grow your kingdom... err, business!
-          </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <button className="pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-8 py-4 pixel-text text-sm hover:bg-medieval-bronze transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none">
-              🗡️ Start Your Quest
-            </button>
-            <button className="pixel-border medieval-shadow bg-transparent text-medieval-parchment px-8 py-4 pixel-text text-sm hover:bg-medieval-parchment/10 transition-all">
-              📖 View Demo
-            </button>
-          </div>
-        </section>
 
-        {/* Features */}
-        <section className="container mx-auto px-4 py-20">
-          <h3 className="pixel-text text-3xl text-center text-medieval-gold mb-16">
-            ⚔️ Your Marketing Arsenal ⚔️
-          </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="pixel-border medieval-shadow bg-medieval-stone/10 p-6 hover:bg-medieval-stone/20 transition-all hover:translate-x-2 hover:translate-y-2 hover:shadow-none"
-              >
-                <div className="text-5xl mb-4">{feature.icon}</div>
-                <h4 className="pixel-text text-lg text-medieval-gold mb-3">
-                  {feature.title}
-                </h4>
-                <p className="font-pixel text-xl text-medieval-parchment">
-                  {feature.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <button
+            onClick={handleSearch}
+            disabled={loading}
+            className="w-full md:w-auto px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
+          >
+            {loading ? '🔍 Searching...' : '🚀 Search Jobs'}
+          </button>
 
-        {/* How It Works */}
-        <section className="container mx-auto px-4 py-20">
-          <h3 className="pixel-text text-3xl text-center text-medieval-gold mb-16">
-            🗺️ The Quest Begins 🗺️
-          </h3>
-          <div className="max-w-4xl mx-auto space-y-8">
-            {[
-              {
-                step: "1",
-                title: "Enter Your Kingdom",
-                desc: "Tell us about your business and brand",
-              },
-              {
-                step: "2",
-                title: "Choose Your Weapons",
-                desc: "Select marketing tools and templates",
-              },
-              {
-                step: "3",
-                title: "AI Crafts Your Tale",
-                desc: "Our AI generates content in seconds",
-              },
-              {
-                step: "4",
-                title: "Conquer the Market",
-                desc: "Deploy campaigns and watch results",
-              },
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="flex items-start gap-6 pixel-border bg-black/30 p-6"
-              >
-                <div className="pixel-border bg-medieval-gold text-medieval-ink w-16 h-16 flex items-center justify-center flex-shrink-0">
-                  <span className="pixel-text text-2xl">{item.step}</span>
-                </div>
-                <div>
-                  <h4 className="pixel-text text-xl text-medieval-gold mb-2">
-                    {item.title}
-                  </h4>
-                  <p className="font-pixel text-xl text-medieval-parchment">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Pricing */}
-        <section className="container mx-auto px-4 py-20">
-          <h3 className="pixel-text text-3xl text-center text-medieval-gold mb-4">
-            💰 Choose Your Path 💰
-          </h3>
-          <p className="font-pixel text-xl text-center text-medieval-stone mb-16">
-            All plans include 7-day free trial. Cancel anytime.
-          </p>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {pricingPlans.map((plan, index) => (
-              <div
-                key={index}
-                className={`pixel-border medieval-shadow p-8 transition-all hover:translate-x-2 hover:translate-y-2 hover:shadow-none ${
-                  plan.popular
-                    ? "bg-medieval-gold/20 border-medieval-gold"
-                    : "bg-medieval-stone/10"
-                }`}
-              >
-                {plan.popular && (
-                  <div className="pixel-border bg-medieval-gold text-medieval-ink px-4 py-2 mb-4 text-center">
-                    <span className="pixel-text text-xs">⭐ MOST POPULAR ⭐</span>
-                  </div>
-                )}
-                <h4 className="pixel-text text-2xl text-medieval-gold mb-4">
-                  {plan.name}
-                </h4>
-                <div className="mb-6">
-                  <span className="pixel-text text-4xl text-medieval-parchment">
-                    {plan.price}
-                  </span>
-                  <span className="font-pixel text-xl text-medieval-stone">
-                    {plan.period}
-                  </span>
-                </div>
-                <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature, idx) => (
-                    <li
-                      key={idx}
-                      className="font-pixel text-lg text-medieval-parchment flex items-start gap-2"
-                    >
-                      <span className="text-medieval-gold">✓</span>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  onClick={() => setSelectedPlan(plan.name)}
-                  className="w-full pixel-border bg-medieval-gold text-medieval-ink px-6 py-3 pixel-text text-sm hover:bg-medieval-bronze transition-colors"
-                >
-                  {plan.cta}
-                </button>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="container mx-auto px-4 py-20">
-          <div className="pixel-border medieval-shadow bg-gradient-to-r from-medieval-gold/20 to-medieval-bronze/20 p-12 text-center max-w-4xl mx-auto">
-            <h3 className="pixel-text text-3xl text-medieval-gold mb-6">
-              🏰 Ready to Build Your Empire? 🏰
-            </h3>
-            <p className="font-pixel text-2xl text-medieval-parchment mb-8">
-              Join thousands of small businesses conquering their markets with AI
-            </p>
-            <button className="pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-10 py-4 pixel-text text-sm hover:bg-medieval-bronze transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none">
-              Start Free Trial
-            </button>
-            <p className="font-pixel text-lg text-medieval-stone mt-4">
-              No credit card required • 7-day free trial
-            </p>
-          </div>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t-4 border-medieval-gold bg-black/50 py-12">
-        <div className="container mx-auto px-4 text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <span className="text-3xl">🏰</span>
-            <span className="pixel-text text-xl text-medieval-gold">Frame Fables</span>
-          </div>
-          <p className="font-pixel text-lg text-medieval-stone">
-            © 2024 Frame Fables. All rights reserved to the realm.
-          </p>
+          {stats.totalScraped > 0 && (
+            <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+              <p className="text-sm text-gray-700">
+                Found <strong>{stats.totalScraped}</strong> jobs, filtered to{' '}
+                <strong>{stats.totalMatched}</strong> matches
+              </p>
+            </div>
+          )}
         </div>
-      </footer>
+
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+            ⚠️ {error}
+          </div>
+        )}
+
+        {/* Jobs List */}
+        <div className="space-y-4">
+          {jobs.map((job) => (
+            <div
+              key={job.id}
+              className="bg-white rounded-xl shadow-md hover:shadow-lg transition p-6"
+            >
+              <div className="flex justify-between items-start mb-4">
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    {job.title}
+                  </h3>
+                  <p className="text-lg text-gray-700 mb-2">{job.company}</p>
+                  <div className="flex flex-wrap gap-3 text-sm text-gray-600">
+                    <span>📍 {job.location}</span>
+                    <span>💰 {formatSalary(job.salary)}</span>
+                    <span>📅 {formatDate(job.postedDate)}</span>
+                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                      {job.jobType}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex gap-2 ml-4">
+                  {savedJobs.includes(job.id) ? (
+                    <span className="px-4 py-2 bg-green-100 text-green-800 rounded-lg">
+                      ✓ Saved
+                    </span>
+                  ) : (
+                    <button
+                      onClick={() => saveJob(job)}
+                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+                    >
+                      💾 Save
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <p className="text-gray-600 mb-4 line-clamp-3">{job.description}</p>
+
+              <div className="flex flex-wrap gap-2 mb-4">
+                {job.tags.slice(0, 8).map((tag, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex justify-between items-center pt-4 border-t">
+                <span className="text-sm text-gray-500">Source: {job.source}</span>
+                <a
+                  href={job.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                >
+                  View Job →
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {jobs.length === 0 && !loading && (
+          <div className="text-center py-12">
+            <p className="text-gray-500 text-lg">
+              Enter keywords and click "Search Jobs" to find opportunities
+            </p>
+          </div>
+        )}
+      </main>
     </div>
   );
 }

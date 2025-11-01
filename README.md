@@ -1,22 +1,23 @@
-# 🏰 Frame Fables - AI Marketing for Small Businesses
+# 🎯 Job Board Scraper
 
-A fully automated AI marketing tool with a medieval 8-bit theme. Built for small businesses to quickly generate marketing content with storytelling flair.
+A comprehensive job aggregation and filtering application that scrapes jobs from multiple online sources and helps you find the perfect opportunities based on your criteria.
 
-## ⚔️ Features
+## ✨ Features
 
-- **Social Media Quest** - Generate engaging social media posts
-- **Email Scrolls** - Craft compelling email campaigns
-- **Ad Campaigns** - Create conversion-focused ad copy
-- **Blog Chronicles** - Write SEO-friendly blog posts
-- **Medieval 8-bit Theme** - Unique pixel art aesthetic
-- **AI-Powered** - Uses OpenAI GPT-4 for content generation
+- **Multi-Source Scraping** - Aggregates jobs from RemoteOK, Adzuna, USAJobs, GitHub, and more
+- **Advanced Filtering** - Filter by keywords, salary, location, job type, and skills
+- **Smart Matching** - AI-powered relevance scoring to surface the best matches
+- **Save Jobs** - Bookmark interesting opportunities for later review
+- **Custom Criteria** - Set your preferences once and reuse them for every search
+- **Real-time Search** - Get fresh job listings from multiple sources instantly
+- **No Database Required** - Simple file-based storage for saved jobs and preferences
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
 - Node.js 18+ installed
-- OpenAI API key (optional for demo mode)
+- (Optional) Adzuna API keys for enhanced job search - [Get free API keys](https://developer.adzuna.com/)
 
 ### Installation
 
@@ -27,29 +28,30 @@ npm install
 # Copy environment file
 cp .env.example .env
 
-# Add your OpenAI API key to .env (optional - works in demo mode without it)
-# OPENAI_API_KEY=your_key_here
+# (Optional) Add your Adzuna API keys to .env for more job sources
+# ADZUNA_APP_ID=your_app_id
+# ADZUNA_APP_KEY=your_app_key
 
 # Run development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser and start searching for jobs!
 
 ## 📦 Tech Stack
 
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **AI**: OpenAI GPT-4 API
-- **Deployment**: Vercel (recommended)
+- **Data Sources**: RemoteOK, Adzuna, USAJobs, GitHub Jobs
+- **Storage**: File-based JSON storage
+- **Deployment**: Vercel, Netlify, or any Node.js hosting
 
 ## 🎨 Pages
 
-- `/` - Landing page with pricing
-- `/dashboard` - Main content generation interface
-- `/login` - User login (demo mode)
-- `/signup` - User registration (demo mode)
+- `/` - Main job search interface
+- `/saved` - View and manage saved jobs
+- `/criteria` - Configure search criteria and preferences
 
 ## 🔧 Configuration
 
@@ -58,16 +60,24 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 Create a `.env` file with:
 
 ```env
-# Required for production
-OPENAI_API_KEY=your_openai_api_key_here
+# Optional - for enhanced job search from Adzuna
+ADZUNA_APP_ID=your_adzuna_app_id
+ADZUNA_APP_KEY=your_adzuna_app_key
 
-# Optional - for Anthropic Claude
-ANTHROPIC_API_KEY=your_anthropic_api_key_here
-
-# Future: Stripe integration
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_key
-STRIPE_SECRET_KEY=your_stripe_secret
+# App URL (for production)
+NEXT_PUBLIC_APP_URL=https://your-domain.com
 ```
+
+### Job Sources
+
+The app scrapes from multiple sources:
+
+1. **RemoteOK** - Remote jobs (no API key needed)
+2. **Adzuna** - Aggregated jobs from multiple sources (API key required)
+3. **USAJobs** - US Government jobs (no API key needed)
+4. **GitHub** - Jobs from various GitHub repositories (no API key needed)
+
+You can use the app without any API keys! Adzuna keys are optional and provide additional job sources.
 
 ## 🚢 Deployment
 
@@ -75,7 +85,7 @@ STRIPE_SECRET_KEY=your_stripe_secret
 
 1. Push your code to GitHub
 2. Import project to Vercel
-3. Add environment variables
+3. Add environment variables (if using Adzuna)
 4. Deploy!
 
 ```bash
@@ -91,45 +101,55 @@ Works with any platform that supports Next.js:
 - AWS Amplify
 - Railway
 - Render
+- Fly.io
 
-## 💰 Monetization
+**Note**: Make sure the `/data` directory is writable for storing saved jobs and criteria.
 
-The app includes three pricing tiers:
+## 🎯 How It Works
 
-1. **Squire** - $29/month (Basic features)
-2. **Knight** - $79/month (Popular, full features)
-3. **King** - $199/month (Enterprise)
+### 1. Search for Jobs
+Enter keywords (e.g., "react developer", "data scientist") and optional location. The app will scrape multiple job boards simultaneously.
 
-To enable payments:
-1. Create a Stripe account
-2. Add Stripe API keys to `.env`
-3. Implement Stripe checkout (webhook handlers included)
+### 2. Filter Results
+Set up your criteria in the Settings page:
+- Required and excluded keywords
+- Salary range
+- Location preferences
+- Job types (full-time, remote, contract, etc.)
+- Required skills
+- How recent the posting should be
 
-## 🎯 Content Types
+### 3. Save Interesting Jobs
+Click the "Save" button on any job to bookmark it for later review.
 
-### Social Media
-- Engagement posts
-- Product announcements
-- Customer testimonials
-- Behind-the-scenes
+### 4. Review Saved Jobs
+Access all your saved jobs from the "Saved Jobs" page, with options to remove jobs or visit the original posting.
 
-### Email Campaigns
-- Welcome sequences
-- Product promotions
-- Newsletters
-- Re-engagement
+## 🔍 Search Capabilities
 
-### Ad Copy
-- Facebook ads
-- Google search ads
-- Instagram stories
-- Landing pages
+### Keyword Matching
+- Search by job title, description, or tags
+- Support for multiple keywords (comma-separated)
+- Exclude specific keywords to filter out unwanted jobs
 
-### Blog Posts
-- How-to guides
-- Industry trends
-- Success stories
-- Comparisons
+### Salary Filtering
+- Set minimum and maximum annual salary
+- Automatic conversion for hourly/monthly salaries
+- Filter out jobs without salary information
+
+### Location & Remote
+- Search specific locations
+- Filter for remote-only positions
+- Match jobs in multiple preferred locations
+
+### Skills & Requirements
+- Specify required skills
+- Match jobs with specific technologies
+- Auto-extract common skills from job descriptions
+
+### Freshness
+- Filter jobs posted within X days
+- Prioritize recent postings in relevance scoring
 
 ## 🛠️ Development
 
@@ -149,86 +169,116 @@ npm run lint
 
 ## 📝 Customization
 
-### Change Theme Colors
+### Add New Job Sources
 
-Edit `tailwind.config.ts`:
+Create a new scraper by extending `BaseJobScraper`:
 
 ```typescript
-colors: {
-  medieval: {
-    gold: "#D4AF37",      // Primary color
-    bronze: "#CD7F32",    // Secondary
-    stone: "#8B8680",     // Tertiary
-    // ... add more
+// lib/scrapers/your-scraper.ts
+import { BaseJobScraper } from './base-scraper';
+import { Job, ScrapeResult } from '../types';
+
+export class YourJobBoardScraper extends BaseJobScraper {
+  async scrapeJobs(keywords: string[], location?: string): Promise<ScrapeResult> {
+    // Implement your scraping logic
+  }
+
+  protected parseJob(data: any): Job | null {
+    // Parse job data
   }
 }
 ```
 
-### Add New Content Types
-
-1. Add type to `app/dashboard/page.tsx`
-2. Add system prompt to `app/api/generate/route.ts`
-3. Add demo content template
-
-### Customize AI Behavior
-
-Edit system prompts in `app/api/generate/route.ts`:
+Then add it to `lib/scraper-manager.ts`:
 
 ```typescript
-const SYSTEM_PROMPTS = {
-  social: `Your custom prompt here...`,
-  // ...
-}
+this.scrapers = [
+  // existing scrapers...
+  new YourJobBoardScraper(),
+];
+```
+
+### Customize Filtering Logic
+
+Edit `lib/job-filter.ts` to modify how jobs are filtered and scored for relevance.
+
+### Adjust Caching
+
+Modify the cache duration in `lib/scraper-manager.ts`:
+
+```typescript
+private cacheDuration: number = 30 * 60 * 1000; // 30 minutes
 ```
 
 ## 🔐 Security Notes
 
 - Never commit `.env` files
-- Use environment variables for all secrets
-- Implement proper authentication before production
-- Add rate limiting to API routes
-- Validate all user inputs
+- Use environment variables for all API keys
+- Implement rate limiting for production use
+- Respect the terms of service of job boards being scraped
+- Cached results reduce API calls and prevent rate limiting
 
 ## 📈 Future Features
 
-- [ ] User authentication (NextAuth.js)
-- [ ] Stripe payment integration
-- [ ] Content scheduling
-- [ ] Analytics dashboard
-- [ ] Team collaboration
-- [ ] Custom brand voice training
-- [ ] Image generation (DALL-E)
-- [ ] Social media auto-posting
-- [ ] Content calendar
-- [ ] A/B testing tools
+- [ ] Email notifications for new matching jobs
+- [ ] Scheduled automatic searches
+- [ ] Export saved jobs to CSV/PDF
+- [ ] Job application tracking
+- [ ] Company research integration
+- [ ] Salary comparison analytics
+- [ ] User authentication and cloud sync
+- [ ] Browser extension for one-click saves
+- [ ] API rate limiting and request queuing
+- [ ] More job board integrations (Indeed, LinkedIn, etc.)
+- [ ] Advanced analytics dashboard
+- [ ] Job alert subscriptions
+
+## 🔒 Privacy & Data
+
+- All data is stored locally in the `/data` directory
+- No user tracking or analytics
+- Job data is cached for 30 minutes to reduce API calls
+- Saved jobs and criteria are stored as JSON files
+- No external database required
 
 ## 🤝 Contributing
 
-This is a commercial project, but suggestions are welcome!
+Contributions are welcome! Here are some ways you can help:
+
+- Add new job board scrapers
+- Improve filtering algorithms
+- Enhance the UI/UX
+- Add new features
+- Report bugs
+- Improve documentation
 
 ## 📄 License
 
-Proprietary - All rights reserved
+MIT License - Feel free to use this for personal or commercial projects
+
+## ⚠️ Disclaimer
+
+This tool is for personal use only. Please respect the terms of service of the job boards being scraped. The app implements rate limiting and caching to minimize requests to external APIs.
 
 ## 🆘 Support
 
 For issues or questions:
 - Check the documentation
 - Review the code comments
-- Test in demo mode first
+- Open an issue on GitHub
 
-## 🎮 Demo Mode
+## 🎮 Running Without API Keys
 
-The app works without API keys for testing:
-- Uses pre-written demo content
-- All features visible
-- No API costs
-- Perfect for development
+The app works great without any API keys:
+- RemoteOK API is public (no key needed)
+- USAJobs API is public (no key needed)
+- GitHub scraping works without authentication
+- Only Adzuna requires API keys (optional)
 
-Add your OpenAI key to unlock real AI generation!
+Even without Adzuna, you'll get access to hundreds of remote jobs and government positions!
 
 ---
 
-Built with ⚔️ by Frame Fables
+Built with 🎯 for job seekers everywhere
 
-*May your conversions be plentiful and your engagement legendary!*
+*May your job search be swift and your offers plentiful!*
