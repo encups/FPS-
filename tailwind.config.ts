@@ -15,9 +15,12 @@ const config: Config = {
           bronze: "#CD7F32",
           stone: "#8B8680",
           parchment: "#F0E5D8",
+          "parchment-light": "#FAF7F2",
+          cream: "#FFFEF9",
           ink: "#2C2416",
           forest: "#2D5016",
           blood: "#8B0000",
+          "stone-dark": "#5A5855",
         },
       },
       fontFamily: {
