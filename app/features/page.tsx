@@ -1,179 +1,157 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import Link from "next/link";
 
 export default function FeaturesPage() {
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0 },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const features = [
-    {
-      icon: "⚔️",
-      title: "Social Media Content",
-      description: "Create engaging posts for Facebook, Instagram, LinkedIn, and Twitter. Perfect tone, hashtags, and calls-to-action every time.",
-    },
-    {
-      icon: "📜",
-      title: "Email Campaigns",
-      description: "Write compelling subject lines, body copy, and CTAs that get opened and clicked. Personalized for your audience.",
-    },
-    {
-      icon: "🏰",
-      title: "Ad Copy",
-      description: "Generate high-converting ad copy for Google, Facebook, and Instagram ads. A/B test variations instantly.",
-    },
-    {
-      icon: "🎨",
-      title: "Blog Posts",
-      description: "Long-form content that ranks on Google. SEO-optimized, well-structured, and engaging from start to finish.",
-    },
-    {
-      icon: "📖",
-      title: "Product Descriptions",
-      description: "Sell more with compelling product copy. Highlight benefits, overcome objections, and drive conversions.",
-    },
-    {
-      icon: "🎯",
-      title: "Marketing Strategy",
-      description: "Get AI-powered recommendations for campaigns, content calendars, and growth strategies tailored to your business.",
-    },
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-medieval-ink via-gray-900 to-medieval-forest">
-      <Navigation />
+    <div className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className="border-b border-gray-100 bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link href="/" className="text-2xl font-bold text-gray-900">
+            Frame Fables
+          </Link>
+          <div className="hidden md:flex items-center gap-8">
+            <Link href="/features" className="text-primary-600 font-medium">
+              Features
+            </Link>
+            <Link href="/examples" className="text-gray-600 hover:text-gray-900 font-medium">
+              Examples
+            </Link>
+            <Link href="/pricing" className="text-gray-600 hover:text-gray-900 font-medium">
+              Pricing
+            </Link>
+            <Link href="/customers" className="text-gray-600 hover:text-gray-900 font-medium">
+              Customers
+            </Link>
+          </div>
+          <div className="flex items-center gap-4">
+            <Link href="/login" className="text-gray-600 hover:text-gray-900 font-medium">
+              Sign in
+            </Link>
+            <Link href="/signup" className="btn-primary">
+              Start Free Trial
+            </Link>
+          </div>
+        </div>
+      </nav>
 
       <main className="pt-24">
         {/* Hero */}
-        <motion.section
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-          className="bg-medieval-parchment-light py-20 relative z-10"
-        >
-          <div className="container mx-auto px-4 text-center">
-            <motion.h1
-              variants={fadeInUp}
-              className="pixel-text text-5xl md:text-6xl text-medieval-ink mb-6"
-            >
-              Everything You Need
-            </motion.h1>
-            <motion.p
-              variants={fadeInUp}
-              className="font-pixel text-2xl text-medieval-stone-dark max-w-3xl mx-auto mb-12"
-            >
-              From social media to email campaigns, Frame Fables handles all your marketing content needs in one platform.
-            </motion.p>
-          </div>
-        </motion.section>
+        <section className="max-w-7xl mx-auto px-6 py-16 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-3xl mx-auto"
+          >
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+              Everything You Need to Scale Your Marketing
+            </h1>
+            <p className="text-xl text-gray-600 mb-8">
+              Powerful AI-driven tools to create professional marketing content in seconds
+            </p>
+          </motion.div>
+        </section>
 
         {/* Features Grid */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={staggerContainer}
-          className="container mx-auto px-4 py-20"
-        >
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                whileHover={{ scale: 1.05, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="pixel-border medieval-shadow bg-medieval-stone/10 p-8 hover:bg-medieval-stone/20 transition-all cursor-pointer"
-              >
+        <section className="bg-gray-50 py-20">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[
+                {
+                  icon: "📱",
+                  title: "Social Media Content",
+                  description: "Create engaging posts for Facebook, Instagram, LinkedIn, and Twitter with perfect tone and hashtags.",
+                },
+                {
+                  icon: "✉️",
+                  title: "Email Campaigns",
+                  description: "Write compelling subject lines and body copy that get opened and clicked. Personalized for your audience.",
+                },
+                {
+                  icon: "📢",
+                  title: "Ad Copy",
+                  description: "Generate high-converting ad copy for Google, Facebook, and Instagram ads. A/B test variations instantly.",
+                },
+                {
+                  icon: "📝",
+                  title: "Blog Posts",
+                  description: "Long-form content that ranks on Google. SEO-optimized, well-structured, and engaging.",
+                },
+                {
+                  icon: "🛍️",
+                  title: "Product Descriptions",
+                  description: "Sell more with compelling product copy that highlights benefits and drives conversions.",
+                },
+                {
+                  icon: "📊",
+                  title: "Marketing Strategy",
+                  description: "Get AI-powered recommendations for campaigns and content calendars tailored to your business.",
+                },
+              ].map((feature, i) => (
                 <motion.div
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  transition={{ delay: index * 0.1, type: "spring", stiffness: 200 }}
-                  className="text-6xl mb-6"
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="card"
                 >
-                  {feature.icon}
+                  <div className="text-5xl mb-4">{feature.icon}</div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
+                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
                 </motion.div>
-                <h3 className="pixel-text text-xl text-medieval-gold mb-4">
-                  {feature.title}
-                </h3>
-                <p className="font-pixel text-lg text-medieval-parchment leading-relaxed">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
+              ))}
+            </div>
           </div>
-        </motion.section>
+        </section>
 
         {/* How It Works */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={staggerContainer}
-          className="bg-medieval-cream py-20 relative z-10"
-        >
-          <div className="container mx-auto px-4">
-            <motion.h2
-              variants={fadeInUp}
-              className="pixel-text text-4xl text-center text-medieval-ink mb-16"
-            >
+        <section className="py-20">
+          <div className="max-w-5xl mx-auto px-6">
+            <h2 className="text-4xl font-bold text-center text-gray-900 mb-16">
               How It Works
-            </motion.h2>
-            <div className="max-w-4xl mx-auto space-y-8">
+            </h2>
+            <div className="space-y-6">
               {[
                 {
                   step: "1",
                   title: "Tell Us About Your Business",
-                  desc: "Input your business details, brand voice, target audience, and marketing goals. The more context you provide, the better your content.",
+                  desc: "Input your business details, brand voice, and target audience. The more context, the better your content.",
                 },
                 {
                   step: "2",
                   title: "Choose Your Content Type",
-                  desc: "Select from social posts, emails, ads, blog posts, or product descriptions. Pick your platform and content format.",
+                  desc: "Select from social posts, emails, ads, blog posts, or product descriptions.",
                 },
                 {
                   step: "3",
                   title: "AI Generates Multiple Options",
-                  desc: "Get 3-5 variations instantly. Each option is unique, on-brand, and ready to use. Edit if needed or regenerate for more.",
+                  desc: "Get 3-5 variations instantly. Each option is unique, on-brand, and ready to use.",
                 },
                 {
                   step: "4",
                   title: "Publish & Track Results",
-                  desc: "Copy to your platform or schedule directly. See what performs best and let the AI learn your preferences over time.",
+                  desc: "Copy to your platform or schedule directly. See what performs best.",
                 },
-              ].map((item, index) => (
+              ].map((item, i) => (
                 <motion.div
-                  key={index}
-                  variants={fadeInUp}
-                  whileHover={{ x: 10 }}
-                  className="flex items-start gap-6 pixel-border bg-white p-8 cursor-pointer medieval-shadow"
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex items-start gap-6 bg-white rounded-2xl border border-gray-100 p-8 hover:shadow-lg transition-shadow"
                 >
-                  <motion.div
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                    className="pixel-border bg-medieval-gold text-medieval-ink w-20 h-20 flex items-center justify-center flex-shrink-0"
-                  >
-                    <span className="pixel-text text-3xl">{item.step}</span>
-                  </motion.div>
+                  <div className="w-16 h-16 bg-primary-600 text-white rounded-lg flex items-center justify-center flex-shrink-0 text-2xl font-bold">
+                    {item.step}
+                  </div>
                   <div>
-                    <h4 className="pixel-text text-2xl text-medieval-ink mb-3">
+                    <h4 className="text-xl font-bold text-gray-900 mb-2">
                       {item.title}
                     </h4>
-                    <p className="font-pixel text-lg text-medieval-stone-dark leading-relaxed">
+                    <p className="text-gray-600 leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
@@ -181,34 +159,65 @@ export default function FeaturesPage() {
               ))}
             </div>
           </div>
-        </motion.section>
+        </section>
+
+        {/* Benefits */}
+        <section className="bg-primary-600 py-20">
+          <div className="max-w-5xl mx-auto px-6">
+            <h2 className="text-4xl font-bold text-center text-white mb-16">
+              Why Frame Fables?
+            </h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  title: "Save 15+ Hours Per Week",
+                  desc: "Stop spending hours on content creation. Generate professional copy in seconds.",
+                },
+                {
+                  title: "Always On-Brand",
+                  desc: "AI learns your brand voice and maintains consistency across all content.",
+                },
+                {
+                  title: "Proven Results",
+                  desc: "1,247+ businesses using Frame Fables have seen average engagement increase of 2x.",
+                },
+              ].map((benefit, i) => (
+                <div key={i} className="text-center text-white">
+                  <h3 className="text-xl font-bold mb-3">{benefit.title}</h3>
+                  <p className="opacity-90">{benefit.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* CTA */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className="container mx-auto px-4 py-20"
-        >
-          <div className="pixel-border medieval-shadow bg-gradient-to-r from-medieval-gold/20 to-medieval-bronze/20 p-12 text-center max-w-4xl mx-auto">
-            <h3 className="pixel-text text-3xl text-medieval-gold mb-6">
-              Ready to Try It?
-            </h3>
-            <p className="font-pixel text-2xl text-medieval-parchment mb-8">
-              See real examples of AI-generated content
+        <section className="py-20">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">
+              Ready to see it in action?
+            </h2>
+            <p className="text-xl text-gray-600 mb-8">
+              View real examples of AI-generated content
             </p>
-            <Link
-              href="/examples"
-              className="inline-block pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-10 py-4 pixel-text text-sm hover:bg-medieval-bronze transition-all"
-            >
-              View Examples
-            </Link>
+            <div className="flex gap-4 justify-center">
+              <Link href="/examples" className="btn-primary">
+                View Examples
+              </Link>
+              <Link href="/signup" className="btn-secondary">
+                Start Free Trial
+              </Link>
+            </div>
           </div>
-        </motion.section>
-      </main>
+        </section>
 
-      <Footer />
+        {/* Footer */}
+        <footer className="bg-gray-50 border-t border-gray-100 py-12">
+          <div className="max-w-7xl mx-auto px-6 text-center text-gray-600">
+            <p>© 2024 Frame Fables. All rights reserved.</p>
+          </div>
+        </footer>
+      </main>
     </div>
   );
 }

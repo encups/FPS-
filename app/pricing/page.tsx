@@ -2,59 +2,41 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import Link from "next/link";
 
 export default function PricingPage() {
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0 },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
 
   const pricingPlans = [
     {
-      name: "Squire",
+      name: "Starter",
       price: "$29",
       period: "/month",
       features: [
         "10 AI-generated posts/month",
         "Basic email campaigns",
-        "Medieval-themed templates",
+        "All content types",
         "Community support",
       ],
-      cta: "Start Your Quest",
+      cta: "Start Free Trial",
     },
     {
-      name: "Knight",
+      name: "Professional",
       price: "$79",
       period: "/month",
       popular: true,
       features: [
         "50 AI-generated posts/month",
         "Advanced email automation",
-        "Custom brand storytelling",
+        "Custom brand voice training",
         "Priority support",
         "Ad copy generation",
         "Analytics dashboard",
       ],
-      cta: "Join the Order",
+      cta: "Start Free Trial",
     },
     {
-      name: "King",
+      name: "Business",
       price: "$199",
       period: "/month",
       features: [
@@ -63,9 +45,9 @@ export default function PricingPage() {
         "Dedicated account manager",
         "Custom integrations",
         "White-label options",
-        "24/7 Royal support",
+        "24/7 Premium support",
       ],
-      cta: "Rule Your Market",
+      cta: "Start Free Trial",
     },
   ];
 
@@ -97,229 +79,196 @@ export default function PricingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-medieval-ink via-gray-900 to-medieval-forest">
-      <Navigation />
+    <div className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className="border-b border-gray-100 bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link href="/" className="text-2xl font-bold text-gray-900">
+            Frame Fables
+          </Link>
+          <div className="hidden md:flex items-center gap-8">
+            <Link href="/features" className="text-gray-600 hover:text-gray-900 font-medium">
+              Features
+            </Link>
+            <Link href="/examples" className="text-gray-600 hover:text-gray-900 font-medium">
+              Examples
+            </Link>
+            <Link href="/pricing" className="text-primary-600 font-medium">
+              Pricing
+            </Link>
+            <Link href="/customers" className="text-gray-600 hover:text-gray-900 font-medium">
+              Customers
+            </Link>
+          </div>
+          <div className="flex items-center gap-4">
+            <Link href="/login" className="text-gray-600 hover:text-gray-900 font-medium">
+              Sign in
+            </Link>
+            <Link href="/signup" className="btn-primary">
+              Start Free Trial
+            </Link>
+          </div>
+        </div>
+      </nav>
 
       <main className="pt-24">
         {/* Hero */}
-        <motion.section
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-          className="bg-medieval-parchment-light py-20 relative z-10"
-        >
-          <div className="container mx-auto px-4 text-center">
-            <motion.h1
-              variants={fadeInUp}
-              className="pixel-text text-5xl md:text-6xl text-medieval-ink mb-6"
-            >
+        <section className="max-w-7xl mx-auto px-6 py-16 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-3xl mx-auto"
+          >
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
               Simple, Transparent Pricing
-            </motion.h1>
-            <motion.p
-              variants={fadeInUp}
-              className="font-pixel text-2xl text-medieval-stone-dark max-w-3xl mx-auto mb-4"
-            >
+            </h1>
+            <p className="text-xl text-gray-600 mb-4">
               Choose the plan that fits your business needs
-            </motion.p>
-            <motion.p variants={fadeInUp} className="font-pixel text-lg text-medieval-stone-dark">
+            </p>
+            <p className="text-sm text-gray-500">
               All plans include 7-day free trial • No credit card required • Cancel anytime
-            </motion.p>
-          </div>
-        </motion.section>
+            </p>
+          </motion.div>
+        </section>
 
         {/* Pricing Cards */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={staggerContainer}
-          className="container mx-auto px-4 py-20 bg-medieval-cream relative z-10"
-        >
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {pricingPlans.map((plan, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                whileHover={{
-                  scale: 1.05,
-                  y: -10,
-                }}
-                transition={{ duration: 0.3 }}
-                className={`pixel-border medieval-shadow p-8 transition-all cursor-pointer ${
-                  plan.popular
-                    ? "bg-medieval-gold/20 border-medieval-gold"
-                    : "bg-white"
-                }`}
-              >
-                {plan.popular && (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                    className="pixel-border bg-medieval-gold text-medieval-ink px-4 py-2 mb-4 text-center"
-                  >
-                    <span className="pixel-text text-xs">⭐ MOST POPULAR ⭐</span>
-                  </motion.div>
-                )}
-                <h3 className="pixel-text text-3xl text-medieval-gold mb-4">
-                  {plan.name}
-                </h3>
-                <div className="mb-6">
-                  <span className="pixel-text text-5xl text-medieval-ink">
-                    {plan.price}
-                  </span>
-                  <span className="font-pixel text-xl text-medieval-stone-dark">
-                    {plan.period}
-                  </span>
-                </div>
-                <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature, idx) => (
-                    <motion.li
-                      key={idx}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="font-pixel text-base text-medieval-ink flex items-start gap-2"
-                    >
-                      <span className="text-medieval-gold text-xl">✓</span>
-                      <span>{feature}</span>
-                    </motion.li>
-                  ))}
-                </ul>
-                <motion.button
-                  onClick={() => setSelectedPlan(plan.name)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-full pixel-border bg-medieval-gold text-medieval-ink px-6 py-4 pixel-text text-sm hover:bg-medieval-bronze transition-colors"
-                >
-                  {plan.cta}
-                </motion.button>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Trust Indicators */}
-          <motion.div
-            variants={staggerContainer}
-            className="flex flex-wrap items-center justify-center gap-8 mt-16"
-          >
-            {[
-              { icon: "🔒", label: "256-bit Encryption" },
-              { icon: "✅", label: "GDPR Compliant" },
-              { icon: "🛡️", label: "SOC 2 Certified" },
-              { icon: "💳", label: "Secure Payments" },
-            ].map((badge, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                className="text-center"
-              >
-                <div className="text-4xl mb-2">{badge.icon}</div>
-                <div className="font-pixel text-sm text-medieval-stone-dark">
-                  {badge.label}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.section>
-
-        {/* FAQ Section */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={staggerContainer}
-          className="bg-medieval-parchment-light py-20 relative z-10"
-        >
-          <div className="container mx-auto px-4 max-w-4xl">
-            <motion.h2
-              variants={fadeInUp}
-              className="pixel-text text-4xl text-center text-medieval-ink mb-4"
-            >
-              Frequently Asked Questions
-            </motion.h2>
-            <motion.p
-              variants={fadeInUp}
-              className="font-pixel text-xl text-center text-medieval-stone-dark mb-16"
-            >
-              Everything you need to know
-            </motion.p>
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid md:grid-cols-3 gap-8">
+              {pricingPlans.map((plan, i) => (
                 <motion.div
-                  key={index}
-                  variants={fadeInUp}
-                  className="pixel-border bg-white overflow-hidden"
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className={`rounded-2xl border p-8 transition-all ${
+                    plan.popular
+                      ? "border-primary-600 shadow-2xl shadow-primary-600/20 scale-105"
+                      : "border-gray-100 hover:shadow-xl"
+                  }`}
                 >
-                  <motion.button
-                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                    whileHover={{ backgroundColor: "#F0E5D8" }}
-                    className="w-full text-left p-6 flex items-center justify-between transition-colors"
-                  >
-                    <span className="pixel-text text-sm text-medieval-gold pr-4">
-                      {faq.question}
-                    </span>
-                    <motion.span
-                      animate={{ rotate: openFaq === index ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="text-2xl text-medieval-gold flex-shrink-0"
-                    >
-                      {openFaq === index ? "−" : "+"}
-                    </motion.span>
-                  </motion.button>
-                  <motion.div
-                    initial={false}
-                    animate={{
-                      height: openFaq === index ? "auto" : 0,
-                      opacity: openFaq === index ? 1 : 0,
-                    }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="px-6 pb-6 font-pixel text-lg text-medieval-ink leading-relaxed border-t-2 border-medieval-gold/20 pt-4">
-                      {faq.answer}
+                  {plan.popular && (
+                    <div className="bg-primary-600 text-white px-4 py-2 rounded-lg mb-4 text-center text-sm font-bold">
+                      ⭐ MOST POPULAR ⭐
                     </div>
-                  </motion.div>
+                  )}
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                    {plan.name}
+                  </h3>
+                  <div className="mb-6">
+                    <span className="text-5xl font-bold text-gray-900">
+                      {plan.price}
+                    </span>
+                    <span className="text-xl text-gray-600">
+                      {plan.period}
+                    </span>
+                  </div>
+                  <ul className="space-y-4 mb-8">
+                    {plan.features.map((feature, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-start gap-3 text-gray-700"
+                      >
+                        <span className="text-primary-600 text-xl">✓</span>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href="/signup"
+                    className={`w-full block text-center px-6 py-4 rounded-lg font-semibold transition-colors ${
+                      plan.popular
+                        ? "bg-primary-600 text-white hover:bg-primary-700 shadow-lg"
+                        : "bg-gray-100 text-gray-900 hover:bg-gray-200"
+                    }`}
+                  >
+                    {plan.cta}
+                  </Link>
                 </motion.div>
               ))}
             </div>
+
+            {/* Trust Indicators */}
+            <div className="flex flex-wrap items-center justify-center gap-12 mt-16">
+              {[
+                { icon: "🔒", label: "256-bit Encryption" },
+                { icon: "✅", label: "GDPR Compliant" },
+                { icon: "🛡️", label: "SOC 2 Certified" },
+                { icon: "💳", label: "Secure Payments" },
+              ].map((badge, i) => (
+                <div key={i} className="text-center">
+                  <div className="text-4xl mb-2">{badge.icon}</div>
+                  <div className="text-sm text-gray-600">{badge.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
-        </motion.section>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="bg-gray-50 py-20">
+          <div className="max-w-4xl mx-auto px-6">
+            <h2 className="text-4xl font-bold text-center text-gray-900 mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-xl text-center text-gray-600 mb-16">
+              Everything you need to know
+            </p>
+            <div className="space-y-4">
+              {faqs.map((faq, i) => (
+                <div
+                  key={i}
+                  className="bg-white rounded-2xl border border-gray-100 overflow-hidden"
+                >
+                  <button
+                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                    className="w-full text-left p-6 flex items-center justify-between hover:bg-gray-50 transition-colors"
+                  >
+                    <span className="text-lg font-semibold text-gray-900 pr-4">
+                      {faq.question}
+                    </span>
+                    <span className="text-2xl text-primary-600 flex-shrink-0">
+                      {openFaq === i ? "−" : "+"}
+                    </span>
+                  </button>
+                  {openFaq === i && (
+                    <div className="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* CTA */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className="container mx-auto px-4 py-20"
-        >
-          <div className="pixel-border medieval-shadow bg-gradient-to-r from-medieval-gold/20 to-medieval-bronze/20 p-12 text-center max-w-4xl mx-auto">
-            <h3 className="pixel-text text-3xl text-medieval-gold mb-6">
+        <section className="py-20">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">
               Still Have Questions?
-            </h3>
-            <p className="font-pixel text-2xl text-medieval-parchment mb-8">
-              See examples of what you can create or talk to our team
+            </h2>
+            <p className="text-xl text-gray-600 mb-8">
+              See examples of what you can create or start your free trial
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
-              <Link
-                href="/examples"
-                className="inline-block pixel-border bg-white text-medieval-ink px-8 py-4 pixel-text text-sm hover:bg-medieval-parchment transition-all"
-              >
+              <Link href="/examples" className="btn-secondary">
                 View Examples
               </Link>
-              <Link
-                href="/signup"
-                className="inline-block pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-8 py-4 pixel-text text-sm hover:bg-medieval-bronze transition-all"
-              >
+              <Link href="/signup" className="btn-primary">
                 Start Free Trial
               </Link>
             </div>
           </div>
-        </motion.section>
-      </main>
+        </section>
 
-      <Footer />
+        {/* Footer */}
+        <footer className="bg-gray-50 border-t border-gray-100 py-12">
+          <div className="max-w-7xl mx-auto px-6 text-center text-gray-600">
+            <p>© 2024 Frame Fables. All rights reserved.</p>
+          </div>
+        </footer>
+      </main>
     </div>
   );
 }

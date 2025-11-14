@@ -1,26 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import Link from "next/link";
 
 export default function ExamplesPage() {
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0 },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
   const contentExamples = [
     {
       type: "Social Media Post",
@@ -55,66 +38,84 @@ export default function ExamplesPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-medieval-ink via-gray-900 to-medieval-forest">
-      <Navigation />
+    <div className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className="border-b border-gray-100 bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link href="/" className="text-2xl font-bold text-gray-900">
+            Frame Fables
+          </Link>
+          <div className="hidden md:flex items-center gap-8">
+            <Link href="/features" className="text-gray-600 hover:text-gray-900 font-medium">
+              Features
+            </Link>
+            <Link href="/examples" className="text-primary-600 font-medium">
+              Examples
+            </Link>
+            <Link href="/pricing" className="text-gray-600 hover:text-gray-900 font-medium">
+              Pricing
+            </Link>
+            <Link href="/customers" className="text-gray-600 hover:text-gray-900 font-medium">
+              Customers
+            </Link>
+          </div>
+          <div className="flex items-center gap-4">
+            <Link href="/login" className="text-gray-600 hover:text-gray-900 font-medium">
+              Sign in
+            </Link>
+            <Link href="/signup" className="btn-primary">
+              Start Free Trial
+            </Link>
+          </div>
+        </div>
+      </nav>
 
       <main className="pt-24">
         {/* Hero */}
-        <motion.section
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-          className="bg-medieval-parchment-light py-20 relative z-10"
-        >
-          <div className="container mx-auto px-4 text-center">
-            <motion.h1
-              variants={fadeInUp}
-              className="pixel-text text-5xl md:text-6xl text-medieval-ink mb-6"
-            >
+        <section className="max-w-7xl mx-auto px-6 py-16 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-3xl mx-auto"
+          >
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
               See What AI Can Create
-            </motion.h1>
-            <motion.p
-              variants={fadeInUp}
-              className="font-pixel text-2xl text-medieval-stone-dark max-w-3xl mx-auto mb-8"
-            >
-              Real examples of AI-generated marketing content. Professional, engaging, and ready to use in seconds.
-            </motion.p>
-            <motion.p variants={fadeInUp} className="font-pixel text-lg text-medieval-stone-dark">
+            </h1>
+            <p className="text-xl text-gray-600 mb-4">
+              Real examples of AI-generated marketing content. Professional, engaging, and ready to use.
+            </p>
+            <p className="text-sm text-gray-500">
               All content generated in under 5 seconds
-            </motion.p>
-          </div>
-        </motion.section>
+            </p>
+          </motion.div>
+        </section>
 
         {/* Examples Grid */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={staggerContainer}
-          className="bg-medieval-cream py-20 relative z-10"
-        >
-          <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-              {contentExamples.map((example, index) => (
+        <section className="bg-gray-50 py-20">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {contentExamples.map((example, i) => (
                 <motion.div
-                  key={index}
-                  variants={fadeInUp}
-                  whileHover={{ y: -10 }}
-                  className="pixel-border bg-white p-6 medieval-shadow"
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-xl transition-shadow"
                 >
-                  <div className="flex items-center justify-between mb-4 pb-4 border-b-2 border-medieval-gold/20">
-                    <span className="pixel-text text-sm text-medieval-gold">
+                  <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
+                    <span className="text-sm font-semibold text-primary-600">
                       {example.type}
                     </span>
-                    <span className="font-pixel text-xs text-medieval-stone-dark">
+                    <span className="text-xs text-gray-500">
                       {example.platform}
                     </span>
                   </div>
-                  <div className="font-pixel text-base text-medieval-ink leading-relaxed whitespace-pre-line min-h-[240px]">
+                  <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-line min-h-[240px] mb-6">
                     {example.content}
                   </div>
-                  <div className="mt-6 pt-4 border-t-2 border-medieval-gold/20">
-                    <span className="font-pixel text-xs text-medieval-stone-dark">
+                  <div className="pt-4 border-t border-gray-100">
+                    <span className="text-xs text-gray-500">
                       ✨ Generated in 3.2 seconds
                     </span>
                   </div>
@@ -122,85 +123,75 @@ export default function ExamplesPage() {
               ))}
             </div>
           </div>
-        </motion.section>
+        </section>
 
-        {/* Features Highlight */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={staggerContainer}
-          className="container mx-auto px-4 py-20"
-        >
-          <motion.h2
-            variants={fadeInUp}
-            className="pixel-text text-4xl text-center text-medieval-gold mb-16"
-          >
-            Why Frame Fables Content Works
-          </motion.h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {[
-              {
-                icon: "🎯",
-                title: "On-Brand Every Time",
-                desc: "AI learns your brand voice and maintains consistency across all content",
-              },
-              {
-                icon: "⚡",
-                title: "Multiple Variations",
-                desc: "Get 3-5 unique options per request. Pick your favorite or regenerate",
-              },
-              {
-                icon: "✏️",
-                title: "Fully Editable",
-                desc: "Use as-is or make quick edits. You have complete control",
-              },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                className="text-center pixel-border bg-medieval-stone/10 p-8"
-              >
-                <div className="text-6xl mb-4">{item.icon}</div>
-                <h3 className="pixel-text text-lg text-medieval-gold mb-3">{item.title}</h3>
-                <p className="font-pixel text-base text-medieval-parchment">{item.desc}</p>
-              </motion.div>
-            ))}
+        {/* Why It Works */}
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-6">
+            <h2 className="text-4xl font-bold text-center text-gray-900 mb-16">
+              Why Frame Fables Content Works
+            </h2>
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {[
+                {
+                  icon: "🎯",
+                  title: "On-Brand Every Time",
+                  desc: "AI learns your brand voice and maintains consistency across all content",
+                },
+                {
+                  icon: "⚡",
+                  title: "Multiple Variations",
+                  desc: "Get 3-5 unique options per request. Pick your favorite or regenerate",
+                },
+                {
+                  icon: "✏️",
+                  title: "Fully Editable",
+                  desc: "Use as-is or make quick edits. You have complete control",
+                },
+              ].map((item, i) => (
+                <div key={i} className="text-center card">
+                  <div className="text-6xl mb-4">{item.icon}</div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">{item.title}</h3>
+                  <p className="text-gray-600">{item.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </motion.section>
+        </section>
 
         {/* CTA */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className="bg-medieval-parchment-light py-20 relative z-10"
-        >
-          <div className="container mx-auto px-4 text-center">
-            <h3 className="pixel-text text-4xl text-medieval-ink mb-6">
+        <section className="bg-primary-600 py-20">
+          <div className="max-w-4xl mx-auto px-6 text-center text-white">
+            <h2 className="text-4xl font-bold mb-6">
               Ready to Create Your Own?
-            </h3>
-            <p className="font-pixel text-2xl text-medieval-stone-dark mb-8 max-w-2xl mx-auto">
+            </h2>
+            <p className="text-xl mb-8 opacity-90">
               Start your 7-day free trial. No credit card required.
             </p>
-            <Link
-              href="/signup"
-              className="inline-block pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-10 py-4 pixel-text text-sm hover:bg-medieval-bronze transition-all"
-            >
-              Start Free Trial
-            </Link>
-            <p className="font-pixel text-base text-medieval-stone-dark mt-6">
-              or{" "}
-              <Link href="/pricing" className="text-medieval-gold hover:underline">
-                see pricing
+            <div className="flex gap-4 justify-center">
+              <Link
+                href="/signup"
+                className="inline-block bg-white text-primary-600 px-12 py-5 rounded-lg font-bold text-lg hover:bg-gray-50 transition-colors shadow-2xl"
+              >
+                Start Free Trial →
               </Link>
-            </p>
+              <Link
+                href="/pricing"
+                className="inline-block bg-primary-700 text-white px-12 py-5 rounded-lg font-bold text-lg hover:bg-primary-800 transition-colors border-2 border-white/20"
+              >
+                See Pricing
+              </Link>
+            </div>
           </div>
-        </motion.section>
-      </main>
+        </section>
 
-      <Footer />
+        {/* Footer */}
+        <footer className="bg-gray-50 border-t border-gray-100 py-12">
+          <div className="max-w-7xl mx-auto px-6 text-center text-gray-600">
+            <p>© 2024 Frame Fables. All rights reserved.</p>
+          </div>
+        </footer>
+      </main>
     </div>
   );
 }
