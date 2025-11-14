@@ -2,10 +2,12 @@
 
 import { useEffect, useRef } from 'react';
 import { GameState, Position } from '@/lib/gameTypes';
+import { KnightSkin } from '@/lib/skins';
 
 interface GameBoardProps {
   gameState: GameState;
   onTileClick: (position: Position) => void;
+  playerSkin?: KnightSkin;
 }
 
 // Color scheme
@@ -22,7 +24,7 @@ const COLORS = {
   healthBarBg: '#991b1b', // Dark red
 };
 
-export default function GameBoard({ gameState, onTileClick }: GameBoardProps) {
+export default function GameBoard({ gameState, onTileClick, playerSkin }: GameBoardProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { currentRoom, player, inCombat, currentEnemy } = gameState;
 
@@ -111,11 +113,14 @@ export default function GameBoard({ gameState, onTileClick }: GameBoardProps) {
     // Draw player
     const playerX = player.position.x * tileSize;
     const playerY = player.position.y * tileSize;
-    ctx.fillStyle = COLORS.player;
+    const playerColor = playerSkin?.color || COLORS.player;
+    const playerAccent = playerSkin?.accentColor || '#60a5fa';
+
+    ctx.fillStyle = playerColor;
     ctx.fillRect(playerX + 6, playerY + 6, 28, 28);
 
     // Player helmet
-    ctx.fillStyle = '#60a5fa';
+    ctx.fillStyle = playerAccent;
     ctx.fillRect(playerX + 10, playerY + 8, 20, 8);
 
     // Player visor
@@ -151,7 +156,7 @@ export default function GameBoard({ gameState, onTileClick }: GameBoardProps) {
         }
       });
     }
-  }, [gameState, currentRoom, player, inCombat, currentEnemy]);
+  }, [gameState, currentRoom, player, inCombat, currentEnemy, playerSkin]);
 
   const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;

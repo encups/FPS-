@@ -7,22 +7,35 @@ import PlayerStats from '@/components/PlayerStats';
 import CombatPanel from '@/components/CombatPanel';
 import GameOverScreen from '@/components/GameOverScreen';
 import Leaderboard from '@/components/Leaderboard';
+import SkinsModal from '@/components/SkinsModal';
 import { GameState, Position, CombatAction } from '@/lib/gameTypes';
 import { initializeGame, movePlayer, performCombat, saveHighScore } from '@/lib/gameLogic';
 import { getTodaysSeed } from '@/lib/seedRandom';
+import { getCurrentSkin, getSkinById, KnightSkin } from '@/lib/skins';
 
 export default function DungeonGame() {
   const router = useRouter();
   const [gameState, setGameState] = useState<GameState | null>(null);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [showSkinsModal, setShowSkinsModal] = useState(false);
   const [todaysSeed, setTodaysSeed] = useState<string>('');
+  const [currentSkin, setCurrentSkin] = useState<KnightSkin | null>(null);
 
   // Initialize game on mount
   useEffect(() => {
     const seed = getTodaysSeed();
     setTodaysSeed(seed);
     setGameState(initializeGame(seed));
+
+    // Load current skin
+    const skinId = getCurrentSkin();
+    setCurrentSkin(getSkinById(skinId));
   }, []);
+
+  const handleSkinChange = () => {
+    const skinId = getCurrentSkin();
+    setCurrentSkin(getSkinById(skinId));
+  };
 
   const handleTileClick = (position: Position) => {
     if (!gameState || gameState.gameOver || gameState.inCombat) return;
@@ -78,19 +91,31 @@ export default function DungeonGame() {
           <p className="font-pixel text-sm text-medieval-stone">
             📅 {todaysSeed}
           </p>
-          <button
-            onClick={handleMenu}
-            className="mt-4 pixel-border bg-transparent hover:bg-medieval-parchment/10 text-medieval-parchment px-4 py-2 pixel-text text-xs transition-colors"
-          >
-            🏰 MENU
-          </button>
+          <div className="flex gap-2 justify-center mt-4">
+            <button
+              onClick={handleMenu}
+              className="pixel-border bg-transparent hover:bg-medieval-parchment/10 text-medieval-parchment px-4 py-2 pixel-text text-xs transition-colors"
+            >
+              🏰 MENU
+            </button>
+            <button
+              onClick={() => setShowSkinsModal(true)}
+              className="pixel-border bg-medieval-gold/20 hover:bg-medieval-gold/30 text-medieval-gold px-4 py-2 pixel-text text-xs transition-colors"
+            >
+              {currentSkin?.emoji || '⚔️'} SKINS
+            </button>
+          </div>
         </div>
 
         {/* Main Game Area */}
         <div className="grid lg:grid-cols-[1fr_300px] gap-8 mb-8">
           {/* Game Board */}
           <div className="space-y-4">
-            <GameBoard gameState={gameState} onTileClick={handleTileClick} />
+            <GameBoard
+              gameState={gameState}
+              onTileClick={handleTileClick}
+              playerSkin={currentSkin || undefined}
+            />
 
             {/* Controls Guide */}
             <div className="pixel-border bg-black/30 p-4">
@@ -173,6 +198,14 @@ export default function DungeonGame() {
           gameState={gameState}
           onRestart={handleRestart}
           onMenu={handleMenu}
+        />
+      )}
+
+      {/* Skins Modal */}
+      {showSkinsModal && (
+        <SkinsModal
+          onClose={() => setShowSkinsModal(false)}
+          onSkinChange={handleSkinChange}
         />
       )}
     </div>

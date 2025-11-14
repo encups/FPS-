@@ -207,9 +207,19 @@ export default function DungeonMenu() {
       {/* Footer */}
       <footer className="border-t-4 border-medieval-gold bg-black/50 py-8 mt-12">
         <div className="container mx-auto px-4 text-center">
-          <p className="font-pixel text-sm text-medieval-stone">
+          <p className="font-pixel text-sm text-medieval-stone mb-4">
             A Frame Fables mini-game • New dungeon every day at midnight
           </p>
+
+          {/* Support Button */}
+          <a
+            href="https://buymeacoffee.com/framefables"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block pixel-border bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-2 pixel-text text-xs transition-colors"
+          >
+            ☕ SUPPORT THE GAME
+          </a>
         </div>
       </footer>
     </div>

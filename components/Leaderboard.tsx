@@ -3,12 +3,18 @@
 import { HighScore } from '@/lib/gameTypes';
 import { useEffect, useState } from 'react';
 import { getHighScores } from '@/lib/gameLogic';
+import EmailCaptureModal from './EmailCaptureModal';
 
 export default function Leaderboard() {
   const [scores, setScores] = useState<HighScore[]>([]);
+  const [showEmailCapture, setShowEmailCapture] = useState(false);
+  const [hasEmail, setHasEmail] = useState(false);
 
   useEffect(() => {
     setScores(getHighScores());
+    // Check if user has already provided email
+    const email = localStorage.getItem('dailyDungeon_email');
+    setHasEmail(!!email);
   }, []);
 
   if (scores.length === 0) {
@@ -64,6 +70,28 @@ export default function Leaderboard() {
           </div>
         ))}
       </div>
+
+      {/* Global Leaderboard CTA */}
+      {!hasEmail && (
+        <div className="mt-4">
+          <button
+            onClick={() => setShowEmailCapture(true)}
+            className="w-full pixel-border bg-gradient-to-r from-medieval-gold/20 to-medieval-bronze/20 hover:from-medieval-gold/30 hover:to-medieval-bronze/30 text-medieval-gold px-4 py-3 pixel-text text-xs transition-colors"
+          >
+            🌍 UNLOCK GLOBAL LEADERBOARD
+          </button>
+        </div>
+      )}
+
+      {showEmailCapture && (
+        <EmailCaptureModal
+          onSubmit={(email) => {
+            setHasEmail(true);
+            setShowEmailCapture(false);
+          }}
+          onClose={() => setShowEmailCapture(false)}
+        />
+      )}
     </div>
   );
 }

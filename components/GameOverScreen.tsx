@@ -110,6 +110,19 @@ export default function GameOverScreen({ gameState, onRestart, onMenu }: GameOve
             🏰 MAIN MENU
           </button>
         </div>
+
+        {/* Subtle Frame Fables CTA */}
+        <div className="mt-6 pixel-border bg-gradient-to-r from-medieval-gold/10 to-medieval-bronze/10 p-4 text-center">
+          <div className="font-pixel text-xs text-medieval-stone mb-2">
+            Enjoyed the game? 🎮
+          </div>
+          <a
+            href="/"
+            className="font-pixel text-sm text-medieval-gold hover:text-medieval-bronze transition-colors underline"
+          >
+            Check out Frame Fables AI Marketing →
+          </a>
+        </div>
       </div>
     </div>
   );
