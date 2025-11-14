@@ -11,13 +11,15 @@ const config: Config = {
     extend: {
       colors: {
         medieval: {
-          gold: "#D4AF37",
-          bronze: "#CD7F32",
+          gold: "#4ade80", // Bright green (was gold)
+          bronze: "#22c55e", // Medium green (was bronze)
           stone: "#8B8680",
           parchment: "#F0E5D8",
-          ink: "#2C2416",
-          forest: "#2D5016",
+          ink: "#1a2e05", // Dark forest green (was brown)
+          forest: "#2D5016", // Deep forest green
           blood: "#8B0000",
+          emerald: "#10b981", // Additional green
+          lime: "#84cc16", // Light green accent
         },
       },
       fontFamily: {
