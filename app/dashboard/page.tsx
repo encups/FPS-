@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 type ContentType = "social" | "email" | "ad" | "blog";
 
@@ -19,10 +20,10 @@ export default function Dashboard() {
   const [history, setHistory] = useState<GeneratedContent[]>([]);
 
   const contentTypes = [
-    { id: "social" as ContentType, name: "Social Quest", icon: "⚔️" },
-    { id: "email" as ContentType, name: "Email Scroll", icon: "📜" },
-    { id: "ad" as ContentType, name: "Ad Campaign", icon: "🏰" },
-    { id: "blog" as ContentType, name: "Blog Chronicle", icon: "📖" },
+    { id: "social" as ContentType, name: "Social Media", icon: "📱", color: "bg-blue-500" },
+    { id: "email" as ContentType, name: "Email", icon: "✉️", color: "bg-purple-500" },
+    { id: "ad" as ContentType, name: "Ad Copy", icon: "📢", color: "bg-orange-500" },
+    { id: "blog" as ContentType, name: "Blog Post", icon: "📝", color: "bg-green-500" },
   ];
 
   const templates = {
@@ -81,79 +82,86 @@ export default function Dashboard() {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-    alert("Content copied to clipboard! ⚔️");
+  };
+
+  const getTypeColor = (type: ContentType) => {
+    return contentTypes.find((t) => t.id === type)?.color || "bg-gray-500";
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-medieval-ink via-gray-900 to-medieval-forest">
-      {/* Navigation */}
-      <nav className="border-b-4 border-medieval-gold bg-black/50 backdrop-blur">
-        <div className="container mx-auto px-4 py-4">
+    <div className="min-h-screen bg-gray-50">
+      {/* Top Navigation */}
+      <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="text-3xl">🏰</span>
-              <h1 className="pixel-text text-xl text-medieval-gold">Frame Fables</h1>
+            <Link href="/" className="flex items-center gap-3">
+              <div className="text-2xl font-bold text-gray-900">Frame Fables</div>
             </Link>
             <div className="flex items-center gap-4">
-              <div className="pixel-border bg-medieval-gold/20 px-4 py-2">
-                <span className="pixel-text text-xs text-medieval-gold">
-                  ⚡ Knight Plan
-                </span>
+              <div className="bg-primary-50 text-primary-700 px-4 py-2 rounded-lg text-sm font-semibold">
+                Professional Plan
               </div>
-              <button className="pixel-text text-sm text-medieval-parchment hover:text-medieval-gold">
+              <button className="text-gray-600 hover:text-gray-900 font-medium">
                 Settings
               </button>
+              <Link href="/" className="text-gray-600 hover:text-gray-900 font-medium">
+                Back to Site
+              </Link>
             </div>
           </div>
         </div>
       </nav>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Page Header */}
         <div className="mb-8">
-          <h2 className="pixel-text text-3xl text-medieval-gold mb-2">
-            ⚔️ Your Marketing Command Center ⚔️
-          </h2>
-          <p className="font-pixel text-xl text-medieval-stone">
-            Generate epic content for your kingdom
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            Content Studio
+          </h1>
+          <p className="text-xl text-gray-600">
+            Generate professional marketing content with AI
           </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Content Area */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Content Type Tabs */}
-            <div className="pixel-border bg-medieval-stone/10 p-2">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            {/* Content Type Selector */}
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Select Content Type</h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {contentTypes.map((type) => (
                   <button
                     key={type.id}
                     onClick={() => setActiveTab(type.id)}
-                    className={`pixel-text text-xs py-3 px-2 transition-all ${
+                    className={`p-4 rounded-xl border-2 transition-all ${
                       activeTab === type.id
-                        ? "bg-medieval-gold text-medieval-ink"
-                        : "bg-transparent text-medieval-parchment hover:bg-medieval-gold/20"
+                        ? "border-primary-600 bg-primary-50 shadow-lg"
+                        : "border-gray-200 hover:border-gray-300 bg-white"
                     }`}
                   >
-                    {type.icon} {type.name}
+                    <div className="text-3xl mb-2">{type.icon}</div>
+                    <div className={`text-sm font-semibold ${
+                      activeTab === type.id ? "text-primary-700" : "text-gray-700"
+                    }`}>
+                      {type.name}
+                    </div>
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Templates */}
-            <div className="pixel-border bg-black/30 p-6">
-              <h3 className="pixel-text text-lg text-medieval-gold mb-4">
-                📋 Quick Templates
-              </h3>
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Templates</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {templates[activeTab].map((template, index) => (
                   <button
                     key={index}
                     onClick={() => setPrompt(template)}
-                    className="pixel-border bg-medieval-stone/20 hover:bg-medieval-stone/30 p-3 text-left transition-all"
+                    className="p-4 rounded-lg border border-gray-200 hover:border-primary-300 hover:bg-primary-50 text-left transition-all group"
                   >
-                    <span className="font-pixel text-sm text-medieval-parchment">
+                    <span className="text-sm text-gray-700 group-hover:text-primary-700">
                       {template}
                     </span>
                   </button>
@@ -162,27 +170,37 @@ export default function Dashboard() {
             </div>
 
             {/* Input Area */}
-            <div className="pixel-border bg-black/30 p-6">
-              <label className="pixel-text text-sm text-medieval-gold mb-3 block">
-                🖋️ Describe Your Quest
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+              <label className="text-lg font-semibold text-gray-900 mb-3 block">
+                What do you want to create?
               </label>
               <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Tell the AI what content you need... (e.g., 'Create a social media post announcing our new product launch with medieval theme')"
-                className="w-full pixel-border bg-medieval-ink/50 text-medieval-parchment font-pixel text-lg p-4 h-32 resize-none focus:outline-none focus:border-medieval-gold"
+                placeholder="Describe what you need... (e.g., 'Create a social media post announcing our new product launch')"
+                className="w-full bg-gray-50 text-gray-900 rounded-lg p-4 h-32 resize-none focus:outline-none focus:ring-2 focus:ring-primary-500 border border-gray-200"
               />
               <div className="flex gap-3 mt-4">
                 <button
                   onClick={handleGenerate}
                   disabled={isGenerating || !prompt.trim()}
-                  className="pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-6 py-3 pixel-text text-sm hover:bg-medieval-bronze transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-primary-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary-600/30"
                 >
-                  {isGenerating ? "🔮 Crafting..." : "⚡ Generate"}
+                  {isGenerating ? (
+                    <span className="flex items-center gap-2">
+                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      Generating...
+                    </span>
+                  ) : (
+                    "✨ Generate Content"
+                  )}
                 </button>
                 <button
                   onClick={() => setPrompt("")}
-                  className="pixel-border bg-transparent text-medieval-parchment px-6 py-3 pixel-text text-sm hover:bg-medieval-parchment/10"
+                  className="bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-all"
                 >
                   Clear
                 </button>
@@ -191,48 +209,55 @@ export default function Dashboard() {
 
             {/* Generated Content */}
             {generatedContent && (
-              <div className="pixel-border medieval-shadow bg-medieval-gold/10 p-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-gradient-to-br from-primary-50 to-white rounded-2xl border border-primary-200 p-6 shadow-xl"
+              >
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="pixel-text text-lg text-medieval-gold">
-                    ✨ Generated Content
+                  <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                    <span className="text-2xl">✨</span>
+                    Generated Content
                   </h3>
                   <button
-                    onClick={() => copyToClipboard(generatedContent.content)}
-                    className="pixel-border bg-medieval-gold text-medieval-ink px-4 py-2 pixel-text text-xs hover:bg-medieval-bronze"
+                    onClick={() => {
+                      copyToClipboard(generatedContent.content);
+                      alert("Copied to clipboard!");
+                    }}
+                    className="bg-primary-600 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-primary-700 flex items-center gap-2"
                   >
-                    📋 Copy
+                    <span>📋</span>
+                    Copy
                   </button>
                 </div>
-                <div className="pixel-border bg-medieval-ink/50 p-4">
-                  <p className="font-pixel text-lg text-medieval-parchment whitespace-pre-wrap">
+                <div className="bg-white rounded-lg p-6 border border-gray-200">
+                  <p className="text-gray-800 whitespace-pre-wrap leading-relaxed">
                     {generatedContent.content}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             )}
           </div>
 
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Stats */}
-            <div className="pixel-border bg-medieval-stone/10 p-6">
-              <h3 className="pixel-text text-lg text-medieval-gold mb-4">
-                📊 Your Stats
-              </h3>
-              <div className="space-y-3">
-                <div className="pixel-border bg-black/30 p-3">
-                  <div className="font-pixel text-sm text-medieval-stone mb-1">
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Stats</h3>
+              <div className="space-y-4">
+                <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
+                  <div className="text-sm text-blue-700 mb-1 font-medium">
                     Content Created
                   </div>
-                  <div className="pixel-text text-2xl text-medieval-parchment">
+                  <div className="text-3xl font-bold text-blue-900">
                     {history.length}
                   </div>
                 </div>
-                <div className="pixel-border bg-black/30 p-3">
-                  <div className="font-pixel text-sm text-medieval-stone mb-1">
+                <div className="bg-gradient-to-br from-primary-50 to-primary-100 rounded-lg p-4">
+                  <div className="text-sm text-primary-700 mb-1 font-medium">
                     Credits Remaining
                   </div>
-                  <div className="pixel-text text-2xl text-medieval-gold">
+                  <div className="text-3xl font-bold text-primary-900">
                     42/50
                   </div>
                 </div>
@@ -240,51 +265,45 @@ export default function Dashboard() {
             </div>
 
             {/* Recent History */}
-            <div className="pixel-border bg-medieval-stone/10 p-6">
-              <h3 className="pixel-text text-lg text-medieval-gold mb-4">
-                📜 Recent Scrolls
-              </h3>
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent History</h3>
               <div className="space-y-3">
                 {history.slice(0, 5).map((item, index) => (
                   <button
                     key={index}
                     onClick={() => setGeneratedContent(item)}
-                    className="w-full pixel-border bg-black/30 hover:bg-black/50 p-3 text-left transition-all"
+                    className="w-full bg-gray-50 hover:bg-gray-100 rounded-lg p-3 text-left transition-all border border-gray-200"
                   >
                     <div className="flex items-center gap-2 mb-1">
-                      <span>
-                        {contentTypes.find((t) => t.id === item.type)?.icon}
-                      </span>
-                      <span className="pixel-text text-xs text-medieval-gold">
+                      <span className={`w-2 h-2 rounded-full ${getTypeColor(item.type)}`} />
+                      <span className="text-sm font-semibold text-gray-900">
                         {contentTypes.find((t) => t.id === item.type)?.name}
                       </span>
                     </div>
-                    <div className="font-pixel text-xs text-medieval-stone">
-                      {new Date(item.timestamp).toLocaleTimeString()}
+                    <div className="text-xs text-gray-500">
+                      {new Date(item.timestamp).toLocaleString()}
                     </div>
                   </button>
                 ))}
                 {history.length === 0 && (
-                  <div className="font-pixel text-sm text-medieval-stone text-center py-4">
-                    No content yet. Start your quest!
+                  <div className="text-sm text-gray-500 text-center py-8 bg-gray-50 rounded-lg">
+                    No content generated yet
                   </div>
                 )}
               </div>
             </div>
 
             {/* Quick Actions */}
-            <div className="pixel-border bg-medieval-gold/10 p-6">
-              <h3 className="pixel-text text-sm text-medieval-gold mb-4">
-                ⚡ Quick Actions
-              </h3>
+            <div className="bg-gradient-to-br from-primary-50 to-white rounded-2xl border border-primary-200 p-6">
+              <h3 className="text-sm font-semibold text-gray-900 mb-4">Quick Actions</h3>
               <div className="space-y-2">
-                <button className="w-full pixel-border bg-transparent hover:bg-medieval-parchment/10 text-medieval-parchment px-4 py-2 pixel-text text-xs">
+                <button className="w-full bg-white hover:bg-gray-50 text-gray-700 px-4 py-3 rounded-lg text-sm font-medium border border-gray-200 transition-all">
                   🎨 Brand Settings
                 </button>
-                <button className="w-full pixel-border bg-transparent hover:bg-medieval-parchment/10 text-medieval-parchment px-4 py-2 pixel-text text-xs">
+                <button className="w-full bg-white hover:bg-gray-50 text-gray-700 px-4 py-3 rounded-lg text-sm font-medium border border-gray-200 transition-all">
                   📅 Schedule Post
                 </button>
-                <button className="w-full pixel-border bg-transparent hover:bg-medieval-parchment/10 text-medieval-parchment px-4 py-2 pixel-text text-xs">
+                <button className="w-full bg-white hover:bg-gray-50 text-gray-700 px-4 py-3 rounded-lg text-sm font-medium border border-gray-200 transition-all">
                   📈 View Analytics
                 </button>
               </div>
