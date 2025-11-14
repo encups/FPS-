@@ -93,7 +93,13 @@ export default function Home() {
               <span className="text-3xl">🏰</span>
               <h1 className="pixel-text text-xl text-medieval-gold">Frame Fables</h1>
             </div>
-            <div className="flex gap-4">
+            <div className="flex gap-4 items-center">
+              <Link
+                href="/dungeon/menu"
+                className="pixel-text text-xs text-medieval-gold hover:text-medieval-bronze transition-colors flex items-center gap-1"
+              >
+                ⚔️ Play Game
+              </Link>
               <Link
                 href="/login"
                 className="pixel-text text-sm text-medieval-parchment hover:text-medieval-gold transition-colors"
