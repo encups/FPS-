@@ -2,9 +2,37 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
+
+// Dynamically import 3D scene to avoid SSR issues
+const HeroScene = dynamic(() => import("@/components/3d/HeroScene"), {
+  ssr: false,
+});
 
 export default function Home() {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+
+  // Animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 60 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  const fadeIn = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
 
   const features = [
     {
@@ -84,9 +112,17 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-medieval-ink via-gray-900 to-medieval-forest">
+    <div className="min-h-screen bg-gradient-to-b from-medieval-ink via-gray-900 to-medieval-forest relative overflow-hidden">
+      {/* 3D Background Scene */}
+      <HeroScene />
+
       {/* Hero Section */}
-      <nav className="border-b-4 border-medieval-gold bg-black/50 backdrop-blur">
+      <motion.nav
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="border-b-4 border-medieval-gold bg-black/50 backdrop-blur relative z-10"
+      >
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -109,65 +145,118 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
-      <main>
+      <main className="relative z-10">
         {/* Hero */}
-        <section className="container mx-auto px-4 py-20 text-center">
-          <div className="mb-8">
+        <motion.section
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+          className="container mx-auto px-4 py-20 text-center"
+        >
+          <motion.div variants={fadeInUp} transition={{ duration: 0.6 }} className="mb-8">
             <div className="inline-block pixel-border bg-medieval-gold/10 px-4 py-2 mb-6">
               <span className="pixel-text text-sm text-medieval-gold">
                 ⚡ AI-Powered Marketing Magic ⚡
               </span>
             </div>
-          </div>
-          <h2 className="pixel-text text-4xl md:text-6xl text-medieval-gold mb-6 leading-relaxed">
+          </motion.div>
+          <motion.h2
+            variants={fadeInUp}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="pixel-text text-4xl md:text-6xl text-medieval-gold mb-6 leading-relaxed"
+          >
             Conquer Your Market
             <br />
             <span className="text-medieval-parchment">One Fable at a Time</span>
-          </h2>
-          <p className="font-pixel text-2xl text-medieval-stone max-w-3xl mx-auto mb-12 leading-relaxed">
+          </motion.h2>
+          <motion.p
+            variants={fadeInUp}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="font-pixel text-2xl text-medieval-stone max-w-3xl mx-auto mb-12 leading-relaxed"
+          >
             Automated AI marketing tools for small businesses, wrapped in medieval charm.
             Generate content, run campaigns, and grow your kingdom... err, business!
-          </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <button className="pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-8 py-4 pixel-text text-sm hover:bg-medieval-bronze transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none">
+          </motion.p>
+          <motion.div
+            variants={fadeInUp}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="flex gap-4 justify-center flex-wrap"
+          >
+            <motion.button
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className="pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-8 py-4 pixel-text text-sm hover:bg-medieval-bronze transition-all"
+            >
               🗡️ Start Your Quest
-            </button>
-            <button className="pixel-border medieval-shadow bg-transparent text-medieval-parchment px-8 py-4 pixel-text text-sm hover:bg-medieval-parchment/10 transition-all">
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="pixel-border medieval-shadow bg-transparent text-medieval-parchment px-8 py-4 pixel-text text-sm hover:bg-medieval-parchment/10 transition-all"
+            >
               📖 View Demo
-            </button>
-          </div>
-        </section>
+            </motion.button>
+          </motion.div>
+        </motion.section>
 
         {/* Features */}
-        <section className="container mx-auto px-4 py-20">
-          <h3 className="pixel-text text-3xl text-center text-medieval-gold mb-16">
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={staggerContainer}
+          className="container mx-auto px-4 py-20"
+        >
+          <motion.h3
+            variants={fadeInUp}
+            className="pixel-text text-3xl text-center text-medieval-gold mb-16"
+          >
             ⚔️ Your Marketing Arsenal ⚔️
-          </h3>
+          </motion.h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="pixel-border medieval-shadow bg-medieval-stone/10 p-6 hover:bg-medieval-stone/20 transition-all hover:translate-x-2 hover:translate-y-2 hover:shadow-none"
+                variants={fadeInUp}
+                whileHover={{ scale: 1.05, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="pixel-border medieval-shadow bg-medieval-stone/10 p-6 hover:bg-medieval-stone/20 transition-all cursor-pointer"
               >
-                <div className="text-5xl mb-4">{feature.icon}</div>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ delay: index * 0.1, type: "spring", stiffness: 200 }}
+                  className="text-5xl mb-4"
+                >
+                  {feature.icon}
+                </motion.div>
                 <h4 className="pixel-text text-lg text-medieval-gold mb-3">
                   {feature.title}
                 </h4>
                 <p className="font-pixel text-xl text-medieval-parchment">
                   {feature.description}
                 </p>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
         {/* How It Works */}
-        <section className="container mx-auto px-4 py-20">
-          <h3 className="pixel-text text-3xl text-center text-medieval-gold mb-16">
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={staggerContainer}
+          className="container mx-auto px-4 py-20"
+        >
+          <motion.h3
+            variants={fadeInUp}
+            className="pixel-text text-3xl text-center text-medieval-gold mb-16"
+          >
             🗺️ The Quest Begins 🗺️
-          </h3>
+          </motion.h3>
           <div className="max-w-4xl mx-auto space-y-8">
             {[
               {
@@ -191,13 +280,19 @@ export default function Home() {
                 desc: "Deploy campaigns and watch results",
               },
             ].map((item, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="flex items-start gap-6 pixel-border bg-black/30 p-6"
+                variants={fadeInUp}
+                whileHover={{ x: 10 }}
+                className="flex items-start gap-6 pixel-border bg-black/30 p-6 cursor-pointer"
               >
-                <div className="pixel-border bg-medieval-gold text-medieval-ink w-16 h-16 flex items-center justify-center flex-shrink-0">
+                <motion.div
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.6 }}
+                  className="pixel-border bg-medieval-gold text-medieval-ink w-16 h-16 flex items-center justify-center flex-shrink-0"
+                >
                   <span className="pixel-text text-2xl">{item.step}</span>
-                </div>
+                </motion.div>
                 <div>
                   <h4 className="pixel-text text-xl text-medieval-gold mb-2">
                     {item.title}
@@ -206,33 +301,58 @@ export default function Home() {
                     {item.desc}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
         {/* Pricing */}
-        <section className="container mx-auto px-4 py-20">
-          <h3 className="pixel-text text-3xl text-center text-medieval-gold mb-4">
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={staggerContainer}
+          className="container mx-auto px-4 py-20"
+        >
+          <motion.h3
+            variants={fadeInUp}
+            className="pixel-text text-3xl text-center text-medieval-gold mb-4"
+          >
             💰 Choose Your Path 💰
-          </h3>
-          <p className="font-pixel text-xl text-center text-medieval-stone mb-16">
+          </motion.h3>
+          <motion.p
+            variants={fadeInUp}
+            className="font-pixel text-xl text-center text-medieval-stone mb-16"
+          >
             All plans include 7-day free trial. Cancel anytime.
-          </p>
+          </motion.p>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {pricingPlans.map((plan, index) => (
-              <div
+              <motion.div
                 key={index}
-                className={`pixel-border medieval-shadow p-8 transition-all hover:translate-x-2 hover:translate-y-2 hover:shadow-none ${
+                variants={fadeInUp}
+                whileHover={{
+                  scale: 1.05,
+                  rotateY: 5,
+                  z: 50,
+                }}
+                transition={{ duration: 0.3 }}
+                style={{ transformStyle: "preserve-3d" }}
+                className={`pixel-border medieval-shadow p-8 transition-all cursor-pointer ${
                   plan.popular
                     ? "bg-medieval-gold/20 border-medieval-gold"
                     : "bg-medieval-stone/10"
                 }`}
               >
                 {plan.popular && (
-                  <div className="pixel-border bg-medieval-gold text-medieval-ink px-4 py-2 mb-4 text-center">
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="pixel-border bg-medieval-gold text-medieval-ink px-4 py-2 mb-4 text-center"
+                  >
                     <span className="pixel-text text-xs">⭐ MOST POPULAR ⭐</span>
-                  </div>
+                  </motion.div>
                 )}
                 <h4 className="pixel-text text-2xl text-medieval-gold mb-4">
                   {plan.name}
@@ -247,57 +367,105 @@ export default function Home() {
                 </div>
                 <ul className="space-y-4 mb-8">
                   {plan.features.map((feature, idx) => (
-                    <li
+                    <motion.li
                       key={idx}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.1 }}
                       className="font-pixel text-lg text-medieval-parchment flex items-start gap-2"
                     >
                       <span className="text-medieval-gold">✓</span>
                       <span>{feature}</span>
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
-                <button
+                <motion.button
                   onClick={() => setSelectedPlan(plan.name)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   className="w-full pixel-border bg-medieval-gold text-medieval-ink px-6 py-3 pixel-text text-sm hover:bg-medieval-bronze transition-colors"
                 >
                   {plan.cta}
-                </button>
-              </div>
+                </motion.button>
+              </motion.div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
         {/* CTA */}
-        <section className="container mx-auto px-4 py-20">
-          <div className="pixel-border medieval-shadow bg-gradient-to-r from-medieval-gold/20 to-medieval-bronze/20 p-12 text-center max-w-4xl mx-auto">
-            <h3 className="pixel-text text-3xl text-medieval-gold mb-6">
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeIn}
+          className="container mx-auto px-4 py-20"
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="pixel-border medieval-shadow bg-gradient-to-r from-medieval-gold/20 to-medieval-bronze/20 p-12 text-center max-w-4xl mx-auto"
+          >
+            <motion.h3
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="pixel-text text-3xl text-medieval-gold mb-6"
+            >
               🏰 Ready to Build Your Empire? 🏰
-            </h3>
-            <p className="font-pixel text-2xl text-medieval-parchment mb-8">
+            </motion.h3>
+            <motion.p
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="font-pixel text-2xl text-medieval-parchment mb-8"
+            >
               Join thousands of small businesses conquering their markets with AI
-            </p>
-            <button className="pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-10 py-4 pixel-text text-sm hover:bg-medieval-bronze transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none">
+            </motion.p>
+            <motion.button
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              whileHover={{ scale: 1.1, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ delay: 0.6 }}
+              className="pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-10 py-4 pixel-text text-sm hover:bg-medieval-bronze transition-all"
+            >
               Start Free Trial
-            </button>
-            <p className="font-pixel text-lg text-medieval-stone mt-4">
+            </motion.button>
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+              className="font-pixel text-lg text-medieval-stone mt-4"
+            >
               No credit card required • 7-day free trial
-            </p>
-          </div>
-        </section>
+            </motion.p>
+          </motion.div>
+        </motion.section>
       </main>
 
       {/* Footer */}
-      <footer className="border-t-4 border-medieval-gold bg-black/50 py-12">
+      <motion.footer
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="border-t-4 border-medieval-gold bg-black/50 py-12 relative z-10"
+      >
         <div className="container mx-auto px-4 text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
+          <motion.div
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 200 }}
+            className="flex items-center justify-center gap-2 mb-4"
+          >
             <span className="text-3xl">🏰</span>
             <span className="pixel-text text-xl text-medieval-gold">Frame Fables</span>
-          </div>
+          </motion.div>
           <p className="font-pixel text-lg text-medieval-stone">
             © 2024 Frame Fables. All rights reserved to the realm.
           </p>
         </div>
-      </footer>
+      </motion.footer>
     </div>
   );
 }
