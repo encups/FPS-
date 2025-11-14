@@ -11,39 +11,51 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          // Primary Brand Colors (Modern with subtle fantasy)
-          primary: "#6366F1", // Indigo - primary actions
-          secondary: "#8B5CF6", // Purple - mystical/creative
-          accent: "#F59E0B", // Amber - storytelling warmth
+          // Royal Fantasy Palette
+          gold: "#D4AF37", // Ancient gold
+          goldLight: "#F4E5B8", // Light gold shimmer
+          goldDark: "#9A7B2F", // Deep gold
 
-          // Neutral Modern Palette
-          dark: "#0F172A", // Deep navy-black
-          darker: "#020617", // Deepest
-          light: "#F8FAFC", // Off-white
-          gray: {
-            50: "#F9FAFB",
-            100: "#F3F4F6",
-            200: "#E5E7EB",
-            300: "#D1D5DB",
-            400: "#9CA3AF",
-            500: "#6B7280",
-            600: "#4B5563",
-            700: "#374151",
-            800: "#1F2937",
-            900: "#111827",
+          purple: "#6B46C1", // Royal purple
+          purpleLight: "#9F7AEA", // Light mystical purple
+          purpleDark: "#44337A", // Deep mystical purple
+
+          teal: "#2D7A8E", // Mystical teal
+          tealLight: "#4FB3C8", // Light magical teal
+          tealDark: "#1A5566", // Deep ocean teal
+
+          // Parchment & Neutrals
+          parchment: "#F5E6D3", // Old paper
+          parchmentDark: "#D4C4A8", // Aged parchment
+          scroll: "#EAD8C0", // Scroll color
+
+          dark: "#1A1625", // Deep mystical night
+          darker: "#0D0B14", // Deepest void
+          light: "#FFF8F0", // Warm light
+
+          // Magic Effects
+          magic: {
+            blue: "#4A90E2", // Arcane blue
+            violet: "#9B59B6", // Spell violet
+            gold: "#FFD700", // Divine gold
+            emerald: "#50C878", // Nature emerald
           },
 
-          // Gradient Accents
+          // Gradient for mystical effects
           gradient: {
-            from: "#6366F1",
-            via: "#8B5CF6",
-            to: "#EC4899",
+            from: "#D4AF37", // Gold
+            via: "#6B46C1", // Purple
+            to: "#2D7A8E", // Teal
           },
         },
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Cal Sans", "Inter", "sans-serif"],
+        display: ["Cinzel", "serif"],
+        serif: ["Lora", "Georgia", "serif"],
+      },
+      backgroundImage: {
+        'parchment-texture': "url(\"data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E\")",
       },
     },
   },
