@@ -2,255 +2,172 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
-
-// Dynamically import 3D scene to avoid SSR issues
-const HeroScene = dynamic(() => import("@/components/3d/HeroScene"), {
-  ssr: false,
-});
 
 export default function Home() {
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0 },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-medieval-ink via-gray-900 to-medieval-forest relative overflow-hidden">
-      {/* 3D Background Scene */}
-      <HeroScene />
+    <div className="min-h-screen bg-white">
+      {/* Clean Navigation */}
+      <nav className="border-b border-gray-100 bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link href="/" className="text-2xl font-bold text-gray-900">
+            Frame Fables
+          </Link>
+          <div className="hidden md:flex items-center gap-8">
+            <Link href="/features" className="text-gray-600 hover:text-gray-900 font-medium">
+              Features
+            </Link>
+            <Link href="/examples" className="text-gray-600 hover:text-gray-900 font-medium">
+              Examples
+            </Link>
+            <Link href="/pricing" className="text-gray-600 hover:text-gray-900 font-medium">
+              Pricing
+            </Link>
+            <Link href="/customers" className="text-gray-600 hover:text-gray-900 font-medium">
+              Customers
+            </Link>
+          </div>
+          <div className="flex items-center gap-4">
+            <Link href="/login" className="text-gray-600 hover:text-gray-900 font-medium">
+              Sign in
+            </Link>
+            <Link href="/signup" className="btn-primary">
+              Start Free Trial
+            </Link>
+          </div>
+        </div>
+      </nav>
 
-      <Navigation />
-
-      <main className="relative z-10 pt-20">
+      <main className="pt-24">
         {/* Hero Section */}
-        <motion.section
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-          className="container mx-auto px-4 py-32 text-center min-h-[80vh] flex flex-col justify-center"
-        >
-          <motion.div variants={fadeInUp} transition={{ duration: 0.6 }} className="mb-8">
-            <div className="inline-block pixel-border bg-medieval-gold/10 px-4 py-2 mb-6">
-              <span className="pixel-text text-sm text-medieval-gold">
-                ⚡ AI-Powered Marketing Magic ⚡
-              </span>
-            </div>
-          </motion.div>
-          <motion.h1
-            variants={fadeInUp}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="pixel-text text-5xl md:text-7xl text-medieval-gold mb-6 leading-relaxed"
-          >
-            AI Marketing Content
-            <br />
-            <span className="text-medieval-parchment">In Seconds, Not Hours</span>
-          </motion.h1>
-          <motion.p
-            variants={fadeInUp}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="font-pixel text-2xl md:text-3xl text-medieval-stone max-w-4xl mx-auto mb-12 leading-relaxed"
-          >
-            Generate professional social posts, emails, and ads instantly. Save 15+ hours/week on content creation.
-          </motion.p>
+        <section className="max-w-7xl mx-auto px-6 py-24 text-center">
           <motion.div
-            variants={fadeInUp}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="flex gap-4 justify-center flex-wrap"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-4xl mx-auto"
           >
-            <motion.div whileHover={{ scale: 1.05, y: -5 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href="/signup"
-                className="pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-10 py-5 pixel-text text-base hover:bg-medieval-bronze transition-all inline-block"
-              >
-                ⚡ Start Free Trial
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href="/examples"
-                className="pixel-border medieval-shadow bg-transparent text-medieval-parchment px-10 py-5 pixel-text text-base hover:bg-medieval-parchment/10 transition-all inline-block"
-              >
-                📖 See Examples
-              </Link>
-            </motion.div>
-          </motion.div>
-          <motion.p
-            variants={fadeInUp}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="font-pixel text-base text-medieval-stone mt-8"
-          >
-            No credit card required • 7-day free trial • Cancel anytime
-          </motion.p>
-        </motion.section>
+            <div className="inline-flex items-center gap-2 bg-primary-50 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold mb-8">
+              <span className="w-2 h-2 bg-primary-500 rounded-full animate-pulse"></span>
+              Trusted by 1,247+ businesses
+            </div>
 
-        {/* Quick Stats */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={staggerContainer}
-          className="bg-medieval-parchment-light py-16 relative z-10"
-        >
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+            <h1 className="text-6xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+              Create Marketing Content
+              <br />
+              <span className="text-primary-600">10x Faster with AI</span>
+            </h1>
+
+            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+              Generate professional social posts, emails, and ads in seconds. Save 15+ hours per week and never face writer&apos;s block again.
+            </p>
+
+            <div className="flex gap-4 justify-center items-center flex-wrap">
+              <Link href="/signup" className="btn-primary">
+                Start Free Trial →
+              </Link>
+              <Link href="/examples" className="btn-secondary">
+                See Examples
+              </Link>
+            </div>
+
+            <p className="text-sm text-gray-500 mt-6">
+              No credit card required • 7-day free trial • Cancel anytime
+            </p>
+          </motion.div>
+
+          {/* Social Proof Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto mt-24">
+            {[
+              { stat: "1,247+", label: "Active Users" },
+              { stat: "50,000+", label: "Posts Generated" },
+              { stat: "15hrs", label: "Saved Per Week" },
+              { stat: "4.9★", label: "Customer Rating" },
+            ].map((item, i) => (
+              <div key={i} className="text-center">
+                <div className="text-4xl font-bold text-gray-900 mb-1">{item.stat}</div>
+                <div className="text-sm text-gray-600">{item.label}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Benefits Section */}
+        <section className="bg-gray-50 py-24">
+          <div className="max-w-7xl mx-auto px-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-16">
+              Everything you need to scale your marketing
+            </h2>
+            <div className="grid md:grid-cols-3 gap-8">
               {[
-                { number: "1,247+", label: "Active Businesses" },
-                { number: "50,000+", label: "Posts Generated" },
-                { number: "15hrs", label: "Avg. Time Saved/Week" },
-                { number: "4.9/5", label: "Customer Rating" },
-              ].map((stat, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ scale: 0.5, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: index * 0.1, type: "spring" }}
-                  className="text-center"
-                >
-                  <div className="pixel-text text-4xl md:text-5xl text-medieval-gold mb-2">
-                    {stat.number}
-                  </div>
-                  <div className="font-pixel text-lg text-medieval-ink">
-                    {stat.label}
-                  </div>
-                </motion.div>
+                {
+                  title: "AI-Powered Content",
+                  desc: "Generate professional social posts, emails, and ads instantly with GPT-4.",
+                  icon: "⚡",
+                },
+                {
+                  title: "Save Time & Money",
+                  desc: "15+ hours saved per week. Replace expensive copywriters and agencies.",
+                  icon: "💰",
+                },
+                {
+                  title: "Always On-Brand",
+                  desc: "AI learns your brand voice and maintains consistency across all content.",
+                  icon: "🎯",
+                },
+              ].map((feature, i) => (
+                <div key={i} className="card text-center">
+                  <div className="text-5xl mb-4">{feature.icon}</div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
+                  <p className="text-gray-600 leading-relaxed">{feature.desc}</p>
+                </div>
               ))}
             </div>
           </div>
-        </motion.section>
+        </section>
 
-        {/* Value Propositions - Quick Links */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={staggerContainer}
-          className="container mx-auto px-4 py-20"
-        >
-          <motion.h2
-            variants={fadeInUp}
-            className="pixel-text text-4xl text-center text-medieval-gold mb-16"
-          >
-            Everything You Need to Market Smarter
-          </motion.h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              {
-                icon: "⚔️",
-                title: "Powerful Features",
-                desc: "Social media, emails, ads, blogs - all your content needs in one platform",
-                link: "/features",
-                cta: "Explore Features",
-              },
-              {
-                icon: "📖",
-                title: "See It In Action",
-                desc: "Real examples of AI-generated content that actually works",
-                link: "/examples",
-                cta: "View Examples",
-              },
-              {
-                icon: "💰",
-                title: "Simple Pricing",
-                desc: "Plans for every business size. Start free, upgrade when you're ready",
-                link: "/pricing",
-                cta: "View Pricing",
-              },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                whileHover={{ scale: 1.05, y: -10 }}
-                className="pixel-border medieval-shadow bg-medieval-stone/10 p-8 hover:bg-medieval-stone/20 transition-all"
-              >
-                <div className="text-6xl mb-6">{item.icon}</div>
-                <h3 className="pixel-text text-2xl text-medieval-gold mb-4">
-                  {item.title}
-                </h3>
-                <p className="font-pixel text-lg text-medieval-parchment mb-6 leading-relaxed">
-                  {item.desc}
-                </p>
-                <Link
-                  href={item.link}
-                  className="inline-block pixel-border bg-medieval-gold text-medieval-ink px-6 py-3 pixel-text text-sm hover:bg-medieval-bronze transition-colors"
-                >
-                  {item.cta} →
-                </Link>
-              </motion.div>
-            ))}
+        {/* Testimonial */}
+        <section className="py-24">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <div className="text-5xl mb-4">⭐⭐⭐⭐⭐</div>
+            <blockquote className="text-2xl md:text-3xl font-medium text-gray-900 mb-6">
+              &ldquo;Frame Fables saved me 15 hours a week. Sales are up 34% and I finally have time to focus on my business instead of social media.&rdquo;
+            </blockquote>
+            <div className="flex items-center justify-center gap-4">
+              <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-2xl">
+                👩‍💼
+              </div>
+              <div className="text-left">
+                <div className="font-semibold text-gray-900">Sarah Chen</div>
+                <div className="text-sm text-gray-600">Owner, Chen&apos;s Bakery</div>
+              </div>
+            </div>
           </div>
-        </motion.section>
+        </section>
 
-        {/* Social Proof Highlight */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={staggerContainer}
-          className="bg-medieval-cream py-20 relative z-10"
-        >
-          <div className="container mx-auto px-4 text-center">
-            <motion.div variants={fadeInUp} className="mb-8">
-              <div className="text-5xl mb-4">⭐⭐⭐⭐⭐</div>
-              <p className="font-pixel text-2xl text-medieval-ink mb-2">
-                4.9/5 from 1,247 reviews
-              </p>
-              <p className="font-pixel text-lg text-medieval-stone-dark">
-                See why businesses love Frame Fables
-              </p>
-            </motion.div>
-            <motion.div variants={fadeInUp} className="mt-8">
-              <Link
-                href="/customers"
-                className="inline-block pixel-border bg-medieval-gold text-medieval-ink px-8 py-4 pixel-text text-sm hover:bg-medieval-bronze transition-colors"
-              >
-                Read Customer Stories →
-              </Link>
-            </motion.div>
-          </div>
-        </motion.section>
-
-        {/* Final CTA */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className="container mx-auto px-4 py-20"
-        >
-          <div className="pixel-border medieval-shadow bg-gradient-to-r from-medieval-gold/20 to-medieval-bronze/20 p-12 md:p-16 text-center max-w-4xl mx-auto">
-            <h3 className="pixel-text text-4xl text-medieval-gold mb-6">
-              Ready to Save 15+ Hours Per Week?
-            </h3>
-            <p className="font-pixel text-2xl text-medieval-parchment mb-8">
-              Join 1,247+ businesses using AI to create better marketing content faster
+        {/* CTA Section */}
+        <section className="bg-primary-600 py-24">
+          <div className="max-w-4xl mx-auto px-6 text-center text-white">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Ready to save 15+ hours per week?
+            </h2>
+            <p className="text-xl mb-8 opacity-90">
+              Join 1,247+ businesses creating better content faster
             </p>
-            <Link
-              href="/signup"
-              className="inline-block pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-12 py-5 pixel-text text-base hover:bg-medieval-bronze transition-all"
-            >
-              Start Free Trial
+            <Link href="/signup" className="inline-block bg-white text-primary-600 px-12 py-5 rounded-lg font-bold text-lg hover:bg-gray-50 transition-colors shadow-2xl">
+              Start Free Trial →
             </Link>
-            <p className="font-pixel text-base text-medieval-stone mt-6">
+            <p className="text-sm mt-6 opacity-75">
               No credit card required • 7-day free trial
             </p>
           </div>
-        </motion.section>
-      </main>
+        </section>
 
-      <Footer />
+        {/* Footer */}
+        <footer className="bg-gray-50 border-t border-gray-100 py-12">
+          <div className="max-w-7xl mx-auto px-6 text-center text-gray-600">
+            <p>© 2024 Frame Fables. All rights reserved.</p>
+          </div>
+        </footer>
+      </main>
     </div>
   );
 }

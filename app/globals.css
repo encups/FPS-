@@ -1,44 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --medieval-gold: 41 73 55%;
-    --medieval-bronze: 30 62 50%;
-    --medieval-stone: 40 7 54%;
-    --medieval-parchment: 40 43 94%;
-    --medieval-ink: 34 29 14%;
+  * {
+    @apply antialiased;
   }
-
   body {
-    @apply bg-medieval-ink text-medieval-parchment;
-    image-rendering: pixelated;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: crisp-edges;
+    @apply bg-white text-gray-900 font-sans;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-primary-700 transition-all shadow-lg shadow-primary-600/30 text-lg;
+  }
+  .btn-secondary {
+    @apply bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-all border-2 border-gray-200 text-lg;
+  }
+  .card {
+    @apply bg-white rounded-2xl border border-gray-100 p-8 hover:shadow-2xl hover:border-primary-100 transition-all;
   }
 }
 
 @layer utilities {
-  .pixel-border {
-    border: 4px solid;
-    border-image: repeating-linear-gradient(
-      90deg,
-      #D4AF37 0,
-      #D4AF37 4px,
-      transparent 4px,
-      transparent 8px
-    ) 4;
-  }
-
-  .medieval-shadow {
-    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.5);
-  }
-
-  .pixel-text {
-    font-family: 'Press Start 2P', cursive;
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+  .text-balance {
+    text-wrap: balance;
   }
 }

@@ -10,22 +10,28 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        medieval: {
-          gold: "#D4AF37",
-          bronze: "#CD7F32",
-          stone: "#8B8680",
-          parchment: "#F0E5D8",
-          "parchment-light": "#FAF7F2",
-          cream: "#FFFEF9",
-          ink: "#2C2416",
-          forest: "#2D5016",
-          blood: "#8B0000",
-          "stone-dark": "#5A5855",
+        primary: {
+          50: "#f0f9ff",
+          100: "#e0f2fe",
+          200: "#bae6fd",
+          300: "#7dd3fc",
+          400: "#38bdf8",
+          500: "#0ea5e9",
+          600: "#0284c7",
+          700: "#0369a1",
+          800: "#075985",
+          900: "#0c4a6e",
         },
+        accent: {
+          500: "#8b5cf6",
+          600: "#7c3aed",
+        },
+        success: "#10b981",
+        warning: "#f59e0b",
       },
       fontFamily: {
-        medieval: ["Press Start 2P", "cursive"],
-        pixel: ["VT323", "monospace"],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        display: ["Cal Sans", "Inter", "sans-serif"],
       },
     },
   },
