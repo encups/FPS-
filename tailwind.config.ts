@@ -10,42 +10,40 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        medieval: {
-          // Primary Fantasy Colors
-          gold: "#FFD700", // Treasure gold
-          bronze: "#CD7F32", // Armor/copper
-          silver: "#C0C0C0", // Silver items
+        brand: {
+          // Primary Brand Colors (Modern with subtle fantasy)
+          primary: "#6366F1", // Indigo - primary actions
+          secondary: "#8B5CF6", // Purple - mystical/creative
+          accent: "#F59E0B", // Amber - storytelling warmth
 
-          // Dungeon & Castle
-          stone: "#6B7280", // Castle stone walls
-          dungeon: "#1F2937", // Dark dungeon depths
-          ink: "#0F172A", // Darkest black-blue
-          parchment: "#F5E6D3", // Aged paper
+          // Neutral Modern Palette
+          dark: "#0F172A", // Deep navy-black
+          darker: "#020617", // Deepest
+          light: "#F8FAFC", // Off-white
+          gray: {
+            50: "#F9FAFB",
+            100: "#F3F4F6",
+            200: "#E5E7EB",
+            300: "#D1D5DB",
+            400: "#9CA3AF",
+            500: "#6B7280",
+            600: "#4B5563",
+            700: "#374151",
+            800: "#1F2937",
+            900: "#111827",
+          },
 
-          // Elemental Magic
-          fire: "#FF6B35", // Torch/fire magic
-          ice: "#3B82F6", // Ice/mana blue
-          poison: "#22C55E", // Poison/goblin green
-          arcane: "#9333EA", // Purple mystical magic
-          lightning: "#FBBF24", // Lightning yellow
-
-          // Combat & Danger
-          blood: "#DC2626", // Blood red
-          danger: "#EF4444", // Danger/warning
-
-          // Nature & Forest
-          forest: "#166534", // Deep forest
-          moss: "#84CC16", // Moss/nature
-
-          // NPCs & Creatures
-          goblin: "#86EFAC", // Goblin skin
-          dragon: "#7C2D12", // Dragon scales
-          undead: "#A78BFA", // Undead purple
+          // Gradient Accents
+          gradient: {
+            from: "#6366F1",
+            via: "#8B5CF6",
+            to: "#EC4899",
+          },
         },
       },
       fontFamily: {
-        medieval: ["Press Start 2P", "cursive"],
-        pixel: ["VT323", "monospace"],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        display: ["Cal Sans", "Inter", "sans-serif"],
       },
     },
   },

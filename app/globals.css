@@ -1,48 +1,63 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --medieval-gold: 41 73 55%;
-    --medieval-bronze: 30 62 50%;
-    --medieval-stone: 40 7 54%;
-    --medieval-parchment: 40 43 94%;
-    --medieval-ink: 34 29 14%;
+  body {
+    @apply bg-brand-darker text-gray-100 antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
   }
 
-  body {
-    @apply bg-medieval-ink text-medieval-parchment;
-    image-rendering: pixelated;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: crisp-edges;
+  .glass-hover {
+    @apply hover:bg-white/10 hover:border-white/20 transition-all duration-300;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-gradient-from via-brand-gradient-via to-brand-gradient-to;
+  }
+
+  .glow {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3), 0 0 60px rgba(139, 92, 246, 0.2);
+  }
+
+  .glow-hover {
+    @apply hover:shadow-[0_0_30px_rgba(99,102,241,0.4),0_0_80px_rgba(139,92,246,0.3)] transition-shadow duration-300;
   }
 }
 
 @layer utilities {
-  .pixel-border {
-    border: 4px solid;
-    border-image: repeating-linear-gradient(
-      90deg,
-      #FFD700 0,
-      #FFD700 4px,
-      transparent 4px,
-      transparent 8px
-    ) 4;
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 8s ease infinite;
   }
 
-  .medieval-shadow {
-    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.5);
+  @keyframes gradient {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
   }
 
-  .pixel-text {
-    font-family: 'Press Start 2P', cursive;
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
   }
 
-  .font-pixel {
-    font-family: 'VT323', monospace;
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
   }
 }

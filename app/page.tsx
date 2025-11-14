@@ -8,67 +8,67 @@ export default function Home() {
 
   const features = [
     {
-      icon: "⚔️",
-      title: "Social Media Quests",
-      description: "Generate epic social media posts that engage your followers",
+      icon: "✨",
+      title: "AI-Powered Content",
+      description: "Generate engaging social media posts, emails, and ad copy in seconds with advanced AI storytelling",
     },
     {
-      icon: "📜",
-      title: "Scroll of Emails",
-      description: "Craft compelling email campaigns with storytelling magic",
-    },
-    {
-      icon: "🏰",
-      title: "Ad Campaign Castle",
-      description: "Build fortress-strong ad copy that converts",
-    },
-    {
-      icon: "🎨",
-      title: "Banner Creation",
-      description: "Design pixel-perfect marketing visuals",
-    },
-    {
-      icon: "📖",
-      title: "Blog Chronicles",
-      description: "Write engaging blog posts with medieval flair",
+      icon: "📊",
+      title: "Campaign Analytics",
+      description: "Track performance with real-time insights and data-driven recommendations",
     },
     {
       icon: "🎯",
-      title: "Strategy Guild",
-      description: "AI-powered marketing strategies for your kingdom",
+      title: "Brand Voice",
+      description: "Maintain consistent brand storytelling across all your marketing channels",
+    },
+    {
+      icon: "⚡",
+      title: "Automation",
+      description: "Schedule and automate your content pipeline for maximum efficiency",
+    },
+    {
+      icon: "🎨",
+      title: "Design Tools",
+      description: "Create stunning visuals and banners with built-in design templates",
+    },
+    {
+      icon: "🔗",
+      title: "Integrations",
+      description: "Connect with your favorite tools and platforms seamlessly",
     },
   ];
 
   const pricingPlans = [
     {
-      name: "Squire",
+      name: "Starter",
       price: "$29",
       period: "/month",
       features: [
         "10 AI-generated posts/month",
         "Basic email campaigns",
-        "Medieval-themed templates",
+        "Standard templates",
         "Community support",
       ],
-      cta: "Start Your Quest",
+      cta: "Get Started",
     },
     {
-      name: "Knight",
+      name: "Professional",
       price: "$79",
       period: "/month",
       popular: true,
       features: [
         "50 AI-generated posts/month",
-        "Advanced email automation",
-        "Custom brand storytelling",
+        "Advanced automation",
+        "Custom brand voice",
         "Priority support",
         "Ad copy generation",
         "Analytics dashboard",
       ],
-      cta: "Join the Order",
+      cta: "Start Free Trial",
     },
     {
-      name: "King",
+      name: "Enterprise",
       price: "$199",
       period: "/month",
       features: [
@@ -77,91 +77,116 @@ export default function Home() {
         "Dedicated account manager",
         "Custom integrations",
         "White-label options",
-        "24/7 Royal support",
+        "24/7 Premium support",
       ],
-      cta: "Rule Your Market",
+      cta: "Contact Sales",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-medieval-ink via-gray-900 to-medieval-forest">
-      {/* Hero Section */}
-      <nav className="border-b-4 border-medieval-gold bg-black/50 backdrop-blur">
+    <div className="min-h-screen bg-gradient-to-b from-brand-darker via-brand-dark to-brand-darker">
+      {/* Animated Background */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-primary/20 rounded-full filter blur-3xl animate-float" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-brand-secondary/20 rounded-full filter blur-3xl animate-float" style={{ animationDelay: '2s' }} />
+      </div>
+
+      {/* Navigation */}
+      <nav className="relative z-10 border-b border-white/10 bg-brand-dark/50 backdrop-blur-xl">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-3xl">🏰</span>
-              <h1 className="pixel-text text-xl text-medieval-gold">Frame Fables</h1>
+              <div className="w-8 h-8 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-lg" />
+              <span className="text-xl font-bold gradient-text">Frame Fables</span>
             </div>
             <div className="flex gap-4 items-center">
               <Link
-                href="/dungeon/menu"
-                className="pixel-text text-xs text-medieval-gold hover:text-medieval-bronze transition-colors flex items-center gap-1"
-              >
-                ⚔️ Play Game
-              </Link>
-              <Link
                 href="/login"
-                className="pixel-text text-sm text-medieval-parchment hover:text-medieval-gold transition-colors"
+                className="text-sm text-gray-300 hover:text-white transition-colors"
               >
-                Login
+                Sign In
               </Link>
               <Link
                 href="/signup"
-                className="pixel-border pixel-text bg-medieval-gold text-medieval-ink px-4 py-2 text-sm hover:bg-medieval-bronze transition-colors"
+                className="bg-brand-primary hover:bg-brand-primary/90 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all glow-hover"
               >
-                Start Free
+                Get Started Free
               </Link>
             </div>
           </div>
         </div>
       </nav>
 
-      <main>
+      <main className="relative z-10">
         {/* Hero */}
-        <section className="container mx-auto px-4 py-20 text-center">
-          <div className="mb-8">
-            <div className="inline-block pixel-border bg-medieval-gold/10 px-4 py-2 mb-6">
-              <span className="pixel-text text-sm text-medieval-gold">
-                ⚡ AI-Powered Marketing Magic ⚡
-              </span>
-            </div>
+        <section className="container mx-auto px-4 py-24 text-center">
+          <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-8">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-primary"></span>
+            </span>
+            <span className="text-sm text-gray-300">AI-Powered Marketing Platform</span>
           </div>
-          <h2 className="pixel-text text-4xl md:text-6xl text-medieval-gold mb-6 leading-relaxed">
-            Conquer Your Market
+
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            <span className="gradient-text">Transform Your Marketing</span>
             <br />
-            <span className="text-medieval-parchment">One Fable at a Time</span>
-          </h2>
-          <p className="font-pixel text-2xl text-medieval-stone max-w-3xl mx-auto mb-12 leading-relaxed">
-            Automated AI marketing tools for small businesses, wrapped in medieval charm.
-            Generate content, run campaigns, and grow your kingdom... err, business!
+            <span className="text-white">With AI Storytelling</span>
+          </h1>
+
+          <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed">
+            Create compelling content, run powerful campaigns, and grow your brand with
+            AI-powered marketing tools designed for modern businesses.
           </p>
+
           <div className="flex gap-4 justify-center flex-wrap">
-            <button className="pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-8 py-4 pixel-text text-sm hover:bg-medieval-bronze transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none">
-              🗡️ Start Your Quest
+            <button className="group bg-brand-primary hover:bg-brand-primary/90 text-white px-8 py-4 rounded-lg font-medium text-lg transition-all glow-hover">
+              Start Free Trial
+              <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform">→</span>
             </button>
-            <button className="pixel-border medieval-shadow bg-transparent text-medieval-parchment px-8 py-4 pixel-text text-sm hover:bg-medieval-parchment/10 transition-all">
-              📖 View Demo
+            <button className="glass glass-hover text-white px-8 py-4 rounded-lg font-medium text-lg">
+              Watch Demo
             </button>
+          </div>
+
+          {/* Social Proof */}
+          <div className="mt-16 flex items-center justify-center gap-8 flex-wrap text-sm text-gray-500">
+            <div>
+              <span className="text-white font-semibold">10,000+</span> Active Users
+            </div>
+            <div>
+              <span className="text-white font-semibold">500K+</span> Posts Generated
+            </div>
+            <div>
+              <span className="text-white font-semibold">4.9/5</span> Rating
+            </div>
           </div>
         </section>
 
         {/* Features */}
-        <section className="container mx-auto px-4 py-20">
-          <h3 className="pixel-text text-3xl text-center text-medieval-gold mb-16">
-            ⚔️ Your Marketing Arsenal ⚔️
-          </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <section className="container mx-auto px-4 py-24">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="gradient-text">Everything You Need</span>
+            </h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Powerful tools to create, manage, and optimize your marketing campaigns
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="pixel-border medieval-shadow bg-medieval-stone/10 p-6 hover:bg-medieval-stone/20 transition-all hover:translate-x-2 hover:translate-y-2 hover:shadow-none"
+                className="glass glass-hover p-8 rounded-2xl group"
               >
-                <div className="text-5xl mb-4">{feature.icon}</div>
-                <h4 className="pixel-text text-lg text-medieval-gold mb-3">
+                <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-3">
                   {feature.title}
-                </h4>
-                <p className="font-pixel text-xl text-medieval-parchment">
+                </h3>
+                <p className="text-gray-400 leading-relaxed">
                   {feature.description}
                 </p>
               </div>
@@ -169,102 +194,63 @@ export default function Home() {
           </div>
         </section>
 
-        {/* How It Works */}
-        <section className="container mx-auto px-4 py-20">
-          <h3 className="pixel-text text-3xl text-center text-medieval-gold mb-16">
-            🗺️ The Quest Begins 🗺️
-          </h3>
-          <div className="max-w-4xl mx-auto space-y-8">
-            {[
-              {
-                step: "1",
-                title: "Enter Your Kingdom",
-                desc: "Tell us about your business and brand",
-              },
-              {
-                step: "2",
-                title: "Choose Your Weapons",
-                desc: "Select marketing tools and templates",
-              },
-              {
-                step: "3",
-                title: "AI Crafts Your Tale",
-                desc: "Our AI generates content in seconds",
-              },
-              {
-                step: "4",
-                title: "Conquer the Market",
-                desc: "Deploy campaigns and watch results",
-              },
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="flex items-start gap-6 pixel-border bg-black/30 p-6"
-              >
-                <div className="pixel-border bg-medieval-gold text-medieval-ink w-16 h-16 flex items-center justify-center flex-shrink-0">
-                  <span className="pixel-text text-2xl">{item.step}</span>
-                </div>
-                <div>
-                  <h4 className="pixel-text text-xl text-medieval-gold mb-2">
-                    {item.title}
-                  </h4>
-                  <p className="font-pixel text-xl text-medieval-parchment">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* Pricing */}
-        <section className="container mx-auto px-4 py-20">
-          <h3 className="pixel-text text-3xl text-center text-medieval-gold mb-4">
-            💰 Choose Your Path 💰
-          </h3>
-          <p className="font-pixel text-xl text-center text-medieval-stone mb-16">
-            All plans include 7-day free trial. Cancel anytime.
-          </p>
+        <section className="container mx-auto px-4 py-24">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="gradient-text">Simple, Transparent Pricing</span>
+            </h2>
+            <p className="text-xl text-gray-400">
+              Choose the perfect plan for your business
+            </p>
+          </div>
+
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {pricingPlans.map((plan, index) => (
               <div
                 key={index}
-                className={`pixel-border medieval-shadow p-8 transition-all hover:translate-x-2 hover:translate-y-2 hover:shadow-none ${
+                className={`glass p-8 rounded-2xl transition-all ${
                   plan.popular
-                    ? "bg-medieval-gold/20 border-medieval-gold"
-                    : "bg-medieval-stone/10"
+                    ? "glow border-brand-primary scale-105"
+                    : "glass-hover"
                 }`}
               >
                 {plan.popular && (
-                  <div className="pixel-border bg-medieval-gold text-medieval-ink px-4 py-2 mb-4 text-center">
-                    <span className="pixel-text text-xs">⭐ MOST POPULAR ⭐</span>
+                  <div className="inline-block bg-brand-primary text-white px-4 py-1 rounded-full text-xs font-medium mb-4">
+                    Most Popular
                   </div>
                 )}
-                <h4 className="pixel-text text-2xl text-medieval-gold mb-4">
+
+                <h3 className="text-2xl font-bold text-white mb-2">
                   {plan.name}
-                </h4>
+                </h3>
+
                 <div className="mb-6">
-                  <span className="pixel-text text-4xl text-medieval-parchment">
+                  <span className="text-5xl font-bold text-white">
                     {plan.price}
                   </span>
-                  <span className="font-pixel text-xl text-medieval-stone">
-                    {plan.period}
-                  </span>
+                  <span className="text-gray-400">{plan.period}</span>
                 </div>
+
                 <ul className="space-y-4 mb-8">
                   {plan.features.map((feature, idx) => (
                     <li
                       key={idx}
-                      className="font-pixel text-lg text-medieval-parchment flex items-start gap-2"
+                      className="text-gray-300 flex items-start gap-3"
                     >
-                      <span className="text-medieval-gold">✓</span>
+                      <span className="text-brand-primary text-xl">✓</span>
                       <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
+
                 <button
                   onClick={() => setSelectedPlan(plan.name)}
-                  className="w-full pixel-border bg-medieval-gold text-medieval-ink px-6 py-3 pixel-text text-sm hover:bg-medieval-bronze transition-colors"
+                  className={`w-full py-3 rounded-lg font-medium transition-all ${
+                    plan.popular
+                      ? "bg-brand-primary hover:bg-brand-primary/90 text-white glow-hover"
+                      : "glass glass-hover text-white"
+                  }`}
                 >
                   {plan.cta}
                 </button>
@@ -274,33 +260,32 @@ export default function Home() {
         </section>
 
         {/* CTA */}
-        <section className="container mx-auto px-4 py-20">
-          <div className="pixel-border medieval-shadow bg-gradient-to-r from-medieval-gold/20 to-medieval-bronze/20 p-12 text-center max-w-4xl mx-auto">
-            <h3 className="pixel-text text-3xl text-medieval-gold mb-6">
-              🏰 Ready to Build Your Empire? 🏰
-            </h3>
-            <p className="font-pixel text-2xl text-medieval-parchment mb-8">
-              Join thousands of small businesses conquering their markets with AI
+        <section className="container mx-auto px-4 py-24">
+          <div className="glass glow p-12 rounded-3xl text-center max-w-4xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="gradient-text">Ready to Transform</span>
+              <br />
+              <span className="text-white">Your Marketing?</span>
+            </h2>
+            <p className="text-xl text-gray-400 mb-8">
+              Join thousands of businesses using AI to create better content
             </p>
-            <button className="pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-10 py-4 pixel-text text-sm hover:bg-medieval-bronze transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none">
-              Start Free Trial
+            <button className="bg-brand-primary hover:bg-brand-primary/90 text-white px-10 py-4 rounded-lg font-medium text-lg transition-all glow-hover">
+              Start Free Trial - No Credit Card Required
             </button>
-            <p className="font-pixel text-lg text-medieval-stone mt-4">
-              No credit card required • 7-day free trial
-            </p>
           </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="border-t-4 border-medieval-gold bg-black/50 py-12">
+      <footer className="relative z-10 border-t border-white/10 bg-brand-dark/50 backdrop-blur-xl py-12 mt-24">
         <div className="container mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <span className="text-3xl">🏰</span>
-            <span className="pixel-text text-xl text-medieval-gold">Frame Fables</span>
+            <div className="w-8 h-8 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-lg" />
+            <span className="text-xl font-bold gradient-text">Frame Fables</span>
           </div>
-          <p className="font-pixel text-lg text-medieval-stone">
-            © 2024 Frame Fables. All rights reserved to the realm.
+          <p className="text-gray-500">
+            © 2024 Frame Fables. All rights reserved.
           </p>
         </div>
       </footer>
