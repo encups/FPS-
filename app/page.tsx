@@ -164,7 +164,7 @@ export default function Home() {
             <div className="span-5">
               <div className="bold-frame noise-texture">
                 <div className="speech-bubble mb-6">
-                  <p className="mag-bold text-lg">"This AI actually gets our brand voice!"</p>
+                  <p className="mag-bold text-lg">&ldquo;This AI actually gets our brand voice!&rdquo;</p>
                 </div>
                 <div className="mag-body space-y-4 text-gray-700">
                   <div className="flex items-start gap-3">
@@ -360,7 +360,7 @@ export default function Home() {
 
           <div className="bold-frame text-center max-w-4xl mx-auto noise-texture">
             <div className="inline-block sticker mb-8 wiggle-hover">
-              Ready? Let's Go!
+              Ready? Let&apos;s Go!
             </div>
 
             <h2 className="mag-display mag-title mb-8">
@@ -372,7 +372,7 @@ export default function Home() {
             </h2>
 
             <p className="mag-body text-xl text-gray-700 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Join thousands of businesses who've discovered that great marketing starts with a great story.
+              Join thousands of businesses who&apos;ve discovered that great marketing starts with a great story.
               And great stories start with <span className="split-color mag-bold">Frame Fables</span>.
             </p>
 
