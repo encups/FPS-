@@ -324,3 +324,292 @@
   opacity: 0.05;
   pointer-events: none;
 }
+
+/* ===== MYSTICAL & ASTRAL QUEST ELEMENTS ===== */
+
+/* Starfield Background */
+.starfield {
+  position: relative;
+  overflow: hidden;
+}
+
+.starfield::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, white, transparent),
+    radial-gradient(2px 2px at 60% 70%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent),
+    radial-gradient(1px 1px at 80% 10%, white, transparent),
+    radial-gradient(2px 2px at 90% 60%, white, transparent),
+    radial-gradient(1px 1px at 33% 80%, white, transparent),
+    radial-gradient(1px 1px at 15% 55%, white, transparent);
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  animation: twinkle 8s ease-in-out infinite;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+/* Cosmic Gradient Orbs */
+.cosmic-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.3;
+  animation: float-cosmic 20s ease-in-out infinite;
+}
+
+@keyframes float-cosmic {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+/* Magic Glow Effect */
+.magic-glow {
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.8),
+    0 0 20px var(--electric-blue),
+    0 0 30px var(--hot-pink),
+    0 0 40px var(--vibrant-orange);
+  animation: magic-pulse 3s ease-in-out infinite;
+}
+
+@keyframes magic-pulse {
+  0%, 100% {
+    text-shadow:
+      0 0 10px rgba(255, 255, 255, 0.8),
+      0 0 20px var(--electric-blue),
+      0 0 30px var(--hot-pink);
+  }
+  50% {
+    text-shadow:
+      0 0 20px rgba(255, 255, 255, 1),
+      0 0 30px var(--electric-blue),
+      0 0 40px var(--hot-pink),
+      0 0 50px var(--vibrant-orange);
+  }
+}
+
+/* Quest Border - Medieval meets Cosmic */
+.quest-border {
+  position: relative;
+  border: 4px solid transparent;
+  background:
+    linear-gradient(white, white) padding-box,
+    linear-gradient(45deg, var(--electric-blue), var(--hot-pink), var(--vibrant-orange), var(--lime-green)) border-box;
+}
+
+.quest-border::before,
+.quest-border::after {
+  content: '✦';
+  position: absolute;
+  font-size: 1.5rem;
+  color: var(--sunny-yellow);
+  text-shadow: 0 0 10px var(--sunny-yellow);
+  animation: sparkle-quest 3s ease-in-out infinite;
+}
+
+.quest-border::before {
+  top: -15px;
+  left: -15px;
+}
+
+.quest-border::after {
+  bottom: -15px;
+  right: -15px;
+  animation-delay: 1.5s;
+}
+
+@keyframes sparkle-quest {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3) rotate(180deg);
+  }
+}
+
+/* Mystical Shimmer */
+.mystical-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.mystical-shimmer::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  animation: shimmer-sweep 4s ease-in-out infinite;
+}
+
+@keyframes shimmer-sweep {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+/* Constellation Pattern */
+.constellation-bg {
+  position: relative;
+}
+
+.constellation-bg::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 100% 100%;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Epic Quest Card */
+.epic-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(107, 44, 191, 0.3));
+  border: 3px solid var(--electric-blue);
+  box-shadow:
+    0 0 20px rgba(0, 102, 255, 0.3),
+    inset 0 0 30px rgba(107, 44, 191, 0.2);
+  transition: all 0.3s ease;
+}
+
+.epic-card:hover {
+  box-shadow:
+    0 0 30px rgba(0, 102, 255, 0.5),
+    0 0 50px rgba(255, 0, 110, 0.3),
+    inset 0 0 40px rgba(107, 44, 191, 0.3);
+  transform: translateY(-5px);
+}
+
+/* Astral Gradient Text */
+.astral-text {
+  background: linear-gradient(
+    135deg,
+    #667eea 0%,
+    #764ba2 25%,
+    #f093fb 50%,
+    #4facfe 75%,
+    #00f2fe 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: astral-flow 6s ease infinite;
+}
+
+@keyframes astral-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Magic Particles */
+.magic-particles {
+  position: relative;
+}
+
+.magic-particles::before {
+  content: '✨';
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  font-size: 1.5rem;
+  animation: float-particle 4s ease-in-out infinite;
+  opacity: 0.7;
+}
+
+.magic-particles::after {
+  content: '⭐';
+  position: absolute;
+  top: 70%;
+  right: 10%;
+  font-size: 1.2rem;
+  animation: float-particle 5s ease-in-out infinite reverse;
+  opacity: 0.7;
+}
+
+@keyframes float-particle {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 0.9;
+  }
+}
+
+/* Enchanted Border */
+.enchanted {
+  position: relative;
+  border: 4px solid black;
+  box-shadow:
+    0 0 20px var(--electric-blue),
+    inset 0 0 20px rgba(0, 102, 255, 0.1);
+}
+
+.enchanted::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    var(--electric-blue),
+    var(--hot-pink),
+    var(--vibrant-orange),
+    var(--electric-blue)
+  );
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0.5;
+  filter: blur(10px);
+  animation: enchant-glow 3s ease infinite;
+}
+
+@keyframes enchant-glow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
