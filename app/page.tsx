@@ -11,31 +11,37 @@ export default function Home() {
       icon: "⚔️",
       title: "Social Media Quests",
       description: "Generate epic social media posts that engage your followers",
+      color: "var(--electric-blue)",
     },
     {
       icon: "📜",
       title: "Scroll of Emails",
       description: "Craft compelling email campaigns with storytelling magic",
+      color: "var(--hot-pink)",
     },
     {
       icon: "🏰",
       title: "Ad Campaign Castle",
       description: "Build fortress-strong ad copy that converts",
+      color: "var(--vibrant-orange)",
     },
     {
       icon: "🎨",
       title: "Banner Creation",
       description: "Design pixel-perfect marketing visuals",
+      color: "var(--deep-purple)",
     },
     {
       icon: "📖",
       title: "Blog Chronicles",
       description: "Write engaging blog posts with medieval flair",
+      color: "var(--lime-green)",
     },
     {
       icon: "🎯",
       title: "Strategy Guild",
       description: "AI-powered marketing strategies for your kingdom",
+      color: "var(--sunny-yellow)",
     },
   ];
 
@@ -51,6 +57,7 @@ export default function Home() {
         "Community support",
       ],
       cta: "Start Your Quest",
+      color: "var(--vibrant-orange)",
     },
     {
       name: "Knight",
@@ -66,6 +73,7 @@ export default function Home() {
         "Analytics dashboard",
       ],
       cta: "Join the Order",
+      color: "var(--electric-blue)",
     },
     {
       name: "King",
@@ -80,33 +88,32 @@ export default function Home() {
         "24/7 Royal support",
       ],
       cta: "Rule Your Market",
+      color: "var(--hot-pink)",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="border-b border-gray-200 bg-white sticky top-0 z-50">
+    <div className="min-h-screen bg-white overflow-hidden">
+      {/* Bold Navigation */}
+      <nav className="border-b-4 border-black bg-white sticky top-0 z-50">
         <div className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 border-2 border-gray-900 flex items-center justify-center">
-                <span className="gallery-mono text-xs">FF</span>
-              </div>
-              <h1 className="gallery-display text-2xl text-gray-900">Frame Fables</h1>
+            <div className="flex items-center gap-4">
+              <div className="text-5xl wiggle-hover bounce-subtle">📖</div>
+              <h1 className="mag-display text-3xl split-color">Frame Fables</h1>
             </div>
-            <div className="flex gap-8 items-center">
+            <div className="flex gap-6 items-center">
               <Link
                 href="/login"
-                className="gallery-sans text-sm text-gray-700 hover:text-gray-900 transition-colors"
+                className="mag-bold text-base hover:text-[var(--electric-blue)] transition-colors outline-text"
               >
                 Login
               </Link>
               <Link
                 href="/signup"
-                className="gallery-button"
+                className="bold-button shine-effect"
               >
-                <span>Get Started</span>
+                Get Started
               </Link>
             </div>
           </div>
@@ -114,309 +121,333 @@ export default function Home() {
       </nav>
 
       <main>
-        {/* Hero */}
-        <section className="container mx-auto px-6 py-32">
-          <div className="max-w-6xl mx-auto">
-            <div className="mb-8">
-              <span className="gallery-mono text-xs text-gray-600 tracking-wider">
-                AI-Powered Marketing Platform
-              </span>
-              <div className="minimal-divider"></div>
-            </div>
-
-            <h2 className="gallery-display hero-xl text-gray-900 mb-8">
-              Turn Stories<br />
-              Into Strategy
-            </h2>
-
-            <p className="gallery-serif text-2xl md:text-3xl text-gray-700 max-w-3xl mb-16 leading-relaxed">
-              Frame Fables transforms your brand narrative into powerful marketing campaigns.
-              <span className="text-gray-900"> AI-powered content generation meets timeless storytelling.</span>
-            </p>
-
-            <div className="flex gap-6 items-center flex-wrap mb-24">
-              <button className="gallery-button">
-                <span>Start Free Trial</span>
-              </button>
-              <button className="outline-button">
-                <span>View Demo</span>
-              </button>
-            </div>
-
-            {/* Featured Frame */}
-            <div className="gallery-frame">
-              <div className="grid md:grid-cols-3 gap-12">
-                <div className="border-accent-left">
-                  <h3 className="gallery-mono text-xs mb-4">Content Generation</h3>
-                  <p className="gallery-sans text-sm text-gray-600 leading-relaxed">
-                    AI-crafted posts, emails, and campaigns in your brand voice
-                  </p>
-                </div>
-                <div className="border-accent-left">
-                  <h3 className="gallery-mono text-xs mb-4">Brand Storytelling</h3>
-                  <p className="gallery-sans text-sm text-gray-600 leading-relaxed">
-                    Weave compelling narratives that resonate with your audience
-                  </p>
-                </div>
-                <div className="border-accent-left">
-                  <h3 className="gallery-mono text-xs mb-4">Smart Automation</h3>
-                  <p className="gallery-sans text-sm text-gray-600 leading-relaxed">
-                    Schedule and deploy across all your marketing channels
-                  </p>
-                </div>
-              </div>
-            </div>
+        {/* HERO - Magazine Style */}
+        <section className="container mx-auto px-6 py-24 relative">
+          <div className="absolute top-20 right-10 sticker rotate-12 wiggle-hover bounce-subtle">
+            AI POWERED ⚡
           </div>
-        </section>
 
-        {/* Features */}
-        <section className="bg-gray-50 py-32">
-          <div className="container mx-auto px-6">
-            <div className="max-w-6xl mx-auto">
-              <div className="mb-20">
-                <span className="gallery-mono text-xs text-gray-600 tracking-wider">
-                  Marketing Tools
-                </span>
-                <div className="minimal-divider"></div>
-                <h3 className="gallery-display hero-lg text-gray-900 mt-8 mb-6">
-                  Every Story Needs<br />The Right Tools
-                </h3>
-                <p className="gallery-sans text-lg text-gray-600 max-w-2xl">
-                  Complete suite of AI-powered tools designed for modern storytellers
-                </p>
+          {/* Decorative rotating shapes */}
+          <div className="absolute top-40 left-10 morph-shape w-24 h-24 opacity-20 rotate-accent"></div>
+          <div className="absolute bottom-20 right-20 morph-shape w-32 h-32 opacity-20 rotate-accent-reverse bg-[var(--electric-blue)]"></div>
+
+          <div className="magazine-grid items-center">
+            <div className="span-7">
+              <div className="mag-body text-sm text-gray-600 mb-6 uppercase tracking-wider">
+                Revolutionary Marketing Platform
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {features.map((feature, index) => (
-                  <div
-                    key={index}
-                    className="minimal-frame p-8 subtle-lift group"
-                  >
-                    <div className="text-4xl mb-6">{feature.icon}</div>
-                    <h4 className="gallery-serif text-xl text-gray-900 mb-4">
-                      {feature.title}
-                    </h4>
-                    <p className="gallery-sans text-sm text-gray-600 leading-relaxed">
-                      {feature.description}
-                    </p>
+              <h1 className="mag-display mag-hero mb-8">
+                Tell Your
+                <br />
+                <span className="gradient-text-animated">Story.</span>
+                <br />
+                Win Your
+                <br />
+                <span className="text-[var(--hot-pink)] neon-text">Market.</span>
+              </h1>
+
+              <p className="mag-body text-xl text-gray-700 mb-12 max-w-xl leading-relaxed">
+                Frame Fables turns your brand narrative into <span className="text-highlight mag-bold">powerful marketing campaigns</span> with AI-powered content generation that actually sounds like you.
+              </p>
+
+              <div className="flex gap-6 flex-wrap">
+                <button className="bold-button button-3d shine-effect">
+                  Start Free Trial
+                </button>
+                <button className="outline-bold-button tilt-hover">
+                  See How It Works
+                </button>
+              </div>
+            </div>
+
+            <div className="span-5">
+              <div className="bold-frame noise-texture">
+                <div className="speech-bubble mb-6">
+                  <p className="mag-bold text-lg">"This AI actually gets our brand voice!"</p>
+                </div>
+                <div className="mag-body space-y-4 text-gray-700">
+                  <div className="flex items-start gap-3">
+                    <div className="text-3xl">✓</div>
+                    <div>
+                      <div className="mag-bold">10,000+ businesses</div>
+                      <div className="text-sm">Already telling better stories</div>
+                    </div>
                   </div>
-                ))}
+                  <div className="flex items-start gap-3">
+                    <div className="text-3xl">✓</div>
+                    <div>
+                      <div className="mag-bold">500,000+ campaigns</div>
+                      <div className="text-sm">Created and deployed</div>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="text-3xl">✓</div>
+                    <div>
+                      <div className="mag-bold">4.9/5 rating</div>
+                      <div className="text-sm">From actual marketers</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* How It Works */}
-        <section className="container mx-auto px-6 py-32">
-          <div className="max-w-6xl mx-auto">
-            <div className="mb-20 text-center">
-              <span className="gallery-mono text-xs text-gray-600 tracking-wider">
-                How It Works
-              </span>
-              <div className="centered-divider"></div>
-              <h3 className="gallery-display hero-lg text-gray-900 mt-8">
-                From Blank Page<br />To Bestseller
-              </h3>
+        {/* FEATURES - Comic Panel Style */}
+        <section className="py-32 bg-[var(--lime-green)] diagonal-section">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-20">
+              <h2 className="mag-display mag-title mb-6">
+                Your Complete
+                <br />
+                <span className="underline-squiggle gradient-text-animated">Marketing Toolkit</span>
+              </h2>
+              <p className="mag-body text-xl max-w-2xl mx-auto">
+                Everything you need to create, deploy, and dominate
+              </p>
             </div>
 
-            <div className="space-y-16">
-              {[
-                {
-                  step: "01",
-                  title: "Define Your Narrative",
-                  desc: "Tell us about your brand, voice, and audience. We build a narrative framework unique to you.",
-                },
-                {
-                  step: "02",
-                  title: "Select Your Channels",
-                  desc: "Choose from social media, email, ads, blogs, and more. We adapt your story for each platform.",
-                },
-                {
-                  step: "03",
-                  title: "AI Generates Content",
-                  desc: "Our AI creates authentic, on-brand content in seconds. Edit, refine, or use as-is.",
-                },
-                {
-                  step: "04",
-                  title: "Deploy & Measure",
-                  desc: "Schedule posts, send campaigns, and track performance. Your story reaches the right audience.",
-                },
-              ].map((item, index) => (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {features.map((feature, index) => (
                 <div
                   key={index}
-                  className="accent-frame group flex flex-col md:flex-row gap-8"
+                  className="comic-panel p-8 wiggle-hover scale-bounce relative"
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="md:w-32 flex-shrink-0">
-                    <span className="gallery-mono text-6xl text-gray-300 group-hover:text-gray-900 transition-colors">
-                      {item.step}
-                    </span>
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="gallery-serif text-2xl md:text-3xl text-gray-900 mb-4">
-                      {item.title}
-                    </h4>
-                    <p className="gallery-sans text-base text-gray-600 leading-relaxed max-w-2xl">
-                      {item.desc}
-                    </p>
-                  </div>
+                  <div className="text-6xl mb-6 float-gentle">{feature.icon}</div>
+                  <h3 className="mag-headline text-2xl mb-4">
+                    {feature.title}
+                  </h3>
+                  <p className="mag-body text-gray-700">
+                    {feature.description}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Pricing */}
-        <section className="bg-gray-50 py-32">
-          <div className="container mx-auto px-6">
-            <div className="max-w-6xl mx-auto">
-              <div className="mb-20 text-center">
-                <span className="gallery-mono text-xs text-gray-600 tracking-wider">
-                  Pricing
-                </span>
-                <div className="centered-divider"></div>
-                <h3 className="gallery-display hero-lg text-gray-900 mt-8 mb-6">
-                  Choose Your Edition
-                </h3>
-                <p className="gallery-sans text-lg text-gray-600">
-                  7-day free trial • No credit card required • Cancel anytime
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-8">
-                {pricingPlans.map((plan, index) => (
-                  <div
-                    key={index}
-                    className={`contemporary-card ${
-                      plan.popular
-                        ? "border-2 border-gray-900 shadow-lg"
-                        : ""
-                    }`}
-                  >
-                    {plan.popular && (
-                      <div className="mb-6">
-                        <span className="gallery-mono text-xs bg-gray-900 text-white px-3 py-1">
-                          MOST POPULAR
-                        </span>
-                      </div>
-                    )}
-                    <h4 className="gallery-serif text-2xl text-gray-900 mb-2">
-                      {plan.name}
-                    </h4>
-                    <div className="mb-8">
-                      <span className="gallery-display text-5xl text-gray-900">
-                        {plan.price}
-                      </span>
-                      <span className="gallery-sans text-sm text-gray-600">
-                        {plan.period}
-                      </span>
-                    </div>
-                    <ul className="space-y-4 mb-10">
-                      {plan.features.map((feature, idx) => (
-                        <li
-                          key={idx}
-                          className="gallery-sans text-sm text-gray-600 flex items-start gap-3"
-                        >
-                          <span className="text-gray-900 mt-1">✓</span>
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <button
-                      onClick={() => setSelectedPlan(plan.name)}
-                      className={`w-full ${
-                        plan.popular
-                          ? "gallery-button"
-                          : "outline-button"
-                      }`}
-                    >
-                      <span>{plan.cta}</span>
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
+        {/* HOW IT WORKS - Bold Steps */}
         <section className="container mx-auto px-6 py-32">
-          <div className="max-w-4xl mx-auto">
-            <div className="gallery-frame text-center">
-              <span className="gallery-mono text-xs text-gray-600 tracking-wider">
-                Get Started Today
-              </span>
-              <div className="centered-divider"></div>
-              <h3 className="gallery-display hero-lg text-gray-900 mt-8 mb-8">
-                Ready to Frame<br />Your Success Story?
-              </h3>
-              <p className="gallery-sans text-lg text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-                Join thousands of businesses transforming their marketing with AI-powered storytelling.
-                Start your free trial today—no credit card required.
-              </p>
-              <div className="flex gap-6 justify-center flex-wrap">
-                <button className="gallery-button">
-                  <span>Start Free Trial</span>
-                </button>
-                <button className="outline-button">
-                  <span>Schedule Demo</span>
-                </button>
+          <div className="text-center mb-20">
+            <div className="inline-block sticker mb-8 pulse-scale">The Process</div>
+            <h2 className="mag-display mag-title">
+              4 Steps to
+              <br />
+              Marketing <span className="gradient-text-animated">Mastery</span>
+            </h2>
+          </div>
+
+          <div className="max-w-5xl mx-auto space-y-12">
+            {[
+              {
+                num: "01",
+                title: "Define Your Voice",
+                desc: "Tell us about your brand personality, target audience, and what makes you unique. We create a custom narrative framework.",
+                color: "var(--electric-blue)",
+              },
+              {
+                num: "02",
+                title: "Choose Your Channels",
+                desc: "Social media, email, ads, blogs—pick where your story needs to be told. We adapt your voice for each platform.",
+                color: "var(--hot-pink)",
+              },
+              {
+                num: "03",
+                title: "AI Crafts Content",
+                desc: "Our AI generates authentic, on-brand content in seconds. Edit it, tweak it, or ship it as-is. It's your call.",
+                color: "var(--vibrant-orange)",
+              },
+              {
+                num: "04",
+                title: "Deploy & Dominate",
+                desc: "Schedule posts, launch campaigns, track performance. Watch your story resonate with the right people.",
+                color: "var(--deep-purple)",
+              },
+            ].map((step, index) => (
+              <div
+                key={index}
+                className="outline-frame relative hover:bg-gray-50 transition-all"
+              >
+                <div className="flex flex-col md:flex-row gap-8 items-start">
+                  <div
+                    className="mag-display text-8xl opacity-20"
+                    style={{ color: step.color }}
+                  >
+                    {step.num}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="mag-headline text-3xl md:text-4xl mb-4">
+                      {step.title}
+                    </h3>
+                    <p className="mag-body text-lg text-gray-700 leading-relaxed">
+                      {step.desc}
+                    </p>
+                  </div>
+                </div>
               </div>
+            ))}
+          </div>
+        </section>
+
+        {/* PRICING - Vibrant Cards */}
+        <section className="py-32 bg-gray-50">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-20">
+              <h2 className="mag-display mag-title mb-6">
+                Pick Your
+                <br />
+                <span className="neon-text">Plan</span>
+              </h2>
+              <p className="mag-body text-xl text-gray-600">
+                7-day free trial • No credit card • Cancel anytime
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {pricingPlans.map((plan, index) => (
+                <div
+                  key={index}
+                  className={`vibrant-card relative ${plan.popular ? 'scale-110 z-10 rainbow-shadow' : 'tilt-hover'}`}
+                  style={{
+                    background: plan.popular
+                      ? `linear-gradient(135deg, ${plan.color}, var(--deep-purple))`
+                      : `linear-gradient(135deg, ${plan.color}, black)`,
+                  }}
+                >
+                  {plan.popular && (
+                    <div className="badge-corner">
+                      MOST
+                      <br />
+                      POPULAR
+                    </div>
+                  )}
+
+                  <h3 className="mag-headline text-3xl mb-4">{plan.name}</h3>
+
+                  <div className="mb-8">
+                    <span className="mag-display text-6xl">{plan.price}</span>
+                    <span className="mag-body text-lg opacity-80">{plan.period}</span>
+                  </div>
+
+                  <ul className="space-y-4 mb-10">
+                    {plan.features.map((feature, idx) => (
+                      <li key={idx} className="mag-body flex items-start gap-3">
+                        <span className="text-2xl">✦</span>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <button
+                    onClick={() => setSelectedPlan(plan.name)}
+                    className="w-full bold-button bg-white text-black hover:bg-black hover:text-[var(--lime-green)]"
+                  >
+                    {plan.cta}
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
         </section>
-      </main>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-200 bg-white py-20">
-        <div className="container mx-auto px-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col md:flex-row justify-between gap-12 mb-16">
+        {/* CTA - Big & Bold */}
+        <section className="container mx-auto px-6 py-32 relative">
+          {/* Decorative background elements */}
+          <div className="absolute top-10 left-10 comic-dots w-32 h-32 opacity-30"></div>
+          <div className="absolute bottom-10 right-10 comic-dots w-40 h-40 opacity-30"></div>
+
+          <div className="bold-frame text-center max-w-4xl mx-auto noise-texture">
+            <div className="inline-block sticker mb-8 wiggle-hover">
+              Ready? Let's Go!
+            </div>
+
+            <h2 className="mag-display mag-title mb-8">
+              Start Telling
+              <br />
+              <span className="gradient-text-animated">Better Stories</span>
+              <br />
+              Today
+            </h2>
+
+            <p className="mag-body text-xl text-gray-700 mb-12 max-w-2xl mx-auto leading-relaxed">
+              Join thousands of businesses who've discovered that great marketing starts with a great story.
+              And great stories start with <span className="split-color mag-bold">Frame Fables</span>.
+            </p>
+
+            <div className="flex gap-6 justify-center flex-wrap">
+              <button className="bold-button text-lg px-12 button-3d rainbow-shadow">
+                Start Free Trial →
+              </button>
+              <button className="outline-bold-button text-lg px-12 squish-hover">
+                Schedule Demo
+              </button>
+            </div>
+
+            <p className="mag-body text-sm text-gray-600 mt-8">
+              No credit card required • 7 days free • Cancel anytime
+            </p>
+          </div>
+        </section>
+
+        {/* FOOTER */}
+        <footer className="border-t-4 border-black bg-black text-white py-20">
+          <div className="container mx-auto px-6">
+            <div className="grid md:grid-cols-4 gap-12 mb-12">
               <div>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 border-2 border-gray-900 flex items-center justify-center">
-                    <span className="gallery-mono text-xs">FF</span>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="text-4xl float-gentle">📖</div>
+                  <div className="mag-display text-2xl gradient-text-animated">
+                    Frame
+                    <br />
+                    Fables
                   </div>
-                  <h3 className="gallery-display text-2xl text-gray-900">Frame Fables</h3>
                 </div>
-                <p className="gallery-sans text-sm text-gray-600 max-w-xs leading-relaxed">
-                  Where stories become strategies. AI-powered marketing for modern storytellers.
+                <p className="mag-body text-sm text-gray-400">
+                  Where stories become strategies. Marketing that actually works.
                 </p>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-12">
-                <div>
-                  <h4 className="gallery-mono text-xs mb-4">Product</h4>
-                  <ul className="space-y-2 gallery-sans text-sm text-gray-600">
-                    <li><a href="#" className="hover:text-gray-900">Features</a></li>
-                    <li><a href="#" className="hover:text-gray-900">Pricing</a></li>
-                    <li><a href="#" className="hover:text-gray-900">Use Cases</a></li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="gallery-mono text-xs mb-4">Company</h4>
-                  <ul className="space-y-2 gallery-sans text-sm text-gray-600">
-                    <li><a href="#" className="hover:text-gray-900">About</a></li>
-                    <li><a href="#" className="hover:text-gray-900">Blog</a></li>
-                    <li><a href="#" className="hover:text-gray-900">Careers</a></li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="gallery-mono text-xs mb-4">Legal</h4>
-                  <ul className="space-y-2 gallery-sans text-sm text-gray-600">
-                    <li><a href="#" className="hover:text-gray-900">Privacy</a></li>
-                    <li><a href="#" className="hover:text-gray-900">Terms</a></li>
-                    <li><a href="#" className="hover:text-gray-900">Security</a></li>
-                  </ul>
-                </div>
+
+              <div>
+                <h4 className="mag-bold text-sm mb-4 text-[var(--sunny-yellow)]">PRODUCT</h4>
+                <ul className="space-y-2 mag-body text-sm text-gray-400">
+                  <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
+                  <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
+                  <li><a href="#" className="hover:text-white transition-colors">Use Cases</a></li>
+                  <li><a href="#" className="hover:text-white transition-colors">Roadmap</a></li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="mag-bold text-sm mb-4 text-[var(--hot-pink)]">COMPANY</h4>
+                <ul className="space-y-2 mag-body text-sm text-gray-400">
+                  <li><a href="#" className="hover:text-white transition-colors">About</a></li>
+                  <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
+                  <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+                  <li><a href="#" className="hover:text-white transition-colors">Press</a></li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="mag-bold text-sm mb-4 text-[var(--electric-blue)]">LEGAL</h4>
+                <ul className="space-y-2 mag-body text-sm text-gray-400">
+                  <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
+                  <li><a href="#" className="hover:text-white transition-colors">Terms</a></li>
+                  <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
+                  <li><a href="#" className="hover:text-white transition-colors">Cookies</a></li>
+                </ul>
               </div>
             </div>
-            <div className="border-t border-gray-200 pt-8">
-              <p className="gallery-sans text-xs text-gray-500 text-center">
-                © 2024 Frame Fables. All rights reserved.
+
+            <div className="border-t border-gray-800 pt-8">
+              <p className="mag-body text-xs text-gray-500 text-center">
+                © 2024 Frame Fables. Built with ❤️ and AI. All rights reserved.
               </p>
             </div>
           </div>
-        </div>
-      </footer>
+        </footer>
+      </main>
     </div>
   );
 }
