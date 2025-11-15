@@ -1,0 +1,257 @@
+// Frame Fables - Database Schema
+// Medieval-themed AI Marketing Platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ===== ENUMS =====
+
+enum SubscriptionTier {
+  SQUIRE  // $249.99/mo - Squire's Start
+  KNIGHT  // $499.99/mo - Knight's Climb
+  KING    // $999.99/mo - King's Command
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  PAST_DUE
+  TRIALING
+  PAUSED
+}
+
+enum ContentStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  FAILED
+  ARCHIVED
+}
+
+enum ContentPlatform {
+  INSTAGRAM
+  FACEBOOK
+  TIKTOK
+  YOUTUBE
+  LINKEDIN
+  TWITTER
+  EMAIL
+}
+
+enum ContentType {
+  SHORT_FORM     // Reels, TikTok, Shorts
+  LONG_CAPTION   // Instagram/Facebook posts
+  STORY          // IG/FB Stories
+  EMAIL          // Newsletter
+  BLOG           // Long-form content
+  AD_COPY        // Paid advertising
+}
+
+// ===== CORE MODELS =====
+
+model Client {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  name          String
+  businessName  String
+  niche         String
+  size          String?  // "solo", "small", "medium", "large"
+  goals         String[] // Array of goal strings
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  subscription    Subscription?
+  brandProfile    BrandProfile?
+  contentItems    ContentItem[]
+  contentCalendars ContentCalendar[]
+  analytics       Analytics[]
+  auditReports    AuditReport[]
+  socialHandles   SocialHandle[]
+
+  @@map("clients")
+}
+
+model Subscription {
+  id         String             @id @default(uuid())
+  clientId   String             @unique
+  tier       SubscriptionTier
+  status     SubscriptionStatus @default(TRIALING)
+  priceInCents Int              // 24999, 49999, or 99999
+  stripeCustomerId String?      @unique
+  stripeSubscriptionId String?  @unique
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+  cancelAtPeriodEnd  Boolean    @default(false)
+  trialEndsAt        DateTime?
+  startedAt   DateTime          @default(now())
+  canceledAt  DateTime?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@map("subscriptions")
+}
+
+model BrandProfile {
+  id               String   @id @default(uuid())
+  clientId         String   @unique
+  voiceDescription String   @db.Text // "Professional, witty, educational"
+  toneKeywords     String[] // ["friendly", "authoritative", "playful"]
+  colors           String[] // Brand hex colors
+  targetAudience   String?  @db.Text
+  uniqueValueProp  String?  @db.Text
+  notes            String?  @db.Text
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@map("brand_profiles")
+}
+
+model SocialHandle {
+  id        String          @id @default(uuid())
+  clientId  String
+  platform  ContentPlatform
+  handle    String
+  url       String?
+  isActive  Boolean         @default(true)
+  accessToken String?       // For future API integrations
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@unique([clientId, platform])
+  @@map("social_handles")
+}
+
+model ContentItem {
+  id           String          @id @default(uuid())
+  clientId     String
+  platform     ContentPlatform
+  type         ContentType
+  title        String?
+  body         String          @db.Text
+  caption      String?         @db.Text
+  hashtags     String[]
+  callToAction String?
+  imageUrl     String?
+  videoUrl     String?
+  status       ContentStatus   @default(DRAFT)
+  scheduledFor DateTime?
+  publishedAt  DateTime?
+  metadata     Json?           // Extra platform-specific data
+  errorMessage String?         @db.Text
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  client    Client      @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  analytics Analytics[]
+
+  @@index([clientId, status])
+  @@index([scheduledFor])
+  @@map("content_items")
+}
+
+model ContentCalendar {
+  id         String   @id @default(uuid())
+  clientId   String
+  weekStart  DateTime // Start of the week
+  weekEnd    DateTime
+  metadata   Json     // Stores the calendar structure and content IDs
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@unique([clientId, weekStart])
+  @@map("content_calendars")
+}
+
+model Analytics {
+  id          String   @id @default(uuid())
+  clientId    String
+  contentId   String?
+  platform    ContentPlatform
+  impressions Int      @default(0)
+  reach       Int      @default(0)
+  likes       Int      @default(0)
+  comments    Int      @default(0)
+  shares      Int      @default(0)
+  saves       Int      @default(0)
+  clicks      Int      @default(0)
+  ctr         Float?   // Click-through rate
+  engagement  Float?   // Engagement rate
+  metadata    Json?    // Extra metrics
+  recordedAt  DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  client  Client       @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  content ContentItem? @relation(fields: [contentId], references: [id], onDelete: SetNull)
+
+  @@index([clientId, recordedAt])
+  @@map("analytics")
+}
+
+model AuditReport {
+  id                  String           @id @default(uuid())
+  clientId            String
+  tierRecommendation  SubscriptionTier
+  summary             String           @db.Text // Medieval-styled summary
+  strengths           String[]
+  weaknesses          String[]
+  opportunities       String[]
+  recommendedActions  Json             // Structured action items
+  scoreOverall        Int?             // 0-100
+  scoreContent        Int?
+  scoreEngagement     Int?
+  scoreStrategy       Int?
+  createdAt           DateTime         @default(now())
+
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId, createdAt])
+  @@map("audit_reports")
+}
+
+model AgentLog {
+  id         String   @id @default(uuid())
+  agentName  String   // "DungeonMaster", "SocialScribe", etc.
+  taskType   String   // "onboard", "generate_content", "run_audit"
+  payload    Json     // Input data
+  result     Json?    // Output data
+  success    Boolean  @default(true)
+  errorMessage String? @db.Text
+  durationMs Int?     // Execution time
+  createdAt  DateTime @default(now())
+
+  @@index([agentName, createdAt])
+  @@index([taskType, createdAt])
+  @@map("agent_logs")
+}
+
+// ===== INTEGRATION MODELS =====
+
+model Integration {
+  id          String   @id @default(uuid())
+  name        String   // "tally", "notion", "zapier"
+  type        String   // "form", "crm", "automation"
+  config      Json     // Integration-specific configuration
+  isActive    Boolean  @default(true)
+  webhookUrl  String?
+  apiKey      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([name, type])
+  @@map("integrations")
+}
