@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700;900&family=Fraunces:wght@400;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Archivo+Black&family=DM+Sans:wght@400;500;700;900&family=Fraunces:wght@400;600;700;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,11 +7,26 @@
 @layer base {
   body {
     @apply bg-white text-gray-900;
+    image-rendering: -webkit-optimize-contrast;
   }
 }
 
-/* Color System */
+/* ===== EMBERQUILL WYRM COLOR SYSTEM ===== */
 :root {
+  /* Dragon Colors - Primary */
+  --dragon-emerald: #2D9F6E;
+  --dragon-turquoise: #3FCFD5;
+  --molten-gold: #FFB84D;
+  --flame-orange: #FF8C42;
+  --dragon-fire: #FF6B35;
+
+  /* Dragon Colors - Secondary */
+  --sky-blue: #6BA3D9;
+  --cloud-white: #F5F8FA;
+  --rune-purple: #6B2CBF;
+  --shadow-black: #1A1A2E;
+
+  /* Legacy colors (keeping for compatibility) */
   --electric-blue: #0066FF;
   --hot-pink: #FF006E;
   --vibrant-orange: #FF6B35;
@@ -612,4 +627,563 @@
 @keyframes enchant-glow {
   0%, 100% { opacity: 0.3; }
   50% { opacity: 0.7; }
+}
+
+/* ===== EMBERQUILL WYRM PIXEL-ART FRAMEWORK ===== */
+
+/* Pixel-Art Rendering */
+.pixel-perfect {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.pixel-art-base {
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+/* Dragon Typography */
+.pixel-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(1rem, 3vw, 2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-shadow: 4px 4px 0 var(--shadow-black);
+  color: var(--molten-gold);
+}
+
+.dragon-text {
+  font-family: 'Archivo Black', sans-serif;
+  color: var(--dragon-emerald);
+  text-shadow: 2px 2px 0 var(--shadow-black);
+}
+
+/* Pixel Borders & Boxes */
+.pixel-border {
+  border: 4px solid var(--shadow-black);
+  box-shadow: 8px 8px 0 rgba(26, 26, 46, 0.3);
+  image-rendering: crisp-edges;
+}
+
+.pixel-border:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 10px 10px 0 rgba(26, 26, 46, 0.3);
+}
+
+.pixel-box {
+  background: var(--cloud-white);
+  border: 4px solid var(--shadow-black);
+  padding: 24px;
+  box-shadow: 8px 8px 0 var(--dragon-emerald);
+  position: relative;
+}
+
+/* Dragon Buttons */
+.dragon-button {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  padding: 16px 32px;
+  border: 4px solid var(--shadow-black);
+  background: var(--molten-gold);
+  color: var(--shadow-black);
+  box-shadow: 6px 6px 0 var(--shadow-black);
+  transition: all 0.2s ease;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.dragon-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.dragon-button:hover::before {
+  left: 100%;
+}
+
+.dragon-button:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 3px 3px 0 var(--shadow-black);
+  background: var(--flame-orange);
+}
+
+.dragon-button:active {
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 var(--shadow-black);
+}
+
+.dragon-button-emerald {
+  background: var(--dragon-emerald);
+  color: white;
+}
+
+.dragon-button-emerald:hover {
+  background: var(--dragon-turquoise);
+}
+
+/* Dragon Tier Cards */
+.tier-card-dragon {
+  position: relative;
+  border: 4px solid var(--shadow-black);
+  background: var(--cloud-white);
+  padding: 32px;
+  box-shadow: 12px 12px 0 rgba(26, 26, 46, 0.2);
+  transition: all 0.3s ease;
+}
+
+.tier-card-dragon::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: linear-gradient(135deg, var(--dragon-emerald), var(--dragon-turquoise));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tier-card-dragon:hover::before {
+  opacity: 0.3;
+}
+
+.tier-card-dragon:hover {
+  transform: translateY(-8px);
+  box-shadow: 16px 16px 0 rgba(26, 26, 46, 0.3);
+}
+
+.tier-squire {
+  border-top: 8px solid var(--dragon-emerald);
+}
+
+.tier-knight {
+  border-top: 8px solid var(--dragon-turquoise);
+}
+
+.tier-king {
+  border-top: 8px solid var(--molten-gold);
+}
+
+/* Dragon Badge */
+.dragon-badge {
+  position: absolute;
+  top: -12px;
+  right: 16px;
+  background: var(--molten-gold);
+  color: var(--shadow-black);
+  padding: 8px 16px;
+  border: 3px solid var(--shadow-black);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.6rem;
+  box-shadow: 4px 4px 0 var(--shadow-black);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Pixel Sky Background */
+.pixel-sky {
+  background: linear-gradient(
+    180deg,
+    #87CEEB 0%,
+    var(--sky-blue) 50%,
+    #4A90C8 100%
+  );
+  position: relative;
+}
+
+.pixel-clouds {
+  position: relative;
+  overflow: hidden;
+}
+
+.pixel-clouds::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(ellipse 100px 40px at 20% 30%, white, transparent),
+    radial-gradient(ellipse 120px 50px at 60% 60%, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(ellipse 80px 30px at 80% 20%, rgba(255, 255, 255, 0.9), transparent);
+  opacity: 0.6;
+  animation: cloud-drift 60s linear infinite;
+}
+
+@keyframes cloud-drift {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100px);
+  }
+}
+
+/* Dragon Silhouette Placeholder */
+.dragon-silhouette {
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(
+    135deg,
+    var(--dragon-emerald) 0%,
+    var(--dragon-turquoise) 50%,
+    var(--molten-gold) 100%
+  );
+  clip-path: polygon(
+    20% 10%,
+    40% 5%,
+    60% 10%,
+    75% 25%,
+    85% 45%,
+    90% 65%,
+    85% 80%,
+    70% 90%,
+    50% 95%,
+    30% 90%,
+    15% 75%,
+    10% 50%,
+    15% 30%
+  );
+  position: relative;
+  animation: dragon-breathe 4s ease-in-out infinite;
+  image-rendering: pixelated;
+}
+
+@keyframes dragon-breathe {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 20px var(--dragon-emerald));
+  }
+  50% {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 30px var(--molten-gold));
+  }
+}
+
+/* Dragon Wing Animation */
+.dragon-wing {
+  width: 120px;
+  height: 80px;
+  background: linear-gradient(
+    45deg,
+    var(--flame-orange),
+    var(--molten-gold),
+    var(--dragon-fire)
+  );
+  clip-path: polygon(0% 50%, 30% 10%, 70% 5%, 100% 20%, 90% 50%, 100% 80%, 70% 95%, 30% 90%);
+  animation: wing-flap 2.5s ease-in-out infinite;
+  transform-origin: left center;
+}
+
+@keyframes wing-flap {
+  0%, 100% {
+    transform: rotateY(0deg) scaleX(1);
+  }
+  25% {
+    transform: rotateY(-15deg) scaleX(0.95);
+  }
+  75% {
+    transform: rotateY(15deg) scaleX(1.05);
+  }
+}
+
+/* Pixel Sparkle Effect */
+.pixel-sparkle {
+  position: relative;
+}
+
+.pixel-sparkle::before,
+.pixel-sparkle::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--molten-gold);
+  box-shadow:
+    0 0 10px var(--molten-gold),
+    0 0 20px var(--flame-orange);
+  animation: sparkle-pixel 2s ease-in-out infinite;
+}
+
+.pixel-sparkle::before {
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.pixel-sparkle::after {
+  top: 70%;
+  right: 10%;
+  animation-delay: 1s;
+}
+
+@keyframes sparkle-pixel {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
+}
+
+/* Rune Symbol Animation */
+.dragon-rune {
+  width: 32px;
+  height: 32px;
+  background: var(--dragon-turquoise);
+  clip-path: polygon(
+    50% 0%,
+    65% 35%,
+    100% 50%,
+    65% 65%,
+    50% 100%,
+    35% 65%,
+    0% 50%,
+    35% 35%
+  );
+  animation: rune-rotate 4s linear infinite;
+  box-shadow: 0 0 20px var(--dragon-turquoise);
+}
+
+@keyframes rune-rotate {
+  0% {
+    transform: rotate(0deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 0.6;
+  }
+}
+
+/* Dragon Scale Shimmer */
+.dragon-scales {
+  background: linear-gradient(
+    135deg,
+    var(--dragon-emerald) 0%,
+    var(--dragon-turquoise) 50%,
+    var(--dragon-emerald) 100%
+  );
+  background-size: 200% 200%;
+  animation: scale-shimmer 4s ease infinite;
+}
+
+@keyframes scale-shimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Pixel Grid Pattern */
+.pixel-grid {
+  background-image:
+    linear-gradient(var(--shadow-black) 1px, transparent 1px),
+    linear-gradient(90deg, var(--shadow-black) 1px, transparent 1px);
+  background-size: 8px 8px;
+  opacity: 0.05;
+}
+
+/* Dragon Horn Glow */
+.dragon-horn-glow {
+  position: relative;
+  color: var(--flame-orange);
+  text-shadow:
+    0 0 10px var(--flame-orange),
+    0 0 20px var(--dragon-fire),
+    0 0 30px var(--molten-gold);
+  animation: horn-pulse 2s ease-in-out infinite;
+}
+
+@keyframes horn-pulse {
+  0%, 100% {
+    text-shadow:
+      0 0 10px var(--flame-orange),
+      0 0 20px var(--dragon-fire);
+  }
+  50% {
+    text-shadow:
+      0 0 20px var(--flame-orange),
+      0 0 30px var(--dragon-fire),
+      0 0 40px var(--molten-gold);
+  }
+}
+
+/* Pixel Art Icons */
+.pixel-icon {
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+.pixel-icon-shield {
+  background: linear-gradient(
+    135deg,
+    var(--dragon-emerald) 0%,
+    var(--dragon-turquoise) 100%
+  );
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.pixel-icon-sword {
+  background: linear-gradient(
+    0deg,
+    var(--dragon-turquoise) 0%,
+    var(--sky-blue) 70%,
+    var(--cloud-white) 100%
+  );
+  clip-path: polygon(
+    45% 0%, 55% 0%,
+    55% 60%, 70% 60%,
+    70% 65%, 55% 65%,
+    55% 75%, 60% 80%,
+    50% 100%, 40% 80%,
+    45% 75%, 45% 65%,
+    30% 65%, 30% 60%,
+    45% 60%
+  );
+}
+
+.pixel-icon-crown {
+  background: linear-gradient(
+    0deg,
+    var(--molten-gold) 0%,
+    var(--flame-orange) 100%
+  );
+  clip-path: polygon(
+    10% 60%, 20% 30%, 30% 60%,
+    40% 20%, 50% 60%,
+    60% 20%, 70% 60%,
+    80% 30%, 90% 60%,
+    90% 80%, 10% 80%
+  );
+}
+
+/* Dragon Flame Effect */
+.dragon-flame {
+  position: relative;
+}
+
+.dragon-flame::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--flame-orange),
+    var(--dragon-fire),
+    transparent
+  );
+  opacity: 0;
+  animation: flame-burst 3s ease-in-out infinite;
+}
+
+@keyframes flame-burst {
+  0%, 100% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translateX(100%);
+  }
+}
+
+/* Loading State - Dragon */
+.dragon-loading {
+  display: inline-block;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+  color: var(--dragon-emerald);
+}
+
+.dragon-loading::after {
+  content: '...';
+  animation: loading-dots 1.5s steps(4) infinite;
+}
+
+@keyframes loading-dots {
+  0% { content: ''; }
+  25% { content: '.'; }
+  50% { content: '..'; }
+  75% { content: '...'; }
+}
+
+/* Pixel Card Hover Lift */
+.pixel-card-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pixel-card-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 12px 20px 0 rgba(26, 26, 46, 0.2);
+}
+
+/* Dragon Theme Integration - Overrides */
+.dragon-theme-active .bold-button {
+  background: var(--molten-gold);
+  border-color: var(--shadow-black);
+}
+
+.dragon-theme-active .bold-button:hover {
+  background: var(--flame-orange);
+}
+
+.dragon-theme-active .speech-bubble {
+  background: var(--dragon-emerald);
+  border-color: var(--shadow-black);
+}
+
+.dragon-theme-active .sticker {
+  background: var(--molten-gold);
+  color: var(--shadow-black);
+  border-color: var(--shadow-black);
+}
+
+/* Responsive Pixel Art */
+@media (max-width: 768px) {
+  .pixel-title {
+    font-size: 1rem;
+  }
+
+  .dragon-silhouette {
+    width: 120px;
+    height: 120px;
+  }
+
+  .dragon-wing {
+    width: 80px;
+    height: 60px;
+  }
+
+  .pixel-icon {
+    width: 48px;
+    height: 48px;
+  }
 }
