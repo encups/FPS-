@@ -99,19 +99,19 @@ export default function Home() {
         <div className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="text-5xl wiggle-hover bounce-subtle">📖</div>
-              <h1 className="mag-display text-3xl split-color">Frame Fables</h1>
+              <div className="text-5xl">📖</div>
+              <h1 className="mag-display text-3xl">Frame Fables</h1>
             </div>
             <div className="flex gap-6 items-center">
               <Link
                 href="/login"
-                className="mag-bold text-base hover:text-[var(--electric-blue)] transition-colors outline-text"
+                className="mag-bold text-base hover:text-[var(--electric-blue)] transition-colors"
               >
                 Login
               </Link>
               <Link
                 href="/signup"
-                className="bold-button shine-effect"
+                className="bold-button"
               >
                 Get Started
               </Link>
@@ -123,13 +123,9 @@ export default function Home() {
       <main>
         {/* HERO - Magazine Style */}
         <section className="container mx-auto px-6 py-24 relative">
-          <div className="absolute top-20 right-10 sticker rotate-12 wiggle-hover bounce-subtle">
+          <div className="absolute top-20 right-10 sticker rotate-12">
             AI POWERED ⚡
           </div>
-
-          {/* Decorative rotating shapes */}
-          <div className="absolute top-40 left-10 morph-shape w-24 h-24 opacity-20 rotate-accent"></div>
-          <div className="absolute bottom-20 right-20 morph-shape w-32 h-32 opacity-20 rotate-accent-reverse bg-[var(--electric-blue)]"></div>
 
           <div className="magazine-grid items-center">
             <div className="span-7">
@@ -144,7 +140,7 @@ export default function Home() {
                 <br />
                 Win Your
                 <br />
-                <span className="text-[var(--hot-pink)] neon-text">Market.</span>
+                <span className="text-[var(--hot-pink)]">Market.</span>
               </h1>
 
               <p className="mag-body text-xl text-gray-700 mb-12 max-w-xl leading-relaxed">
@@ -152,10 +148,10 @@ export default function Home() {
               </p>
 
               <div className="flex gap-6 flex-wrap">
-                <button className="bold-button button-3d shine-effect">
+                <button className="bold-button">
                   Start Free Trial
                 </button>
-                <button className="outline-bold-button tilt-hover">
+                <button className="outline-bold-button">
                   See How It Works
                 </button>
               </div>
@@ -201,7 +197,7 @@ export default function Home() {
               <h2 className="mag-display mag-title mb-6">
                 Your Complete
                 <br />
-                <span className="underline-squiggle gradient-text-animated">Marketing Toolkit</span>
+                <span className="underline-squiggle">Marketing Toolkit</span>
               </h2>
               <p className="mag-body text-xl max-w-2xl mx-auto">
                 Everything you need to create, deploy, and dominate
@@ -212,10 +208,9 @@ export default function Home() {
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className="comic-panel p-8 wiggle-hover scale-bounce relative"
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                  className="comic-panel p-8 relative"
                 >
-                  <div className="text-6xl mb-6 float-gentle">{feature.icon}</div>
+                  <div className="text-6xl mb-6">{feature.icon}</div>
                   <h3 className="mag-headline text-2xl mb-4">
                     {feature.title}
                   </h3>
@@ -231,11 +226,11 @@ export default function Home() {
         {/* HOW IT WORKS - Bold Steps */}
         <section className="container mx-auto px-6 py-32">
           <div className="text-center mb-20">
-            <div className="inline-block sticker mb-8 pulse-scale">The Process</div>
+            <div className="inline-block sticker mb-8">The Process</div>
             <h2 className="mag-display mag-title">
               4 Steps to
               <br />
-              Marketing <span className="gradient-text-animated">Mastery</span>
+              Marketing <span className="text-[var(--electric-blue)]">Mastery</span>
             </h2>
           </div>
 
@@ -298,7 +293,7 @@ export default function Home() {
               <h2 className="mag-display mag-title mb-6">
                 Pick Your
                 <br />
-                <span className="neon-text">Plan</span>
+                <span className="text-[var(--hot-pink)]">Plan</span>
               </h2>
               <p className="mag-body text-xl text-gray-600">
                 7-day free trial • No credit card • Cancel anytime
@@ -309,7 +304,7 @@ export default function Home() {
               {pricingPlans.map((plan, index) => (
                 <div
                   key={index}
-                  className={`vibrant-card relative ${plan.popular ? 'scale-110 z-10 rainbow-shadow' : 'tilt-hover'}`}
+                  className={`vibrant-card relative ${plan.popular ? 'scale-110 z-10' : ''}`}
                   style={{
                     background: plan.popular
                       ? `linear-gradient(135deg, ${plan.color}, var(--deep-purple))`
@@ -353,34 +348,30 @@ export default function Home() {
         </section>
 
         {/* CTA - Big & Bold */}
-        <section className="container mx-auto px-6 py-32 relative">
-          {/* Decorative background elements */}
-          <div className="absolute top-10 left-10 comic-dots w-32 h-32 opacity-30"></div>
-          <div className="absolute bottom-10 right-10 comic-dots w-40 h-40 opacity-30"></div>
-
+        <section className="container mx-auto px-6 py-32">
           <div className="bold-frame text-center max-w-4xl mx-auto noise-texture">
-            <div className="inline-block sticker mb-8 wiggle-hover">
+            <div className="inline-block sticker mb-8">
               Ready? Let&apos;s Go!
             </div>
 
             <h2 className="mag-display mag-title mb-8">
               Start Telling
               <br />
-              <span className="gradient-text-animated">Better Stories</span>
+              <span className="text-[var(--electric-blue)]">Better Stories</span>
               <br />
               Today
             </h2>
 
             <p className="mag-body text-xl text-gray-700 mb-12 max-w-2xl mx-auto leading-relaxed">
               Join thousands of businesses who&apos;ve discovered that great marketing starts with a great story.
-              And great stories start with <span className="split-color mag-bold">Frame Fables</span>.
+              And great stories start with <span className="mag-bold">Frame Fables</span>.
             </p>
 
             <div className="flex gap-6 justify-center flex-wrap">
-              <button className="bold-button text-lg px-12 button-3d rainbow-shadow">
+              <button className="bold-button text-lg px-12">
                 Start Free Trial →
               </button>
-              <button className="outline-bold-button text-lg px-12 squish-hover">
+              <button className="outline-bold-button text-lg px-12">
                 Schedule Demo
               </button>
             </div>
@@ -397,8 +388,8 @@ export default function Home() {
             <div className="grid md:grid-cols-4 gap-12 mb-12">
               <div>
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="text-4xl float-gentle">📖</div>
-                  <div className="mag-display text-2xl gradient-text-animated">
+                  <div className="text-4xl">📖</div>
+                  <div className="mag-display text-2xl text-[var(--lime-green)]">
                     Frame
                     <br />
                     Fables
