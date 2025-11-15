@@ -103,29 +103,26 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white overflow-hidden">
-      {/* Bold Navigation */}
-      <nav className="border-b-4 bg-white sticky top-0 z-50" style={{ borderColor: 'var(--shadow-black)' }}>
-        <div className="container mx-auto px-6 py-6">
+      {/* Modern Navigation */}
+      <nav className="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
+        <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="text-5xl pixel-sparkle">🐉</div>
-              <h1 className="mag-display text-3xl pixel-text" style={{ color: 'var(--dragon-emerald)' }}>Frame Fables</h1>
+            <div className="flex items-center gap-3">
+              <div className="text-3xl">🐉</div>
+              <h1 className="dragon-display text-2xl gradient-text">Frame Fables</h1>
             </div>
-            <div className="flex gap-6 items-center">
+            <div className="flex gap-4 items-center">
               <Link
                 href="/login"
-                className="mag-bold text-base transition-colors"
-                style={{ color: 'var(--shadow-black)' }}
-                onMouseEnter={(e) => e.currentTarget.style.color = 'var(--dragon-turquoise)'}
-                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--shadow-black)'}
+                className="dragon-body font-semibold text-base hover:text-dragon-emerald transition-colors"
               >
                 Login
               </Link>
               <Link
                 href="/signup"
-                className="dragon-button"
+                className="dragon-btn-primary px-6 py-2.5 rounded-lg text-sm"
               >
-                Get Started
+                <span>Get Started</span>
               </Link>
             </div>
           </div>
@@ -133,80 +130,68 @@ export default function Home() {
       </nav>
 
       <main>
-        {/* HERO - Dragon Quest */}
-        <section className="container mx-auto px-6 py-24 relative pixel-sky overflow-hidden">
-          {/* Pixel Clouds */}
-          <div className="pixel-clouds"></div>
+        {/* HERO - Modern Dragon */}
+        <section className="relative py-20 lg:py-32 overflow-hidden">
+          {/* Subtle gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/30 via-white to-cyan-50/30"></div>
 
-          {/* Dragon Runes */}
-          <div className="dragon-rune" style={{ top: '10%', left: '10%' }}></div>
-          <div className="dragon-rune" style={{ top: '20%', right: '15%', animationDelay: '1s' }}></div>
-          <div className="dragon-rune" style={{ bottom: '15%', left: '20%', animationDelay: '2s' }}></div>
-
-          <div className="absolute top-20 right-10 sticker rotate-12 pixel-sparkle">
-            🐉 THE WYRM AWAITS
-          </div>
-
-          <div className="magazine-grid items-center relative z-10">
-            <div className="span-7">
-              <div className="mag-body text-sm mb-6 uppercase tracking-wider pixel-text" style={{ color: 'var(--dragon-emerald)' }}>
-                🐉 The Emberquill Wyrm Welcomes You
-              </div>
-
-              <h1 className="mag-display mag-hero mb-8">
-                Tell Your
-                <br />
-                <span style={{ color: 'var(--dragon-emerald)' }}>Legendary</span>
-                <br />
-                <span style={{ color: 'var(--molten-gold)' }}>Story.</span>
-                <br />
-                Conquer Your
-                <br />
-                <span style={{ color: 'var(--flame-orange)' }}>Market.</span>
-              </h1>
-
-              <p className="mag-body text-xl text-gray-700 mb-12 max-w-xl leading-relaxed">
-                Frame Fables weaves your brand narrative into <span className="mag-bold" style={{ color: 'var(--dragon-fire)' }}>epic marketing campaigns</span> with AI-powered storytelling magic guided by the ancient wisdom of the Emberquill Wyrm.
-              </p>
-
-              <div className="flex gap-6 flex-wrap">
-                <button className="dragon-button">
-                  Begin Your Quest
-                </button>
-                <button className="dragon-button-outline">
-                  Watch the Magic
-                </button>
-              </div>
-            </div>
-
-            <div className="span-5">
-              {/* Dragon Silhouette */}
-              <div className="dragon-silhouette mb-8 mx-auto"></div>
-
-              <div className="bold-frame noise-texture" style={{ borderColor: 'var(--shadow-black)' }}>
-                <div className="speech-bubble mb-6">
-                  <p className="mag-bold text-lg">&ldquo;The wyrm understands our brand voice!&rdquo;</p>
+          <div className="container mx-auto px-6 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <div className="dragon-badge mb-8">
+                  <span>🐉</span>
+                  <span>Powered by the Emberquill Wyrm</span>
                 </div>
-                <div className="mag-body space-y-4 text-gray-700">
-                  <div className="flex items-start gap-3">
-                    <div className="text-3xl" style={{ color: 'var(--dragon-emerald)' }}>✓</div>
-                    <div>
-                      <div className="mag-bold">10,000+ businesses</div>
-                      <div className="text-sm">Guided by the Emberquill</div>
+
+                <h1 className="dragon-display hero-title mb-6">
+                  Tell Your
+                  <br />
+                  <span className="gradient-text">Legendary</span> Story.
+                  <br />
+                  Conquer Your Market.
+                </h1>
+
+                <p className="dragon-body text-xl mb-10 max-w-xl">
+                  Frame Fables weaves your brand narrative into <span className="font-semibold text-gray-900">epic marketing campaigns</span> with AI-powered storytelling magic guided by the ancient wisdom of the Emberquill Wyrm.
+                </p>
+
+                <div className="flex gap-4 flex-wrap">
+                  <button className="dragon-btn-primary px-8 py-4 text-lg">
+                    <span>Begin Your Quest →</span>
+                  </button>
+                  <button className="dragon-btn-secondary px-8 py-4 text-lg">
+                    <span>Watch Demo</span>
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <div className="dragon-card p-8">
+                  <div className="text-6xl mb-6 text-center">🐉</div>
+                  <p className="dragon-headline text-2xl mb-6 text-center">
+                    &ldquo;The wyrm understands our brand voice!&rdquo;
+                  </p>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <div className="text-2xl text-emerald-500">✓</div>
+                      <div>
+                        <div className="font-semibold text-gray-900">10,000+ businesses</div>
+                        <div className="dragon-body text-sm">Guided by the Emberquill</div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="text-3xl" style={{ color: 'var(--dragon-turquoise)' }}>✓</div>
-                    <div>
-                      <div className="mag-bold">500,000+ campaigns</div>
-                      <div className="text-sm">Forged with dragon fire</div>
+                    <div className="flex items-start gap-3">
+                      <div className="text-2xl text-cyan-500">✓</div>
+                      <div>
+                        <div className="font-semibold text-gray-900">500,000+ campaigns</div>
+                        <div className="dragon-body text-sm">Forged with dragon fire</div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="text-3xl" style={{ color: 'var(--molten-gold)' }}>✓</div>
-                    <div>
-                      <div className="mag-bold">4.9/5 rating</div>
-                      <div className="text-sm">From legendary marketers</div>
+                    <div className="flex items-start gap-3">
+                      <div className="text-2xl text-amber-500">✓</div>
+                      <div>
+                        <div className="font-semibold text-gray-900">4.9/5 rating</div>
+                        <div className="dragon-body text-sm">From legendary marketers</div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -215,37 +200,33 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FEATURES - Dragon Arsenal */}
-        <section className="py-32 diagonal-section relative pixel-sky" style={{ backgroundColor: 'var(--cloud-white)' }}>
-          <div className="pixel-clouds"></div>
-
+        {/* FEATURES - Modern Arsenal */}
+        <section className="py-24 lg:py-32 dragon-bg-subtle">
           <div className="container mx-auto px-6">
-            <div className="text-center mb-20 relative z-10">
-              <div className="inline-block sticker mb-8 pixel-sparkle" style={{ background: 'var(--dragon-emerald)', color: 'white' }}>
-                ⚔️ DRAGON ARSENAL
+            <div className="text-center mb-16">
+              <div className="dragon-badge mx-auto mb-6">
+                <span>⚔️</span>
+                <span>Dragon Arsenal</span>
               </div>
-              <h2 className="mag-display mag-title mb-6">
-                The Wyrm&apos;s
-                <br />
-                <span style={{ color: 'var(--molten-gold)' }}>Marketing Magic</span>
+              <h2 className="dragon-display section-title mb-4">
+                The Wyrm&apos;s <span className="gradient-text-gold">Marketing Magic</span>
               </h2>
-              <p className="mag-body text-xl max-w-2xl mx-auto">
-                🐉 Legendary tools forged with dragon fire
+              <p className="dragon-body text-xl max-w-2xl mx-auto">
+                Legendary tools forged with dragon fire to dominate your market
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className="quest-border p-8 relative bg-white"
-                  style={{ borderColor: 'var(--shadow-black)' }}
+                  className="dragon-card"
                 >
-                  <div className="text-6xl mb-6">{feature.icon}</div>
-                  <h3 className="mag-headline text-2xl mb-4 pixel-text" style={{ color: 'var(--dragon-fire)' }}>
+                  <div className="text-5xl mb-6">{feature.icon}</div>
+                  <h3 className="dragon-headline text-2xl mb-4">
                     {feature.title}
                   </h3>
-                  <p className="mag-body text-gray-700">
+                  <p className="dragon-body">
                     {feature.description}
                   </p>
                 </div>
@@ -254,119 +235,113 @@ export default function Home() {
           </div>
         </section>
 
-        {/* HOW IT WORKS - Dragon's Path */}
-        <section className="container mx-auto px-6 py-32">
-          <div className="text-center mb-20">
-            <div className="inline-block sticker mb-8 pixel-sparkle" style={{ background: 'var(--dragon-fire)', color: 'white' }}>🐉 The Dragon&apos;s Path</div>
-            <h2 className="mag-display mag-title">
-              4 Legendary Steps
-              <br />
-              to Marketing <span style={{ color: 'var(--molten-gold)' }}>Victory</span>
-            </h2>
-          </div>
+        {/* HOW IT WORKS - Modern Path */}
+        <section className="py-24 lg:py-32">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-16">
+              <div className="dragon-badge mx-auto mb-6">
+                <span>🐉</span>
+                <span>The Dragon&apos;s Path</span>
+              </div>
+              <h2 className="dragon-display section-title">
+                4 Legendary Steps to Marketing <span className="gradient-text-gold">Victory</span>
+              </h2>
+            </div>
 
-          <div className="max-w-5xl mx-auto space-y-12">
-            {[
-              {
-                num: "01",
-                title: "Define Your Voice",
-                desc: "Tell us about your brand personality, target audience, and what makes you unique. The wyrm creates a custom narrative framework.",
-                color: "var(--dragon-emerald)",
-              },
-              {
-                num: "02",
-                title: "Choose Your Channels",
-                desc: "Social media, email, ads, blogs—pick where your story needs to be told. We adapt your voice for each platform with dragon precision.",
-                color: "var(--dragon-turquoise)",
-              },
-              {
-                num: "03",
-                title: "AI Crafts Content",
-                desc: "The Emberquill wyrm generates authentic, on-brand content in seconds. Edit it, tweak it, or ship it as-is. It's your call.",
-                color: "var(--molten-gold)",
-              },
-              {
-                num: "04",
-                title: "Deploy & Dominate",
-                desc: "Schedule posts, launch campaigns, track performance. Watch your story resonate with the right people, guided by dragon wisdom.",
-                color: "var(--flame-orange)",
-              },
-            ].map((step, index) => (
-              <div
-                key={index}
-                className="outline-frame relative hover:bg-gray-50 transition-all"
-                style={{ borderColor: 'var(--shadow-black)' }}
-              >
-                <div className="flex flex-col md:flex-row gap-8 items-start">
-                  <div
-                    className="mag-display text-8xl opacity-20 pixel-text"
-                    style={{ color: step.color }}
-                  >
+            <div className="max-w-4xl mx-auto space-y-8">
+              {[
+                {
+                  num: "01",
+                  title: "Define Your Voice",
+                  desc: "Tell us about your brand personality, target audience, and what makes you unique. The wyrm creates a custom narrative framework.",
+                },
+                {
+                  num: "02",
+                  title: "Choose Your Channels",
+                  desc: "Social media, email, ads, blogs—pick where your story needs to be told. We adapt your voice for each platform with dragon precision.",
+                },
+                {
+                  num: "03",
+                  title: "AI Crafts Content",
+                  desc: "The Emberquill wyrm generates authentic, on-brand content in seconds. Edit it, tweak it, or ship it as-is. It's your call.",
+                },
+                {
+                  num: "04",
+                  title: "Deploy & Dominate",
+                  desc: "Schedule posts, launch campaigns, track performance. Watch your story resonate with the right people, guided by dragon wisdom.",
+                },
+              ].map((step, index) => (
+                <div
+                  key={index}
+                  className="dragon-card flex flex-col md:flex-row gap-8 items-start"
+                >
+                  <div className="dragon-display text-6xl gradient-text opacity-30">
                     {step.num}
                   </div>
                   <div className="flex-1">
-                    <h3 className="mag-headline text-3xl md:text-4xl mb-4 pixel-text" style={{ color: 'var(--dragon-fire)' }}>
+                    <h3 className="dragon-headline text-3xl mb-4">
                       {step.title}
                     </h3>
-                    <p className="mag-body text-lg text-gray-700 leading-relaxed">
+                    <p className="dragon-body text-lg leading-relaxed">
                       {step.desc}
                     </p>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* PRICING - Dragon Tier Cards */}
-        <section className="py-32 bg-gray-50 relative">
-          {/* Background Dragon Elements */}
-          <div className="absolute inset-0 opacity-5 pixel-sky"></div>
-
-          <div className="container mx-auto px-6 relative z-10">
-            <div className="text-center mb-20">
-              <div className="inline-block sticker mb-8 pixel-sparkle" style={{ background: 'var(--molten-gold)', color: 'var(--shadow-black)' }}>
-                🐉 CHOOSE YOUR PATH
+        {/* PRICING - Modern Tier Cards */}
+        <section className="py-24 lg:py-32 dragon-bg-gradient">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-16">
+              <div className="dragon-badge mx-auto mb-6">
+                <span>🐉</span>
+                <span>Choose Your Path</span>
               </div>
-              <h2 className="mag-display mag-title mb-6">
-                Ascend to
-                <br />
-                <span style={{ color: 'var(--dragon-emerald)' }}>Dragon</span> <span style={{ color: 'var(--molten-gold)' }}>Mastery</span>
+              <h2 className="dragon-display section-title mb-4">
+                Ascend to <span className="gradient-text">Dragon</span> <span className="gradient-text-gold">Mastery</span>
               </h2>
-              <p className="mag-body text-xl text-gray-600">
+              <p className="dragon-body text-xl">
                 ⭐ 7-day free trial • No credit card • The wyrm protects all
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
               {pricingPlans.map((plan, index) => (
                 <div
                   key={index}
-                  className={`tier-card-dragon ${plan.tierClass} relative ${plan.popular ? 'scale-105 z-10' : ''}`}
+                  className={`tier-card tier-card-${plan.tierClass.split('-')[1]} relative ${plan.popular ? 'md:scale-105' : ''}`}
                 >
                   {plan.popular && (
-                    <div className="badge-corner" style={{ background: 'var(--dragon-turquoise)', color: 'var(--shadow-black)' }}>
-                      MOST
-                      <br />
-                      POPULAR
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                      <div className="dragon-badge text-xs">
+                        <span>⭐</span>
+                        <span>Most Popular</span>
+                      </div>
                     </div>
                   )}
 
-                  {/* Pixel Icon */}
-                  <div className={`${plan.iconClass} mx-auto mb-6`}></div>
+                  <div className="text-center mb-6">
+                    <div className="text-4xl mb-4">
+                      {plan.tierClass.includes('squire') && '🛡️'}
+                      {plan.tierClass.includes('knight') && '⚔️'}
+                      {plan.tierClass.includes('king') && '👑'}
+                    </div>
+                    <h3 className="dragon-headline text-2xl mb-2">{plan.name}</h3>
+                    <p className="dragon-body text-sm italic text-gray-500">{plan.dragonElement}</p>
+                  </div>
 
-                  <h3 className="mag-headline text-2xl mb-2 pixel-text">{plan.name}</h3>
-                  <p className="text-sm text-gray-600 mb-6 italic">{plan.dragonElement}</p>
-
-                  <div className="mb-8">
-                    <span className="mag-display text-5xl">{plan.price}</span>
-                    <span className="mag-body text-lg opacity-80">{plan.period}</span>
+                  <div className="text-center mb-8">
+                    <span className="dragon-display text-5xl block mb-2">{plan.price}</span>
+                    <span className="dragon-body text-gray-600">{plan.period}</span>
                   </div>
 
                   <ul className="space-y-3 mb-10">
                     {plan.features.map((feature, idx) => (
-                      <li key={idx} className="mag-body flex items-start gap-3 text-sm">
-                        <span className="text-xl">🐉</span>
+                      <li key={idx} className="dragon-body flex items-start gap-3 text-sm">
+                        <span className="text-emerald-500 font-bold">✓</span>
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -374,115 +349,113 @@ export default function Home() {
 
                   <button
                     onClick={() => setSelectedPlan(plan.name)}
-                    className="w-full dragon-button"
+                    className="w-full dragon-btn-primary py-3"
                   >
-                    {plan.cta}
+                    <span>{plan.cta}</span>
                   </button>
                 </div>
               ))}
             </div>
 
-            {/* Dragon Tier Pathway Visualization */}
-            <div className="mt-20 max-w-4xl mx-auto">
+            {/* Modern Tier Pathway */}
+            <div className="max-w-5xl mx-auto">
               <div className="text-center mb-12">
-                <h3 className="mag-headline text-3xl mb-4" style={{ color: 'var(--dragon-fire)' }}>
+                <h3 className="dragon-headline text-3xl mb-3 gradient-text">
                   The Dragon&apos;s Path to Mastery
                 </h3>
-                <p className="mag-body text-gray-600">
+                <p className="dragon-body">
                   Ascend from Squire to King alongside the Emberquill Wyrm
                 </p>
               </div>
 
-              <div className="dragon-tier-pathway">
-                <div className="tier-path-segment">
-                  <div className="tier-path-icon pixel-icon-shield"></div>
-                  <div className="tier-path-label pixel-text">Squire&apos;s Start</div>
-                  <div className="tier-path-description">Begin your journey under the dragon&apos;s tail</div>
+              <div className="tier-pathway">
+                <div className="tier-path-item">
+                  <div className="tier-path-icon-wrapper">
+                    <span>🛡️</span>
+                  </div>
+                  <div className="dragon-label">Squire&apos;s Start</div>
+                  <p className="dragon-body text-sm text-center">Begin your journey under the dragon&apos;s tail</p>
                 </div>
 
                 <div className="tier-path-arrow">→</div>
 
-                <div className="tier-path-segment">
-                  <div className="tier-path-icon pixel-icon-sword"></div>
-                  <div className="tier-path-label pixel-text">Knight&apos;s Climb</div>
-                  <div className="tier-path-description">Rise beneath the mighty wings</div>
+                <div className="tier-path-item">
+                  <div className="tier-path-icon-wrapper">
+                    <span>⚔️</span>
+                  </div>
+                  <div className="dragon-label">Knight&apos;s Climb</div>
+                  <p className="dragon-body text-sm text-center">Rise beneath the mighty wings</p>
                 </div>
 
                 <div className="tier-path-arrow">→</div>
 
-                <div className="tier-path-segment">
-                  <div className="tier-path-icon pixel-icon-crown"></div>
-                  <div className="tier-path-label pixel-text">King&apos;s Command</div>
-                  <div className="tier-path-description">Stand beside the dragon&apos;s crest</div>
+                <div className="tier-path-item">
+                  <div className="tier-path-icon-wrapper">
+                    <span>👑</span>
+                  </div>
+                  <div className="dragon-label">King&apos;s Command</div>
+                  <p className="dragon-body text-sm text-center">Stand beside the dragon&apos;s crest</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* CTA - Epic Call to Adventure */}
-        <section className="container mx-auto px-6 py-32 relative pixel-sky">
-          {/* Pixel Clouds */}
-          <div className="pixel-clouds"></div>
+        {/* CTA - Modern Call to Adventure */}
+        <section className="py-24 lg:py-32 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-cyan-500/10 to-amber-500/10"></div>
 
-          {/* Dragon Flames */}
-          <div className="dragon-flame" style={{ top: '20%', left: '10%' }}></div>
-          <div className="dragon-flame" style={{ top: '60%', right: '10%', animationDelay: '1.5s' }}></div>
+          <div className="container mx-auto px-6 relative z-10">
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="dragon-badge mx-auto mb-8">
+                <span>🐉</span>
+                <span>The Wyrm Calls!</span>
+              </div>
 
-          <div className="bold-frame text-center max-w-4xl mx-auto noise-texture relative z-10" style={{ borderColor: 'var(--shadow-black)', background: 'rgba(255, 255, 255, 0.95)' }}>
-            <div className="inline-block sticker mb-8 pixel-sparkle" style={{ background: 'var(--dragon-fire)', color: 'white' }}>
-              🐉 The Wyrm Calls!
+              <h2 className="dragon-display section-title mb-6">
+                Begin Weaving <span className="gradient-text">Legendary</span> <span className="gradient-text-gold">Tales</span> Today
+              </h2>
+
+              <p className="dragon-body text-xl mb-12 max-w-2xl mx-auto">
+                Join thousands of marketing heroes who&apos;ve discovered that epic campaigns begin with compelling stories.
+                And legendary stories are forged with the <span className="font-semibold gradient-text">Emberquill Wyrm</span>.
+              </p>
+
+              <div className="flex gap-4 justify-center flex-wrap mb-8">
+                <button className="dragon-btn-primary px-10 py-4 text-lg">
+                  <span>🐉 Start Your Quest →</span>
+                </button>
+                <button className="dragon-btn-secondary px-10 py-4 text-lg">
+                  <span>⚔️ View the Magic</span>
+                </button>
+              </div>
+
+              <p className="dragon-body text-sm text-gray-600">
+                No credit card required • 7 days free • The wyrm protects all trials
+              </p>
             </div>
-
-            <h2 className="mag-display mag-title mb-8">
-              Begin Weaving
-              <br />
-              <span style={{ color: 'var(--dragon-emerald)' }}>Legendary</span> <span style={{ color: 'var(--molten-gold)' }}>Tales</span>
-              <br />
-              Today
-            </h2>
-
-            <p className="mag-body text-xl text-gray-700 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Join thousands of marketing heroes who&apos;ve discovered that epic campaigns begin with compelling stories.
-              And legendary stories are forged with the <span className="mag-bold" style={{ color: 'var(--dragon-fire)' }}>Emberquill Wyrm</span>.
-            </p>
-
-            <div className="flex gap-6 justify-center flex-wrap">
-              <button className="dragon-button text-lg px-12">
-                🐉 Start Your Quest →
-              </button>
-              <button className="dragon-button-outline text-lg px-12">
-                ⚔️ View the Magic
-              </button>
-            </div>
-
-            <p className="mag-body text-sm text-gray-600 mt-8">
-              No credit card required • 7 days free • The wyrm protects all trials
-            </p>
           </div>
         </section>
 
-        {/* FOOTER */}
-        <footer className="border-t-4 bg-black text-white py-20 relative pixel-sky" style={{ borderColor: 'var(--shadow-black)' }}>
-          <div className="container mx-auto px-6 relative z-10">
+        {/* FOOTER - Modern */}
+        <footer className="border-t border-gray-200 bg-gray-900 text-white py-16">
+          <div className="container mx-auto px-6">
             <div className="grid md:grid-cols-4 gap-12 mb-12">
               <div>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="text-4xl pixel-sparkle">🐉</div>
-                  <div className="mag-display text-2xl pixel-text" style={{ color: 'var(--dragon-emerald)' }}>
-                    Frame
-                    <br />
-                    Fables
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="text-3xl">🐉</div>
+                  <div className="dragon-display text-xl gradient-text">
+                    Frame Fables
                   </div>
                 </div>
-                <p className="mag-body text-sm text-gray-400">
-                  🐉 Where ancient wisdom meets modern magic. Guided by the Emberquill Wyrm.
+                <p className="dragon-body text-sm text-gray-400">
+                  Where ancient wisdom meets modern magic. Guided by the Emberquill Wyrm.
                 </p>
               </div>
 
               <div>
-                <h4 className="mag-bold text-sm mb-4" style={{ color: 'var(--molten-gold)' }}>PRODUCT</h4>
-                <ul className="space-y-2 mag-body text-sm text-gray-400">
+                <h4 className="dragon-label text-amber-400 mb-4">Product</h4>
+                <ul className="space-y-2 dragon-body text-sm text-gray-400">
                   <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
                   <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
                   <li><a href="#" className="hover:text-white transition-colors">Use Cases</a></li>
@@ -491,8 +464,8 @@ export default function Home() {
               </div>
 
               <div>
-                <h4 className="mag-bold text-sm mb-4" style={{ color: 'var(--dragon-turquoise)' }}>COMPANY</h4>
-                <ul className="space-y-2 mag-body text-sm text-gray-400">
+                <h4 className="dragon-label text-cyan-400 mb-4">Company</h4>
+                <ul className="space-y-2 dragon-body text-sm text-gray-400">
                   <li><a href="#" className="hover:text-white transition-colors">About</a></li>
                   <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
                   <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
@@ -501,8 +474,8 @@ export default function Home() {
               </div>
 
               <div>
-                <h4 className="mag-bold text-sm mb-4" style={{ color: 'var(--flame-orange)' }}>LEGAL</h4>
-                <ul className="space-y-2 mag-body text-sm text-gray-400">
+                <h4 className="dragon-label text-emerald-400 mb-4">Legal</h4>
+                <ul className="space-y-2 dragon-body text-sm text-gray-400">
                   <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
                   <li><a href="#" className="hover:text-white transition-colors">Terms</a></li>
                   <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
@@ -512,7 +485,7 @@ export default function Home() {
             </div>
 
             <div className="border-t border-gray-800 pt-8">
-              <p className="mag-body text-xs text-gray-500 text-center">
+              <p className="dragon-body text-xs text-gray-500 text-center">
                 © 2024 Frame Fables. Built with ❤️ and AI. All rights reserved.
               </p>
             </div>
