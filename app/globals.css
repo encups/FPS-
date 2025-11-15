@@ -422,34 +422,73 @@
   }
 }
 
-/* Quest Border - Medieval meets Cosmic */
+/* Quest Border - Dragon Style */
 .quest-border {
   position: relative;
-  border: 4px solid transparent;
-  background:
-    linear-gradient(white, white) padding-box,
-    linear-gradient(45deg, var(--electric-blue), var(--hot-pink), var(--vibrant-orange), var(--lime-green)) border-box;
-}
-
-.quest-border::before,
-.quest-border::after {
-  content: '✦';
-  position: absolute;
-  font-size: 1.5rem;
-  color: var(--sunny-yellow);
-  text-shadow: 0 0 10px var(--sunny-yellow);
-  animation: sparkle-quest 3s ease-in-out infinite;
+  border: 4px solid var(--shadow-black);
+  background: white;
+  box-shadow: 8px 8px 0 rgba(26, 26, 46, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
 }
 
 .quest-border::before {
-  top: -15px;
-  left: -15px;
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  background: linear-gradient(
+    135deg,
+    var(--dragon-emerald),
+    var(--dragon-turquoise),
+    var(--molten-gold),
+    var(--flame-orange)
+  );
+  background-size: 300% 300%;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s;
+  animation: quest-border-flow 8s ease infinite;
+}
+
+@keyframes quest-border-flow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .quest-border::after {
-  bottom: -15px;
-  right: -15px;
-  animation-delay: 1.5s;
+  content: '🐉';
+  position: absolute;
+  top: -18px;
+  right: -18px;
+  font-size: 1.5rem;
+  opacity: 0;
+  transform: scale(0) rotate(-45deg);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  filter: drop-shadow(0 0 8px var(--molten-gold));
+  z-index: 10;
+}
+
+.quest-border:hover::before {
+  opacity: 0.6;
+}
+
+.quest-border:hover::after {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.quest-border:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow:
+    12px 20px 0 rgba(26, 26, 46, 0.2),
+    0 0 40px rgba(45, 159, 110, 0.3);
 }
 
 @keyframes sparkle-quest {
@@ -679,22 +718,40 @@
   position: relative;
 }
 
-/* Dragon Buttons */
+/* Dragon Buttons - Enhanced Pixel Style */
 .dragon-button {
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 900;
+  font-family: 'Press Start 2P', cursive;
   text-transform: uppercase;
-  padding: 16px 32px;
+  padding: 18px 36px;
   border: 4px solid var(--shadow-black);
-  background: var(--molten-gold);
+  background: linear-gradient(
+    135deg,
+    var(--molten-gold) 0%,
+    var(--flame-orange) 50%,
+    var(--molten-gold) 100%
+  );
+  background-size: 200% 200%;
   color: var(--shadow-black);
-  box-shadow: 6px 6px 0 var(--shadow-black);
-  transition: all 0.2s ease;
+  box-shadow:
+    6px 6px 0 var(--shadow-black),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   letter-spacing: 0.05em;
-  font-size: 0.875rem;
+  font-size: 0.7rem;
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  image-rendering: pixelated;
+  animation: button-bg-shift 4s ease infinite;
+}
+
+@keyframes button-bg-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .dragon-button::before {
@@ -704,23 +761,58 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: flame-sweep-auto 3s ease-in-out infinite;
+}
+
+@keyframes flame-sweep-auto {
+  0%, 20% {
+    left: -100%;
+  }
+  80%, 100% {
+    left: 100%;
+  }
+}
+
+.dragon-button::after {
+  content: '🔥';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
 .dragon-button:hover::before {
   left: 100%;
+  animation: none;
+}
+
+.dragon-button:hover::after {
+  opacity: 1;
 }
 
 .dragon-button:hover {
-  transform: translate(3px, 3px);
-  box-shadow: 3px 3px 0 var(--shadow-black);
-  background: var(--flame-orange);
+  transform: translate(-4px, -4px);
+  box-shadow:
+    10px 10px 0 var(--shadow-black),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(255, 139, 66, 0.6);
+  background: linear-gradient(
+    135deg,
+    var(--flame-orange) 0%,
+    var(--dragon-fire) 50%,
+    var(--flame-orange) 100%
+  );
 }
 
 .dragon-button:active {
-  transform: translate(6px, 6px);
-  box-shadow: 0 0 0 var(--shadow-black);
+  transform: translate(2px, 2px);
+  box-shadow:
+    2px 2px 0 var(--shadow-black),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.2);
 }
 
 .dragon-button-emerald {
@@ -766,14 +858,97 @@
 
 .tier-squire {
   border-top: 8px solid var(--dragon-emerald);
+  box-shadow: 0 8px 24px rgba(45, 159, 110, 0.2);
+  position: relative;
+}
+
+.tier-squire::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--dragon-emerald),
+    transparent
+  );
+  animation: tier-shimmer 3s ease infinite;
+}
+
+.tier-squire:hover {
+  box-shadow: 0 12px 32px rgba(45, 159, 110, 0.4);
 }
 
 .tier-knight {
   border-top: 8px solid var(--dragon-turquoise);
+  box-shadow: 0 12px 32px rgba(63, 207, 213, 0.3);
+  position: relative;
+}
+
+.tier-knight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--dragon-turquoise),
+    var(--molten-gold),
+    var(--dragon-turquoise),
+    transparent
+  );
+  animation: tier-shimmer 3s ease infinite;
+}
+
+.tier-knight:hover {
+  box-shadow: 0 16px 40px rgba(63, 207, 213, 0.5);
 }
 
 .tier-king {
   border-top: 8px solid var(--molten-gold);
+  box-shadow: 0 16px 40px rgba(255, 184, 77, 0.4);
+  position: relative;
+}
+
+.tier-king::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--molten-gold),
+    var(--flame-orange),
+    var(--dragon-fire),
+    var(--flame-orange),
+    var(--molten-gold),
+    transparent
+  );
+  animation: tier-shimmer 2.5s ease infinite;
+}
+
+.tier-king:hover {
+  box-shadow: 0 20px 48px rgba(255, 184, 77, 0.6);
+}
+
+@keyframes tier-shimmer {
+  0%, 100% {
+    opacity: 0.5;
+    transform: translateX(-10%);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(10%);
+  }
 }
 
 /* Dragon Badge */
@@ -832,44 +1007,91 @@
   }
 }
 
-/* Dragon Silhouette Placeholder */
+/* Dragon Silhouette - Enhanced Detailed Design */
 .dragon-silhouette {
-  width: 200px;
-  height: 200px;
+  width: 280px;
+  height: 280px;
   background: linear-gradient(
     135deg,
     var(--dragon-emerald) 0%,
-    var(--dragon-turquoise) 50%,
-    var(--molten-gold) 100%
+    var(--dragon-turquoise) 30%,
+    var(--molten-gold) 70%,
+    var(--flame-orange) 100%
   );
+  /* Detailed dragon with wings spread, head up, tail curved */
   clip-path: polygon(
-    20% 10%,
-    40% 5%,
-    60% 10%,
-    75% 25%,
-    85% 45%,
-    90% 65%,
-    85% 80%,
-    70% 90%,
-    50% 95%,
-    30% 90%,
-    15% 75%,
-    10% 50%,
-    15% 30%
+    /* Head and horns */
+    50% 0%, 52% 2%, 55% 1%, 53% 4%, 56% 8%, 54% 10%,
+    /* Neck curve */
+    52% 12%, 50% 15%, 48% 18%,
+    /* Right wing spread */
+    65% 20%, 75% 18%, 85% 20%, 92% 25%, 95% 32%, 90% 38%, 82% 42%,
+    /* Right body */
+    70% 45%, 68% 50%, 70% 55%,
+    /* Right leg */
+    72% 60%, 74% 68%, 72% 72%, 68% 70%,
+    /* Tail curve */
+    62% 75%, 58% 82%, 55% 90%, 54% 95%, 52% 98%, 50% 96%, 48% 92%,
+    /* Tail tip curl */
+    47% 85%, 46% 78%,
+    /* Left leg */
+    42% 72%, 38% 70%, 36% 68%, 38% 60%,
+    /* Left body */
+    40% 55%, 42% 50%, 40% 45%,
+    /* Left wing spread */
+    28% 42%, 20% 38%, 15% 32%, 18% 25%, 25% 20%, 35% 18%, 45% 20%,
+    /* Back to neck */
+    42% 18%, 40% 15%, 38% 12%, 36% 10%, 34% 8%, 37% 4%, 35% 1%, 38% 2%
   );
   position: relative;
   animation: dragon-breathe 4s ease-in-out infinite;
   image-rendering: pixelated;
+  filter: drop-shadow(0 0 20px var(--dragon-emerald));
+}
+
+.dragon-silhouette::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 184, 77, 0.4),
+    transparent 60%
+  );
+  animation: dragon-aura 3s ease-in-out infinite alternate;
+}
+
+.dragon-silhouette::after {
+  content: '🐉';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  opacity: 0.1;
+  pointer-events: none;
 }
 
 @keyframes dragon-breathe {
   0%, 100% {
-    transform: scale(1);
-    filter: drop-shadow(0 0 20px var(--dragon-emerald));
+    transform: scale(1) translateY(0);
+    filter: drop-shadow(0 0 20px var(--dragon-emerald)) drop-shadow(0 0 40px var(--dragon-turquoise));
   }
   50% {
-    transform: scale(1.05);
-    filter: drop-shadow(0 0 30px var(--molten-gold));
+    transform: scale(1.08) translateY(-8px);
+    filter: drop-shadow(0 0 30px var(--molten-gold)) drop-shadow(0 0 60px var(--flame-orange));
+  }
+}
+
+@keyframes dragon-aura {
+  0% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0.6;
   }
 }
 
@@ -994,6 +1216,56 @@
   50% {
     background-position: 100% 50%;
   }
+}
+
+/* Dragon Button Outline Version */
+.dragon-button-outline {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  padding: 16px 32px;
+  background: transparent;
+  border: 4px solid var(--dragon-emerald);
+  color: var(--dragon-emerald);
+  box-shadow: 6px 6px 0 rgba(45, 159, 110, 0.2);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  image-rendering: pixelated;
+}
+
+.dragon-button-outline:hover {
+  background: var(--dragon-emerald);
+  color: white;
+  transform: translate(-4px, -4px);
+  box-shadow: 10px 10px 0 rgba(45, 159, 110, 0.3);
+}
+
+.dragon-button-outline:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 rgba(45, 159, 110, 0.2);
+}
+
+.dragon-button-outline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.dragon-button-outline:hover::before {
+  left: 100%;
 }
 
 /* Pixel Grid Pattern */
@@ -1143,6 +1415,140 @@
 .pixel-card-lift:hover {
   transform: translateY(-8px);
   box-shadow: 12px 20px 0 rgba(26, 26, 46, 0.2);
+}
+
+/* Dragon Tier Pathway Visualization */
+.dragon-tier-pathway {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 3rem 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(45, 159, 110, 0.05),
+    rgba(63, 207, 213, 0.05),
+    rgba(255, 184, 77, 0.05)
+  );
+  border: 4px solid var(--shadow-black);
+  border-radius: 0;
+  box-shadow: 8px 8px 0 rgba(26, 26, 46, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.dragon-tier-pathway::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(90deg, transparent 95%, rgba(26, 26, 46, 0.05) 100%),
+    linear-gradient(0deg, transparent 95%, rgba(26, 26, 46, 0.05) 100%);
+  background-size: 16px 16px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.tier-path-segment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  max-width: 200px;
+  padding: 2rem 1rem;
+  background: white;
+  border: 4px solid var(--shadow-black);
+  box-shadow: 6px 6px 0 rgba(26, 26, 46, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
+}
+
+.tier-path-segment:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 8px 12px 0 rgba(26, 26, 46, 0.2);
+  z-index: 2;
+}
+
+.tier-path-segment:hover .tier-path-icon {
+  transform: scale(1.2) rotate(360deg);
+  filter: drop-shadow(0 0 20px var(--molten-gold));
+}
+
+.tier-path-icon {
+  width: 80px;
+  height: 80px;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.tier-path-label {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.9rem;
+  color: var(--dragon-fire);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tier-path-description {
+  font-size: 0.75rem;
+  color: #666;
+  text-align: center;
+  line-height: 1.4;
+  font-style: italic;
+}
+
+.tier-path-arrow {
+  font-size: 3rem;
+  color: var(--molten-gold);
+  font-weight: bold;
+  animation: arrow-pulse 2s ease-in-out infinite;
+  text-shadow:
+    0 0 10px var(--flame-orange),
+    0 0 20px var(--dragon-fire);
+}
+
+@keyframes arrow-pulse {
+  0%, 100% {
+    transform: scale(1) translateX(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.2) translateX(8px);
+    opacity: 1;
+  }
+}
+
+/* Responsive Tier Pathway */
+@media (max-width: 1024px) {
+  .dragon-tier-pathway {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .tier-path-arrow {
+    transform: rotate(90deg);
+  }
+
+  @keyframes arrow-pulse {
+    0%, 100% {
+      transform: rotate(90deg) scale(1) translateX(0);
+      opacity: 0.7;
+    }
+    50% {
+      transform: rotate(90deg) scale(1.2) translateX(8px);
+      opacity: 1;
+    }
+  }
+
+  .tier-path-segment {
+    max-width: 100%;
+    width: 100%;
+  }
 }
 
 /* Dragon Theme Integration - Overrides */
