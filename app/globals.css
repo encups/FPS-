@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Cinzel+Decorative:wght@400;700;900&family=Philosopher:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Cinzel+Decorative:wght@400;700;900&family=Philosopher:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -547,5 +547,298 @@
       0 0 0 8px rgba(212, 175, 55, 0.3),
       0 30px 60px rgba(0, 0, 0, 0.5),
       0 0 100px rgba(212, 175, 55, 0.4);
+  }
+
+  /* ===== CONTEMPORARY GALLERY AESTHETIC ===== */
+
+  /* Modern Typography */
+  .gallery-display {
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .gallery-serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .gallery-sans {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .gallery-mono {
+    font-family: 'Space Grotesk', monospace;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  /* Gallery Frame Styles */
+  .gallery-frame {
+    position: relative;
+    padding: 3rem;
+    background: linear-gradient(135deg, #fafaf9 0%, #f5f5f4 100%);
+    border: 12px solid #2C2416;
+    box-shadow:
+      inset 0 0 0 4px #f5f5f4,
+      inset 0 0 0 8px #D4AF37,
+      inset 0 0 0 12px #f5f5f4,
+      0 20px 80px rgba(0, 0, 0, 0.15),
+      0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .gallery-frame::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    pointer-events: none;
+  }
+
+  .minimal-frame {
+    border: 2px solid #2C2416;
+    background: white;
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.05),
+      0 8px 24px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .minimal-frame:hover {
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.08),
+      0 16px 48px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+  }
+
+  .accent-frame {
+    position: relative;
+    border: 3px solid #D4AF37;
+    background: white;
+    padding: 2rem;
+  }
+
+  .accent-frame::after {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border: 1px solid #2C2416;
+    pointer-events: none;
+  }
+
+  /* Modern Geometric Elements */
+  .geometric-accent {
+    position: relative;
+  }
+
+  .geometric-accent::before {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #D4AF37 0%, #CD7F32 100%);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    opacity: 0.15;
+  }
+
+  /* Split Screen Layouts */
+  .split-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 80vh;
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .split-hero {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Contemporary Buttons */
+  .gallery-button {
+    font-family: 'Space Grotesk', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1rem 2.5rem;
+    border: 2px solid #2C2416;
+    background: #D4AF37;
+    color: #2C2416;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gallery-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: #2C2416;
+    transition: left 0.3s ease;
+    z-index: 0;
+  }
+
+  .gallery-button:hover::before {
+    left: 0;
+  }
+
+  .gallery-button:hover {
+    color: #D4AF37;
+  }
+
+  .gallery-button span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .outline-button {
+    font-family: 'Space Grotesk', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1rem 2.5rem;
+    border: 2px solid #2C2416;
+    background: transparent;
+    color: #2C2416;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+  }
+
+  .outline-button:hover {
+    background: #2C2416;
+    color: white;
+  }
+
+  /* Contemporary Cards */
+  .contemporary-card {
+    background: white;
+    border: 1px solid #e5e5e5;
+    padding: 2.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .contemporary-card:hover {
+    border-color: #D4AF37;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  /* Minimalist Dividers */
+  .minimal-divider {
+    width: 60px;
+    height: 2px;
+    background: #D4AF37;
+    margin: 2rem 0;
+  }
+
+  .centered-divider {
+    width: 60px;
+    height: 2px;
+    background: #D4AF37;
+    margin: 2rem auto;
+  }
+
+  /* Accent Colors */
+  .coral-accent {
+    color: #ff6b6b;
+  }
+
+  .terracotta-accent {
+    color: #e76f51;
+  }
+
+  /* Clean Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .slide-in-right {
+    animation: slideInRight 0.6s ease-out;
+  }
+
+  /* Typography Hierarchy */
+  .hero-xl {
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1.1;
+  }
+
+  .hero-lg {
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.2;
+  }
+
+  .display-md {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.3;
+  }
+
+  /* Gradient Overlays */
+  .light-gradient {
+    background: linear-gradient(135deg, #fafaf9 0%, #f5f5f4 50%, #fafaf9 100%);
+  }
+
+  .gold-wash {
+    background: linear-gradient(135deg,
+      rgba(212, 175, 55, 0.03) 0%,
+      transparent 50%,
+      rgba(212, 175, 55, 0.03) 100%);
+  }
+
+  /* Sophisticated Hover States */
+  .subtle-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .subtle-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Border Accents */
+  .border-accent-left {
+    border-left: 4px solid #D4AF37;
+    padding-left: 2rem;
+  }
+
+  .border-accent-top {
+    border-top: 4px solid #D4AF37;
+    padding-top: 2rem;
   }
 }

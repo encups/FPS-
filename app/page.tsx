@@ -84,34 +84,29 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-medieval-ink via-gray-900 to-medieval-forest relative overflow-hidden">
-      {/* Ambient Background Glow */}
-      <div className="fixed inset-0 pointer-events-none opacity-30">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-medieval-gold rounded-full blur-3xl opacity-20 animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-medieval-bronze rounded-full blur-3xl opacity-20 animate-pulse" style={{animationDelay: '2s'}}></div>
-      </div>
-
-      {/* Hero Section */}
-      <nav className="border-b-2 border-medieval-gold glass-frame relative z-10">
-        <div className="container mx-auto px-4 py-5">
+    <div className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className="border-b border-gray-200 bg-white sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4 hover-glow">
-              <span className="text-5xl animate-float">📖</span>
-              <h1 className="fable-title text-3xl animated-gradient-text">Frame Fables</h1>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 border-2 border-gray-900 flex items-center justify-center">
+                <span className="gallery-mono text-xs">FF</span>
+              </div>
+              <h1 className="gallery-display text-2xl text-gray-900">Frame Fables</h1>
             </div>
-            <div className="flex gap-6 items-center">
+            <div className="flex gap-8 items-center">
               <Link
                 href="/login"
-                className="story-text text-lg text-medieval-parchment hover:text-medieval-gold transition-all hover:scale-110 relative group"
+                className="gallery-sans text-sm text-gray-700 hover:text-gray-900 transition-colors"
               >
                 Login
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-medieval-gold transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <Link
                 href="/signup"
-                className="picture-frame modern-button bg-medieval-gold text-medieval-ink px-8 py-3 fable-title text-xs relative z-10"
+                className="gallery-button"
               >
-                Start Free
+                <span>Get Started</span>
               </Link>
             </div>
           </div>
@@ -120,254 +115,306 @@ export default function Home() {
 
       <main>
         {/* Hero */}
-        <section className="container mx-auto px-4 py-32 text-center particles-bg relative">
-          <div className="mb-12">
-            <div className="inline-block ornate-frame glass-card px-8 py-4 mb-8 relative">
-              <span className="pixel-text text-sm neon-text">
-                ⚡ AI-Powered Marketing Magic ⚡
+        <section className="container mx-auto px-6 py-32">
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-8">
+              <span className="gallery-mono text-xs text-gray-600 tracking-wider">
+                AI-Powered Marketing Platform
               </span>
+              <div className="minimal-divider"></div>
             </div>
-          </div>
 
-          {/* Main Headline - Framed */}
-          <div className="max-w-6xl mx-auto mb-12 relative">
-            <div className="ornament-divider mb-10">
-              <span className="text-5xl hover-glow">✦ ◆ ✦</span>
-            </div>
-            <h2 className="fable-title text-6xl md:text-8xl mb-6 leading-tight relative inline-block">
-              <span className="animated-gradient-text">Conquer Your Market</span>
+            <h2 className="gallery-display hero-xl text-gray-900 mb-8">
+              Turn Stories<br />
+              Into Strategy
             </h2>
-            <h3 className="fable-title text-5xl md:text-6xl mb-8 leading-tight">
-              <span className="neon-text">One Fable at a Time</span>
-            </h3>
 
-            {/* Decorative Frame Elements */}
-            <div className="absolute -top-6 -left-6 text-6xl text-medieval-gold opacity-50 animate-float">「</div>
-            <div className="absolute -bottom-6 -right-6 text-6xl text-medieval-gold opacity-50 animate-float" style={{animationDelay: '1s'}}>」</div>
-          </div>
+            <p className="gallery-serif text-2xl md:text-3xl text-gray-700 max-w-3xl mb-16 leading-relaxed">
+              Frame Fables transforms your brand narrative into powerful marketing campaigns.
+              <span className="text-gray-900"> AI-powered content generation meets timeless storytelling.</span>
+            </p>
 
-          <p className="story-text text-2xl md:text-4xl text-medieval-parchment max-w-5xl mx-auto mb-16 leading-relaxed font-light">
-            Automated AI marketing tools for small businesses, wrapped in
-            <span className="animated-gradient-text font-bold"> storytelling charm</span>.
-            <br />Generate content, run campaigns, and grow your kingdom... err, business!
-          </p>
+            <div className="flex gap-6 items-center flex-wrap mb-24">
+              <button className="gallery-button">
+                <span>Start Free Trial</span>
+              </button>
+              <button className="outline-button">
+                <span>View Demo</span>
+              </button>
+            </div>
 
-          <div className="flex gap-8 justify-center flex-wrap">
-            <button className="picture-frame modern-button vibrant-gradient text-medieval-ink px-14 py-6 fable-title text-base relative overflow-hidden group">
-              <span className="relative z-10">🗡️ Start Your Quest</span>
-            </button>
-            <button className="ornate-frame glass-card text-medieval-parchment px-14 py-6 fable-title text-base hover-frame-pop">
-              📖 View Demo
-            </button>
+            {/* Featured Frame */}
+            <div className="gallery-frame">
+              <div className="grid md:grid-cols-3 gap-12">
+                <div className="border-accent-left">
+                  <h3 className="gallery-mono text-xs mb-4">Content Generation</h3>
+                  <p className="gallery-sans text-sm text-gray-600 leading-relaxed">
+                    AI-crafted posts, emails, and campaigns in your brand voice
+                  </p>
+                </div>
+                <div className="border-accent-left">
+                  <h3 className="gallery-mono text-xs mb-4">Brand Storytelling</h3>
+                  <p className="gallery-sans text-sm text-gray-600 leading-relaxed">
+                    Weave compelling narratives that resonate with your audience
+                  </p>
+                </div>
+                <div className="border-accent-left">
+                  <h3 className="gallery-mono text-xs mb-4">Smart Automation</h3>
+                  <p className="gallery-sans text-sm text-gray-600 leading-relaxed">
+                    Schedule and deploy across all your marketing channels
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* Features */}
-        <section className="container mx-auto px-4 py-28 gold-gradient-bg relative">
-          <div className="ornament-divider mb-12">
-            <span className="fable-title text-5xl neon-text">✦</span>
-          </div>
-          <h3 className="fable-title text-5xl md:text-6xl text-center mb-6">
-            <span className="animated-gradient-text">Your Marketing Arsenal</span>
-          </h3>
-          <p className="story-text text-2xl text-center text-medieval-parchment mb-20 max-w-3xl mx-auto">
-            ⚔️ <span className="neon-text">Powerful tools</span> for every storyteller ⚔️
-          </p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="picture-frame glass-card p-10 hover-frame-pop group relative overflow-hidden page-corner"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-medieval-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="text-7xl mb-8 hover-glow relative z-10" style={{animationDelay: `${index * 0.2}s`}}>{feature.icon}</div>
-                <h4 className="fable-title text-lg text-medieval-gold mb-5 group-hover:neon-text transition-all relative z-10">
-                  {feature.title}
-                </h4>
-                <p className="story-text text-xl text-medieval-parchment leading-relaxed relative z-10">
-                  {feature.description}
+        <section className="bg-gray-50 py-32">
+          <div className="container mx-auto px-6">
+            <div className="max-w-6xl mx-auto">
+              <div className="mb-20">
+                <span className="gallery-mono text-xs text-gray-600 tracking-wider">
+                  Marketing Tools
+                </span>
+                <div className="minimal-divider"></div>
+                <h3 className="gallery-display hero-lg text-gray-900 mt-8 mb-6">
+                  Every Story Needs<br />The Right Tools
+                </h3>
+                <p className="gallery-sans text-lg text-gray-600 max-w-2xl">
+                  Complete suite of AI-powered tools designed for modern storytellers
                 </p>
               </div>
-            ))}
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {features.map((feature, index) => (
+                  <div
+                    key={index}
+                    className="minimal-frame p-8 subtle-lift group"
+                  >
+                    <div className="text-4xl mb-6">{feature.icon}</div>
+                    <h4 className="gallery-serif text-xl text-gray-900 mb-4">
+                      {feature.title}
+                    </h4>
+                    <p className="gallery-sans text-sm text-gray-600 leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
         {/* How It Works */}
-        <section className="container mx-auto px-4 py-32 particles-bg relative">
-          <div className="ornament-divider mb-12">
-            <span className="text-6xl hover-glow">🗺️</span>
-          </div>
-          <h3 className="fable-title text-5xl md:text-6xl text-center mb-6">
-            <span className="neon-text">The Quest Begins</span>
-          </h3>
-          <p className="story-text text-2xl text-center text-medieval-parchment mb-20 max-w-3xl mx-auto">
-            Four steps to <span className="animated-gradient-text font-bold">marketing mastery</span>
-          </p>
-          <div className="max-w-6xl mx-auto space-y-12">
-            {[
-              {
-                step: "1",
-                title: "Enter Your Kingdom",
-                desc: "Tell us about your business and brand story - we'll create your unique narrative framework",
-                icon: "🏰",
-              },
-              {
-                step: "2",
-                title: "Choose Your Weapons",
-                desc: "Select from our arsenal of marketing tools and templates - each crafted for maximum impact",
-                icon: "⚔️",
-              },
-              {
-                step: "3",
-                title: "AI Crafts Your Tale",
-                desc: "Our AI weaves compelling content in mere seconds - powerful storytelling at your fingertips",
-                icon: "✨",
-              },
-              {
-                step: "4",
-                title: "Conquer the Market",
-                desc: "Deploy campaigns and witness legendary results - your brand story comes alive",
-                icon: "👑",
-              },
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="flex items-start gap-10 ornate-frame glass-card p-10 hover-frame-pop group relative overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-medieval-gold/10 via-transparent to-medieval-bronze/10 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-                <div className="picture-frame vibrant-gradient w-28 h-28 flex items-center justify-center flex-shrink-0 relative z-10 modern-button">
-                  <span className="fable-title text-4xl text-medieval-ink">{item.step}</span>
-                </div>
-                <div className="flex-1 relative z-10">
-                  <div className="flex items-center gap-4 mb-5">
-                    <span className="text-5xl hover-glow animate-float" style={{animationDelay: `${index * 0.3}s`}}>{item.icon}</span>
-                    <h4 className="fable-title text-2xl md:text-3xl group-hover:animated-gradient-text transition-all">
+        <section className="container mx-auto px-6 py-32">
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-20 text-center">
+              <span className="gallery-mono text-xs text-gray-600 tracking-wider">
+                How It Works
+              </span>
+              <div className="centered-divider"></div>
+              <h3 className="gallery-display hero-lg text-gray-900 mt-8">
+                From Blank Page<br />To Bestseller
+              </h3>
+            </div>
+
+            <div className="space-y-16">
+              {[
+                {
+                  step: "01",
+                  title: "Define Your Narrative",
+                  desc: "Tell us about your brand, voice, and audience. We build a narrative framework unique to you.",
+                },
+                {
+                  step: "02",
+                  title: "Select Your Channels",
+                  desc: "Choose from social media, email, ads, blogs, and more. We adapt your story for each platform.",
+                },
+                {
+                  step: "03",
+                  title: "AI Generates Content",
+                  desc: "Our AI creates authentic, on-brand content in seconds. Edit, refine, or use as-is.",
+                },
+                {
+                  step: "04",
+                  title: "Deploy & Measure",
+                  desc: "Schedule posts, send campaigns, and track performance. Your story reaches the right audience.",
+                },
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className="accent-frame group flex flex-col md:flex-row gap-8"
+                >
+                  <div className="md:w-32 flex-shrink-0">
+                    <span className="gallery-mono text-6xl text-gray-300 group-hover:text-gray-900 transition-colors">
+                      {item.step}
+                    </span>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="gallery-serif text-2xl md:text-3xl text-gray-900 mb-4">
                       {item.title}
                     </h4>
+                    <p className="gallery-sans text-base text-gray-600 leading-relaxed max-w-2xl">
+                      {item.desc}
+                    </p>
                   </div>
-                  <p className="story-text text-xl md:text-2xl text-medieval-parchment leading-relaxed">
-                    {item.desc}
-                  </p>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
 
         {/* Pricing */}
-        <section className="container mx-auto px-4 py-32 gold-gradient-bg">
-          <div className="ornament-divider mb-12">
-            <span className="text-6xl hover-glow">💰</span>
-          </div>
-          <h3 className="fable-title text-5xl md:text-6xl text-center mb-6">
-            <span className="animated-gradient-text">Choose Your Path</span>
-          </h3>
-          <p className="story-text text-2xl text-center text-medieval-parchment mb-20">
-            All plans include <span className="neon-text">7-day free trial</span> • Cancel anytime
-          </p>
-          <div className="grid md:grid-cols-3 gap-12 max-w-7xl mx-auto">
-            {pricingPlans.map((plan, index) => (
-              <div
-                key={index}
-                className={`picture-frame glass-card p-12 hover-frame-pop relative overflow-hidden ${
-                  plan.popular
-                    ? "scale-110 z-10"
-                    : ""
-                }`}
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-medieval-gold/10 via-transparent to-medieval-bronze/10 opacity-0 hover:opacity-100 transition-all duration-700"></div>
-                {plan.popular && (
-                  <div className="ornate-frame vibrant-gradient px-8 py-4 mb-8 text-center relative">
-                    <span className="fable-title text-xs text-medieval-ink">⭐ MOST POPULAR ⭐</span>
-                  </div>
-                )}
-                <h4 className="fable-title text-4xl mb-8 text-center hover:neon-text transition-all relative z-10">
-                  {plan.name}
-                </h4>
-                <div className="mb-10 text-center relative z-10">
-                  <span className="fable-title text-6xl animated-gradient-text block">
-                    {plan.price}
-                  </span>
-                  <span className="story-text text-2xl text-medieval-stone block mt-3">
-                    {plan.period}
-                  </span>
-                </div>
-                <ul className="space-y-5 mb-12 relative z-10">
-                  {plan.features.map((feature, idx) => (
-                    <li
-                      key={idx}
-                      className="story-text text-lg text-medieval-parchment flex items-start gap-4"
-                    >
-                      <span className="text-medieval-gold text-2xl hover-glow">✦</span>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  onClick={() => setSelectedPlan(plan.name)}
-                  className={`w-full modern-button px-10 py-5 fable-title text-base relative z-10 ${
-                    plan.popular
-                      ? "picture-frame vibrant-gradient text-medieval-ink"
-                      : "ornate-frame glass-card text-medieval-parchment"
-                  }`}
-                >
-                  {plan.cta}
-                </button>
+        <section className="bg-gray-50 py-32">
+          <div className="container mx-auto px-6">
+            <div className="max-w-6xl mx-auto">
+              <div className="mb-20 text-center">
+                <span className="gallery-mono text-xs text-gray-600 tracking-wider">
+                  Pricing
+                </span>
+                <div className="centered-divider"></div>
+                <h3 className="gallery-display hero-lg text-gray-900 mt-8 mb-6">
+                  Choose Your Edition
+                </h3>
+                <p className="gallery-sans text-lg text-gray-600">
+                  7-day free trial • No credit card required • Cancel anytime
+                </p>
               </div>
-            ))}
+
+              <div className="grid md:grid-cols-3 gap-8">
+                {pricingPlans.map((plan, index) => (
+                  <div
+                    key={index}
+                    className={`contemporary-card ${
+                      plan.popular
+                        ? "border-2 border-gray-900 shadow-lg"
+                        : ""
+                    }`}
+                  >
+                    {plan.popular && (
+                      <div className="mb-6">
+                        <span className="gallery-mono text-xs bg-gray-900 text-white px-3 py-1">
+                          MOST POPULAR
+                        </span>
+                      </div>
+                    )}
+                    <h4 className="gallery-serif text-2xl text-gray-900 mb-2">
+                      {plan.name}
+                    </h4>
+                    <div className="mb-8">
+                      <span className="gallery-display text-5xl text-gray-900">
+                        {plan.price}
+                      </span>
+                      <span className="gallery-sans text-sm text-gray-600">
+                        {plan.period}
+                      </span>
+                    </div>
+                    <ul className="space-y-4 mb-10">
+                      {plan.features.map((feature, idx) => (
+                        <li
+                          key={idx}
+                          className="gallery-sans text-sm text-gray-600 flex items-start gap-3"
+                        >
+                          <span className="text-gray-900 mt-1">✓</span>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <button
+                      onClick={() => setSelectedPlan(plan.name)}
+                      className={`w-full ${
+                        plan.popular
+                          ? "gallery-button"
+                          : "outline-button"
+                      }`}
+                    >
+                      <span>{plan.cta}</span>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
         {/* CTA */}
-        <section className="container mx-auto px-4 py-32 particles-bg relative">
-          <div className="picture-frame glass-card gold-gradient-bg p-20 text-center max-w-6xl mx-auto relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-medieval-gold/20 via-transparent to-medieval-bronze/20 animate-pulse"></div>
-
-            {/* Decorative Frame Corners */}
-            <div className="absolute -top-4 -left-4 text-8xl text-medieval-gold opacity-60 animate-float">「</div>
-            <div className="absolute -top-4 -right-4 text-8xl text-medieval-gold opacity-60 animate-float" style={{animationDelay: '0.5s'}}>」</div>
-            <div className="absolute -bottom-4 -left-4 text-8xl text-medieval-gold opacity-60 animate-float" style={{animationDelay: '1s'}}>「</div>
-            <div className="absolute -bottom-4 -right-4 text-8xl text-medieval-gold opacity-60 animate-float" style={{animationDelay: '1.5s'}}>」</div>
-
-            <div className="ornament-divider mb-12 relative z-10">
-              <span className="text-7xl hover-glow animate-float">🏰</span>
+        <section className="container mx-auto px-6 py-32">
+          <div className="max-w-4xl mx-auto">
+            <div className="gallery-frame text-center">
+              <span className="gallery-mono text-xs text-gray-600 tracking-wider">
+                Get Started Today
+              </span>
+              <div className="centered-divider"></div>
+              <h3 className="gallery-display hero-lg text-gray-900 mt-8 mb-8">
+                Ready to Frame<br />Your Success Story?
+              </h3>
+              <p className="gallery-sans text-lg text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
+                Join thousands of businesses transforming their marketing with AI-powered storytelling.
+                Start your free trial today—no credit card required.
+              </p>
+              <div className="flex gap-6 justify-center flex-wrap">
+                <button className="gallery-button">
+                  <span>Start Free Trial</span>
+                </button>
+                <button className="outline-button">
+                  <span>Schedule Demo</span>
+                </button>
+              </div>
             </div>
-            <h3 className="fable-title text-5xl md:text-7xl mb-8 leading-tight relative z-10">
-              <span className="neon-text">Ready to Build Your Empire?</span>
-            </h3>
-            <p className="story-text text-3xl md:text-4xl text-medieval-parchment mb-14 leading-relaxed max-w-4xl mx-auto relative z-10 font-light">
-              Join thousands of small businesses conquering their markets with
-              <span className="animated-gradient-text font-bold"> AI-powered storytelling</span>
-            </p>
-            <button className="picture-frame modern-button vibrant-gradient text-medieval-ink px-16 py-8 fable-title text-xl relative z-10 mb-8">
-              <span className="relative z-10">Start Free Trial</span>
-            </button>
-            <p className="story-text text-xl text-medieval-parchment relative z-10">
-              <span className="neon-text">No credit card required</span> • 7-day free trial • Cancel anytime
-            </p>
           </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="border-t-2 border-medieval-gold glass-frame py-20 relative">
-        <div className="container mx-auto px-4 text-center">
-          <div className="ornament-divider mb-10">
-            <span className="text-6xl hover-glow">✦</span>
+      <footer className="border-t border-gray-200 bg-white py-20">
+        <div className="container mx-auto px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex flex-col md:flex-row justify-between gap-12 mb-16">
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 border-2 border-gray-900 flex items-center justify-center">
+                    <span className="gallery-mono text-xs">FF</span>
+                  </div>
+                  <h3 className="gallery-display text-2xl text-gray-900">Frame Fables</h3>
+                </div>
+                <p className="gallery-sans text-sm text-gray-600 max-w-xs leading-relaxed">
+                  Where stories become strategies. AI-powered marketing for modern storytellers.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-12">
+                <div>
+                  <h4 className="gallery-mono text-xs mb-4">Product</h4>
+                  <ul className="space-y-2 gallery-sans text-sm text-gray-600">
+                    <li><a href="#" className="hover:text-gray-900">Features</a></li>
+                    <li><a href="#" className="hover:text-gray-900">Pricing</a></li>
+                    <li><a href="#" className="hover:text-gray-900">Use Cases</a></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="gallery-mono text-xs mb-4">Company</h4>
+                  <ul className="space-y-2 gallery-sans text-sm text-gray-600">
+                    <li><a href="#" className="hover:text-gray-900">About</a></li>
+                    <li><a href="#" className="hover:text-gray-900">Blog</a></li>
+                    <li><a href="#" className="hover:text-gray-900">Careers</a></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="gallery-mono text-xs mb-4">Legal</h4>
+                  <ul className="space-y-2 gallery-sans text-sm text-gray-600">
+                    <li><a href="#" className="hover:text-gray-900">Privacy</a></li>
+                    <li><a href="#" className="hover:text-gray-900">Terms</a></li>
+                    <li><a href="#" className="hover:text-gray-900">Security</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div className="border-t border-gray-200 pt-8">
+              <p className="gallery-sans text-xs text-gray-500 text-center">
+                © 2024 Frame Fables. All rights reserved.
+              </p>
+            </div>
           </div>
-          <div className="flex items-center justify-center gap-6 mb-8 hover-glow">
-            <span className="text-7xl animate-float">📖</span>
-            <span className="fable-title text-5xl animated-gradient-text">Frame Fables</span>
-          </div>
-          <p className="story-text text-2xl text-medieval-parchment mb-6">
-            Where <span className="neon-text">stories become strategies</span>
-          </p>
-          <div className="ornament-divider mb-6">
-            <span className="text-3xl text-medieval-gold">◆</span>
-          </div>
-          <p className="story-text text-lg text-medieval-stone">
-            © 2024 Frame Fables. All rights reserved to the realm.
-          </p>
         </div>
       </footer>
     </div>
