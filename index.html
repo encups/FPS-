@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Control Center - Outbound Engine</title>
+
+    <!--
+    ============================================
+    HOW TO USE:
+    ============================================
+    1. Double-click this file to open in Chrome (or any modern browser)
+    2. On first run, the app will seed sample data (3 clients, 100+ events)
+    3. Navigate using the top menu: Overview, Clients, Events, Flow, etc.
+    4. Add clients, track events, view KPIs
+    5. Click a client to see details and get a shareable link
+    6. Share links work like: index.html#share=TOKEN (client-facing view)
+    7. To reset data: scroll to footer and click "Reset Seed Data"
+
+    FEATURES:
+    - Overview: Global + per-client KPIs with charts
+    - Clients: Manage client list and campaign settings
+    - Client Detail: View/edit settings, generate share link
+    - Events: Full event log with filters
+    - Flow Diagram: Visual workflow representation
+    - Share View: Client-facing read-only dashboard
+
+    All data is stored in your browser's localStorage.
+    ============================================
+    -->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            height: 60px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            flex: 1;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-600);
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+            background: var(--gray-100);
+        }
+
+        /* Main Container */
+        main {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+        .grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+        /* KPI Card */
+        .kpi-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+        }
+
+        .kpi-label {
+            font-size: 13px;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .kpi-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin: 8px 0;
+        }
+
+        .kpi-subtext {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: var(--gray-200);
+            color: var(--gray-700);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-300);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--gray-50);
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 12px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        tbody tr:hover {
+            background: var(--gray-50);
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-paused {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: var(--gray-700);
+            font-size: 14px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-checkbox {
+            margin-right: 8px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--gray-600);
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* Chart */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+
+        /* Flow Diagram */
+        .flow-diagram {
+            padding: 40px 20px;
+            overflow-x: auto;
+        }
+
+        .flow-steps {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            min-width: max-content;
+        }
+
+        .flow-step {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 20px 30px;
+            min-width: 140px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .flow-step:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .flow-step-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .flow-step-desc {
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        .flow-arrow {
+            color: var(--gray-400);
+            font-size: 24px;
+        }
+
+        /* Utility */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-muted {
+            color: var(--gray-500);
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .flex-gap {
+            gap: 10px;
+        }
+
+        .clickable {
+            cursor: pointer;
+        }
+
+        .clickable:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            max-width: 1400px;
+            margin: 60px auto 20px;
+            padding: 20px;
+            text-align: center;
+            color: var(--gray-500);
+            font-size: 14px;
+        }
+
+        /* Share View Specific */
+        .share-view {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .share-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .share-client-name {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .share-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* Print Styles */
+        @media print {
+            header, footer, .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+            }
+
+            .card {
+                box-shadow: none;
+                border: 1px solid var(--gray-300);
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 10px;
+                font-size: 14px;
+            }
+
+            .grid-2,
+            .grid-3,
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-steps {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <nav>
+            <div class="logo">⚡ Control Center</div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#overview" data-nav="overview">Overview</a></li>
+                <li><a href="#clients" data-nav="clients">Clients</a></li>
+                <li><a href="#events" data-nav="events">Events</a></li>
+                <li><a href="#flow" data-nav="flow">Flow</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="app">
+        <!-- Content will be rendered here by JavaScript -->
+    </main>
+
+    <footer id="footer">
+        <p>Service-First Outbound Engine Control Center</p>
+        <button class="btn btn-danger btn-sm mt-20" onclick="resetSeedData()">Reset Seed Data</button>
+    </footer>
+
+    <!-- Modals -->
+    <div id="modal-container"></div>
+
+    <script>
+        // ============================================
+        // UTILITY FUNCTIONS
+        // ============================================
+
+        function uuid() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        function randomToken() {
+            return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        }
+
+        function formatDate(date) {
+            if (typeof date === 'string') date = new Date(date);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        function formatDateTime(date) {
+            if (typeof date === 'string') date = new Date(date);
+            return date.toLocaleString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit'
+            });
+        }
+
+        function getRangeDates(days) {
+            const end = new Date();
+            const start = new Date();
+            start.setDate(start.getDate() - days);
+            return { start, end };
+        }
+
+        function filterEventsByRange(events, days) {
+            const { start } = getRangeDates(days);
+            return events.filter(e => new Date(e.timestamp) >= start);
+        }
+
+        function computeMetrics(events) {
+            const sends = events.filter(e => e.type === 'EmailSent').length;
+            const positiveReplies = events.filter(e => e.type === 'ReplyPositive').length;
+            const neutralReplies = events.filter(e => e.type === 'ReplyNeutral').length;
+            const negativeReplies = events.filter(e => e.type === 'ReplyNegative').length;
+            const replies = positiveReplies + neutralReplies + negativeReplies;
+            const calls = events.filter(e => e.type === 'CallBooked').length;
+
+            const replyRate = sends > 0 ? (replies / sends * 100).toFixed(1) : '0.0';
+            const bookingRateFromPositive = positiveReplies > 0 ? (calls / positiveReplies * 100).toFixed(1) : '0.0';
+            const bookingRateFromSends = sends > 0 ? (calls / sends * 100).toFixed(1) : '0.0';
+
+            return {
+                sends,
+                replies,
+                positiveReplies,
+                neutralReplies,
+                negativeReplies,
+                calls,
+                replyRate,
+                bookingRateFromPositive,
+                bookingRateFromSends
+            };
+        }
+
+        // ============================================
+        // DATA LAYER
+        // ============================================
+
+        const DB = {
+            getClients() {
+                const data = localStorage.getItem('clients');
+                return data ? JSON.parse(data) : [];
+            },
+
+            saveClients(clients) {
+                localStorage.setItem('clients', JSON.stringify(clients));
+            },
+
+            getClient(id) {
+                return this.getClients().find(c => c.id === id);
+            },
+
+            getClientByToken(token) {
+                return this.getClients().find(c => c.shareToken === token);
+            },
+
+            addClient(client) {
+                const clients = this.getClients();
+                clients.push({
+                    id: uuid(),
+                    shareToken: randomToken(),
+                    createdAt: new Date().toISOString(),
+                    status: 'Active',
+                    campaignSettings: {
+                        dailySends: 50,
+                        inboxCount: 3,
+                        followUpCount: 3,
+                        stopOnReply: true,
+                        exclusions: ''
+                    },
+                    ...client
+                });
+                this.saveClients(clients);
+            },
+
+            updateClient(id, updates) {
+                const clients = this.getClients();
+                const index = clients.findIndex(c => c.id === id);
+                if (index !== -1) {
+                    clients[index] = { ...clients[index], ...updates };
+                    this.saveClients(clients);
+                }
+            },
+
+            getEvents() {
+                const data = localStorage.getItem('events');
+                return data ? JSON.parse(data) : [];
+            },
+
+            saveEvents(events) {
+                localStorage.setItem('events', JSON.stringify(events));
+            },
+
+            addEvent(event) {
+                const events = this.getEvents();
+                events.push({
+                    id: uuid(),
+                    timestamp: new Date().toISOString(),
+                    ...event
+                });
+                events.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                this.saveEvents(events);
+            },
+
+            deleteEvent(id) {
+                const events = this.getEvents().filter(e => e.id !== id);
+                this.saveEvents(events);
+            },
+
+            getClientEvents(clientId, days = null) {
+                let events = this.getEvents().filter(e => e.clientId === clientId);
+                if (days) events = filterEventsByRange(events, days);
+                return events;
+            }
+        };
+
+        // ============================================
+        // SEED DATA
+        // ============================================
+
+        function seedDataIfEmpty() {
+            if (DB.getClients().length > 0) return;
+
+            // Create 3 clients
+            const clients = [
+                {
+                    name: 'Acme Corp',
+                    icpNotes: 'B2B SaaS companies, 50-200 employees',
+                    offerNotes: 'Lead generation audit + strategy call',
+                    calendarUrl: 'https://cal.com/demo',
+                    geo: 'USA',
+                    dealSize: '$5,000/mo'
+                },
+                {
+                    name: 'TechStart Inc',
+                    icpNotes: 'Early-stage startups in fintech',
+                    offerNotes: 'Free growth consultation',
+                    calendarUrl: 'https://calendly.com/demo',
+                    geo: 'UK',
+                    dealSize: '$3,000/mo'
+                },
+                {
+                    name: 'GlobalSales Ltd',
+                    icpNotes: 'Enterprise sales teams, 200+ headcount',
+                    offerNotes: 'Sales enablement workshop',
+                    calendarUrl: 'https://cal.com/demo2',
+                    geo: 'Canada',
+                    dealSize: '$10,000/mo'
+                }
+            ];
+
+            clients.forEach(c => DB.addClient(c));
+
+            // Create 100+ events over the past 30 days
+            const clientIds = DB.getClients().map(c => c.id);
+            const eventTypes = ['LeadsImported', 'EmailSent', 'EmailSent', 'EmailSent', 'EmailSent', 'ReplyPositive', 'ReplyNeutral', 'ReplyNegative', 'CallBooked'];
+            const events = [];
+
+            for (let i = 0; i < 150; i++) {
+                const daysAgo = Math.floor(Math.random() * 30);
+                const date = new Date();
+                date.setDate(date.getDate() - daysAgo);
+                date.setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60));
+
+                const type = eventTypes[Math.floor(Math.random() * eventTypes.length)];
+                const clientId = clientIds[Math.floor(Math.random() * clientIds.length)];
+
+                events.push({
+                    id: uuid(),
+                    clientId,
+                    type,
+                    timestamp: date.toISOString(),
+                    meta: type === 'CallBooked' ? 'Call scheduled for next week' :
+                          type === 'LeadsImported' ? `${Math.floor(Math.random() * 500 + 100)} leads imported` :
+                          type.startsWith('Reply') ? 'Reply from prospect' :
+                          'Automated send'
+                });
+            }
+
+            DB.saveEvents(events);
+        }
+
+        function resetSeedData() {
+            if (confirm('Are you sure? This will delete all data and reset to seed data.')) {
+                localStorage.clear();
+                seedDataIfEmpty();
+                location.hash = '#overview';
+                location.reload();
+            }
+        }
+
+        // ============================================
+        // ROUTING
+        // ============================================
+
+        const Router = {
+            currentRoute: '',
+
+            init() {
+                window.addEventListener('hashchange', () => this.handleRoute());
+                this.handleRoute();
+            },
+
+            handleRoute() {
+                const hash = location.hash.slice(1) || 'overview';
+                const [route, param] = hash.split('=');
+
+                this.currentRoute = route;
+                this.updateNav(route);
+
+                if (route === 'share' && param) {
+                    renderShareView(param);
+                } else if (route === 'client' && param) {
+                    renderClientDetail(param);
+                } else {
+                    this.renderView(route);
+                }
+            },
+
+            updateNav(route) {
+                document.querySelectorAll('.nav-links a').forEach(a => {
+                    a.classList.toggle('active', a.dataset.nav === route);
+                });
+
+                // Hide navigation in share view
+                const header = document.getElementById('header');
+                const footer = document.getElementById('footer');
+                if (route === 'share') {
+                    header.classList.add('hidden');
+                    footer.classList.add('hidden');
+                } else {
+                    header.classList.remove('hidden');
+                    footer.classList.remove('hidden');
+                }
+            },
+
+            renderView(route) {
+                const app = document.getElementById('app');
+
+                switch(route) {
+                    case 'overview':
+                        renderOverview();
+                        break;
+                    case 'clients':
+                        renderClients();
+                        break;
+                    case 'events':
+                        renderEvents();
+                        break;
+                    case 'flow':
+                        renderFlow();
+                        break;
+                    default:
+                        renderOverview();
+                }
+            }
+        };
+
+        // ============================================
+        // VIEWS
+        // ============================================
+
+        function renderOverview() {
+            const app = document.getElementById('app');
+            const clients = DB.getClients();
+            const events = DB.getEvents();
+
+            // Default to 7 days
+            let rangeDays = 7;
+
+            const render = (days) => {
+                rangeDays = days;
+                const rangeEvents = filterEventsByRange(events, days);
+                const metrics = computeMetrics(rangeEvents);
+
+                const clientMetrics = clients.map(client => {
+                    const clientEvents = filterEventsByRange(DB.getClientEvents(client.id), days);
+                    const m = computeMetrics(clientEvents);
+                    return { client, metrics: m };
+                }).sort((a, b) => b.metrics.calls - a.metrics.calls);
+
+                app.innerHTML = `
+                    <div class="card">
+                        <div class="card-header">
+                            <h1 class="card-title">Dashboard Overview</h1>
+                            <div class="tabs">
+                                <button class="tab ${days === 7 ? 'active' : ''}" onclick="overviewChangeRange(7)">Last 7 Days</button>
+                                <button class="tab ${days === 30 ? 'active' : ''}" onclick="overviewChangeRange(30)">Last 30 Days</button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-4">
+                            <div class="kpi-card">
+                                <div class="kpi-label">Total Sends</div>
+                                <div class="kpi-value">${metrics.sends.toLocaleString()}</div>
+                            </div>
+                            <div class="kpi-card" style="border-left-color: var(--success)">
+                                <div class="kpi-label">Total Replies</div>
+                                <div class="kpi-value">${metrics.replies}</div>
+                                <div class="kpi-subtext">${metrics.replyRate}% reply rate</div>
+                            </div>
+                            <div class="kpi-card" style="border-left-color: var(--warning)">
+                                <div class="kpi-label">Positive Replies</div>
+                                <div class="kpi-value">${metrics.positiveReplies}</div>
+                            </div>
+                            <div class="kpi-card" style="border-left-color: var(--danger)">
+                                <div class="kpi-label">Booked Calls</div>
+                                <div class="kpi-value">${metrics.calls}</div>
+                                <div class="kpi-subtext">${metrics.bookingRateFromPositive}% from positive</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Activity Over Time</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="overview-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Client Performance</h2>
+                        </div>
+                        <div class="grid grid-3">
+                            ${clientMetrics.map(({ client, metrics: m }) => `
+                                <div class="kpi-card clickable" onclick="location.hash='client=${client.id}'">
+                                    <div class="flex-between mb-20">
+                                        <strong>${client.name}</strong>
+                                        <span class="badge badge-${client.status.toLowerCase()}">${client.status}</span>
+                                    </div>
+                                    <div class="kpi-label">Calls Booked</div>
+                                    <div class="kpi-value" style="font-size: 24px">${m.calls}</div>
+                                    <div class="kpi-subtext">
+                                        ${m.sends} sends • ${m.replyRate}% reply rate
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+
+                renderTimeSeriesChart('overview-chart', rangeEvents, days);
+            };
+
+            window.overviewChangeRange = render;
+            render(rangeDays);
+        }
+
+        function renderClients() {
+            const app = document.getElementById('app');
+            const clients = DB.getClients();
+
+            app.innerHTML = `
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="card-title">Clients</h1>
+                        <button class="btn btn-primary" onclick="openNewClientModal()">+ New Client</button>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Geo</th>
+                                <th>Deal Size</th>
+                                <th>Daily Sends</th>
+                                <th>Last 7d Calls</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${clients.map(client => {
+                                const events7d = filterEventsByRange(DB.getClientEvents(client.id), 7);
+                                const calls = events7d.filter(e => e.type === 'CallBooked').length;
+
+                                return `
+                                    <tr>
+                                        <td><strong>${client.name}</strong></td>
+                                        <td><span class="badge badge-${client.status.toLowerCase()}">${client.status}</span></td>
+                                        <td>${client.geo}</td>
+                                        <td>${client.dealSize}</td>
+                                        <td>${client.campaignSettings.dailySends}</td>
+                                        <td>${calls}</td>
+                                        <td>
+                                            <button class="btn btn-secondary btn-sm" onclick="location.hash='client=${client.id}'">View</button>
+                                        </td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        function renderClientDetail(clientId) {
+            const app = document.getElementById('app');
+            const client = DB.getClient(clientId);
+
+            if (!client) {
+                app.innerHTML = '<div class="card"><p>Client not found</p></div>';
+                return;
+            }
+
+            let rangeDays = 7;
+
+            const render = (days) => {
+                rangeDays = days;
+                const events = filterEventsByRange(DB.getClientEvents(clientId), days);
+                const metrics = computeMetrics(events);
+                const recentEvents = DB.getClientEvents(clientId).slice(0, 20);
+
+                const shareUrl = `${location.origin}${location.pathname}#share=${client.shareToken}`;
+
+                app.innerHTML = `
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h1 class="card-title">${client.name}</h1>
+                                <p class="text-muted">${client.geo} • ${client.dealSize}</p>
+                            </div>
+                            <div class="flex flex-gap">
+                                <button class="btn btn-secondary" onclick="location.hash='clients'">← Back</button>
+                                <button class="btn ${client.status === 'Active' ? 'btn-secondary' : 'btn-success'}"
+                                    onclick="toggleClientStatus('${clientId}')">
+                                    ${client.status === 'Active' ? 'Pause' : 'Activate'}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="tabs mb-20">
+                            <button class="tab ${days === 7 ? 'active' : ''}" onclick="clientDetailChangeRange('${clientId}', 7)">Last 7 Days</button>
+                            <button class="tab ${days === 30 ? 'active' : ''}" onclick="clientDetailChangeRange('${clientId}', 30)">Last 30 Days</button>
+                        </div>
+
+                        <div class="grid grid-4">
+                            <div class="kpi-card">
+                                <div class="kpi-label">Sends</div>
+                                <div class="kpi-value">${metrics.sends}</div>
+                            </div>
+                            <div class="kpi-card" style="border-left-color: var(--success)">
+                                <div class="kpi-label">Replies</div>
+                                <div class="kpi-value">${metrics.replies}</div>
+                                <div class="kpi-subtext">${metrics.replyRate}% rate</div>
+                            </div>
+                            <div class="kpi-card" style="border-left-color: var(--warning)">
+                                <div class="kpi-label">Positive</div>
+                                <div class="kpi-value">${metrics.positiveReplies}</div>
+                            </div>
+                            <div class="kpi-card" style="border-left-color: var(--danger)">
+                                <div class="kpi-label">Calls</div>
+                                <div class="kpi-value">${metrics.calls}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-2">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">Campaign Settings</h2>
+                                <button class="btn btn-primary btn-sm" onclick="openEditSettingsModal('${clientId}')">Edit</button>
+                            </div>
+                            <div class="form-group">
+                                <div class="kpi-label">Daily Sends</div>
+                                <p>${client.campaignSettings.dailySends}</p>
+                            </div>
+                            <div class="form-group">
+                                <div class="kpi-label">Inbox Count</div>
+                                <p>${client.campaignSettings.inboxCount}</p>
+                            </div>
+                            <div class="form-group">
+                                <div class="kpi-label">Follow-up Count</div>
+                                <p>${client.campaignSettings.followUpCount}</p>
+                            </div>
+                            <div class="form-group">
+                                <div class="kpi-label">Stop on Reply</div>
+                                <p>${client.campaignSettings.stopOnReply ? 'Yes' : 'No'}</p>
+                            </div>
+                            <div class="form-group">
+                                <div class="kpi-label">Exclusions</div>
+                                <p>${client.campaignSettings.exclusions || 'None'}</p>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">Client Info</h2>
+                            </div>
+                            <div class="form-group">
+                                <div class="kpi-label">ICP Notes</div>
+                                <p>${client.icpNotes}</p>
+                            </div>
+                            <div class="form-group">
+                                <div class="kpi-label">Offer Notes</div>
+                                <p>${client.offerNotes}</p>
+                            </div>
+                            <div class="form-group">
+                                <div class="kpi-label">Calendar URL</div>
+                                <p><a href="${client.calendarUrl}" target="_blank">${client.calendarUrl}</a></p>
+                            </div>
+                            <div class="form-group">
+                                <div class="kpi-label">Created</div>
+                                <p>${formatDate(client.createdAt)}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Share Link</h2>
+                        </div>
+                        <p class="mb-20">Share this link with ${client.name} to give them read-only access to their dashboard:</p>
+                        <div class="flex flex-gap">
+                            <input type="text" class="form-input" value="${shareUrl}" readonly id="share-url-${clientId}">
+                            <button class="btn btn-primary" onclick="copyShareLink('${clientId}')">Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Recent Events</h2>
+                            <button class="btn btn-primary btn-sm" onclick="openAddEventModal('${clientId}')">+ Add Event</button>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Timestamp</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${recentEvents.map(event => `
+                                    <tr>
+                                        <td><span class="badge badge-info">${event.type}</span></td>
+                                        <td>${formatDateTime(event.timestamp)}</td>
+                                        <td>${event.meta || '-'}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Weekly Summary</h2>
+                            <button class="btn btn-primary btn-sm" onclick="generateWeeklySummary('${clientId}')">Generate</button>
+                        </div>
+                        <div id="weekly-summary-${clientId}">
+                            <p class="text-muted">Click "Generate" to create a formatted weekly summary</p>
+                        </div>
+                    </div>
+                `;
+            };
+
+            window.clientDetailChangeRange = (id, days) => render(days);
+            render(rangeDays);
+        }
+
+        function renderEvents() {
+            const app = document.getElementById('app');
+            const events = DB.getEvents();
+            const clients = DB.getClients();
+
+            let filterClientId = '';
+            let filterType = '';
+            let filterDays = 30;
+
+            const render = () => {
+                let filtered = events;
+
+                if (filterClientId) {
+                    filtered = filtered.filter(e => e.clientId === filterClientId);
+                }
+
+                if (filterType) {
+                    filtered = filtered.filter(e => e.type === filterType);
+                }
+
+                if (filterDays) {
+                    filtered = filterEventsByRange(filtered, filterDays);
+                }
+
+                app.innerHTML = `
+                    <div class="card">
+                        <div class="card-header">
+                            <h1 class="card-title">Event Log</h1>
+                            <button class="btn btn-primary" onclick="openAddEventModal()">+ Add Event</button>
+                        </div>
+
+                        <div class="grid grid-3 mb-20">
+                            <div class="form-group">
+                                <label class="form-label">Filter by Client</label>
+                                <select class="form-select" id="filter-client" onchange="updateEventFilters()">
+                                    <option value="">All Clients</option>
+                                    ${clients.map(c => `
+                                        <option value="${c.id}" ${filterClientId === c.id ? 'selected' : ''}>${c.name}</option>
+                                    `).join('')}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Filter by Type</label>
+                                <select class="form-select" id="filter-type" onchange="updateEventFilters()">
+                                    <option value="">All Types</option>
+                                    <option value="LeadsImported" ${filterType === 'LeadsImported' ? 'selected' : ''}>Leads Imported</option>
+                                    <option value="EmailSent" ${filterType === 'EmailSent' ? 'selected' : ''}>Email Sent</option>
+                                    <option value="ReplyPositive" ${filterType === 'ReplyPositive' ? 'selected' : ''}>Reply Positive</option>
+                                    <option value="ReplyNeutral" ${filterType === 'ReplyNeutral' ? 'selected' : ''}>Reply Neutral</option>
+                                    <option value="ReplyNegative" ${filterType === 'ReplyNegative' ? 'selected' : ''}>Reply Negative</option>
+                                    <option value="CallBooked" ${filterType === 'CallBooked' ? 'selected' : ''}>Call Booked</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Date Range</label>
+                                <select class="form-select" id="filter-days" onchange="updateEventFilters()">
+                                    <option value="7" ${filterDays === 7 ? 'selected' : ''}>Last 7 Days</option>
+                                    <option value="30" ${filterDays === 30 ? 'selected' : ''}>Last 30 Days</option>
+                                    <option value="" ${filterDays === '' ? 'selected' : ''}>All Time</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <p class="text-muted mb-20">Showing ${filtered.length} events</p>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Client</th>
+                                    <th>Type</th>
+                                    <th>Timestamp</th>
+                                    <th>Details</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${filtered.map(event => {
+                                    const client = DB.getClient(event.clientId);
+                                    return `
+                                        <tr>
+                                            <td><strong>${client ? client.name : 'Unknown'}</strong></td>
+                                            <td><span class="badge badge-info">${event.type}</span></td>
+                                            <td>${formatDateTime(event.timestamp)}</td>
+                                            <td>${event.meta || '-'}</td>
+                                            <td>
+                                                <button class="btn btn-danger btn-sm" onclick="deleteEvent('${event.id}')">🗑</button>
+                                            </td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            };
+
+            window.updateEventFilters = () => {
+                filterClientId = document.getElementById('filter-client').value;
+                filterType = document.getElementById('filter-type').value;
+                filterDays = document.getElementById('filter-days').value ? parseInt(document.getElementById('filter-days').value) : '';
+                render();
+            };
+
+            window.deleteEvent = (eventId) => {
+                if (confirm('Delete this event?')) {
+                    DB.deleteEvent(eventId);
+                    render();
+                }
+            };
+
+            render();
+        }
+
+        function renderFlow() {
+            const app = document.getElementById('app');
+
+            app.innerHTML = `
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="card-title">Service Workflow</h1>
+                    </div>
+
+                    <div class="flow-diagram">
+                        <div class="flow-steps">
+                            <div class="flow-step" onclick="location.hash='clients'">
+                                <div class="flow-step-title">1. Intake</div>
+                                <div class="flow-step-desc">Client onboarding & ICP definition</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step" onclick="location.hash='events'">
+                                <div class="flow-step-title">2. Lead List</div>
+                                <div class="flow-step-desc">Import & qualify leads</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step" onclick="location.hash='events'">
+                                <div class="flow-step-title">3. Sending</div>
+                                <div class="flow-step-desc">Email campaigns via multiple inboxes</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step" onclick="location.hash='events'">
+                                <div class="flow-step-title">4. Follow-ups</div>
+                                <div class="flow-step-desc">Automated sequences</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step" onclick="location.hash='events'">
+                                <div class="flow-step-title">5. Replies</div>
+                                <div class="flow-step-desc">Track & categorize responses</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step" onclick="location.hash='events'">
+                                <div class="flow-step-title">6. Booking</div>
+                                <div class="flow-step-desc">Schedule calls on client calendar</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step" onclick="location.hash='overview'">
+                                <div class="flow-step-title">7. Dashboard</div>
+                                <div class="flow-step-desc">Real-time metrics & reporting</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-20 text-center">
+                        <p class="text-muted">
+                            <strong>Client-Friendly Summary:</strong> We handle everything from finding the right people to talk to,
+                            reaching out professionally, managing conversations, and getting qualified calls on your calendar—
+                            all while you track progress in real-time.
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderShareView(token) {
+            const app = document.getElementById('app');
+            const client = DB.getClientByToken(token);
+
+            if (!client) {
+                app.innerHTML = '<div class="card"><p>Invalid share link</p></div>';
+                return;
+            }
+
+            let rangeDays = 7;
+
+            const render = (days) => {
+                rangeDays = days;
+                const events = filterEventsByRange(DB.getClientEvents(client.id), days);
+                const metrics = computeMetrics(events);
+
+                app.innerHTML = `
+                    <div class="share-view">
+                        <div class="no-print" style="text-align: right; margin-bottom: 20px;">
+                            <a href="#overview" style="color: var(--gray-500); font-size: 14px;">🔐 Internal Access</a>
+                        </div>
+
+                        <div class="share-header">
+                            <div class="share-client-name">${client.name}</div>
+                            <div class="share-subtitle">Outbound Campaign Dashboard</div>
+                        </div>
+
+                        <div class="card">
+                            <div class="flex-between mb-20 no-print">
+                                <div class="tabs">
+                                    <button class="tab ${days === 7 ? 'active' : ''}" onclick="shareViewChangeRange('${token}', 7)">Last 7 Days</button>
+                                    <button class="tab ${days === 30 ? 'active' : ''}" onclick="shareViewChangeRange('${token}', 30)">Last 30 Days</button>
+                                </div>
+                                <button class="btn btn-secondary btn-sm" onclick="window.print()">📄 Print / Save PDF</button>
+                            </div>
+
+                            <div class="grid grid-4">
+                                <div class="kpi-card">
+                                    <div class="kpi-label">Total Sends</div>
+                                    <div class="kpi-value">${metrics.sends}</div>
+                                </div>
+                                <div class="kpi-card" style="border-left-color: var(--success)">
+                                    <div class="kpi-label">Total Replies</div>
+                                    <div class="kpi-value">${metrics.replies}</div>
+                                    <div class="kpi-subtext">${metrics.replyRate}% reply rate</div>
+                                </div>
+                                <div class="kpi-card" style="border-left-color: var(--warning)">
+                                    <div class="kpi-label">Positive Replies</div>
+                                    <div class="kpi-value">${metrics.positiveReplies}</div>
+                                </div>
+                                <div class="kpi-card" style="border-left-color: var(--danger)">
+                                    <div class="kpi-label">Calls Booked</div>
+                                    <div class="kpi-value">${metrics.calls}</div>
+                                    <div class="kpi-subtext">${metrics.bookingRateFromPositive}% from positive</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">Activity Over Time</h2>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="share-chart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="card" id="weekly-summary-share">
+                            <div class="card-header">
+                                <h2 class="card-title">Weekly Summary</h2>
+                            </div>
+                            <p class="text-muted">Summary will be generated by your account manager</p>
+                        </div>
+                    </div>
+                `;
+
+                renderTimeSeriesChart('share-chart', events, days);
+            };
+
+            window.shareViewChangeRange = (t, days) => render(days);
+            render(rangeDays);
+        }
+
+        // ============================================
+        // CHART RENDERING
+        // ============================================
+
+        function renderTimeSeriesChart(canvasId, events, days) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            const width = canvas.parentElement.clientWidth;
+            const height = 300;
+            canvas.width = width;
+            canvas.height = height;
+
+            // Group events by day
+            const dateMap = {};
+            const { start } = getRangeDates(days);
+
+            for (let i = 0; i < days; i++) {
+                const d = new Date(start);
+                d.setDate(d.getDate() + i);
+                const key = d.toISOString().split('T')[0];
+                dateMap[key] = { sends: 0, replies: 0, calls: 0 };
+            }
+
+            events.forEach(e => {
+                const key = e.timestamp.split('T')[0];
+                if (dateMap[key]) {
+                    if (e.type === 'EmailSent') dateMap[key].sends++;
+                    if (e.type.startsWith('Reply')) dateMap[key].replies++;
+                    if (e.type === 'CallBooked') dateMap[key].calls++;
+                }
+            });
+
+            const dates = Object.keys(dateMap).sort();
+            const sends = dates.map(d => dateMap[d].sends);
+            const replies = dates.map(d => dateMap[d].replies);
+            const calls = dates.map(d => dateMap[d].calls);
+
+            const maxValue = Math.max(...sends, ...replies, ...calls, 1);
+
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+
+            // Draw grid
+            ctx.strokeStyle = '#e5e7eb';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 5; i++) {
+                const y = (height - 40) * (i / 5) + 20;
+                ctx.beginPath();
+                ctx.moveTo(40, y);
+                ctx.lineTo(width - 20, y);
+                ctx.stroke();
+
+                ctx.fillStyle = '#6b7280';
+                ctx.font = '12px sans-serif';
+                ctx.textAlign = 'right';
+                ctx.fillText(Math.round(maxValue * (1 - i / 5)), 35, y + 4);
+            }
+
+            // Draw lines
+            const pointSpacing = (width - 60) / (dates.length - 1 || 1);
+
+            const drawLine = (data, color) => {
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+
+                data.forEach((value, i) => {
+                    const x = 40 + i * pointSpacing;
+                    const y = height - 40 - (value / maxValue) * (height - 60);
+
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                });
+
+                ctx.stroke();
+
+                // Draw points
+                ctx.fillStyle = color;
+                data.forEach((value, i) => {
+                    const x = 40 + i * pointSpacing;
+                    const y = height - 40 - (value / maxValue) * (height - 60);
+                    ctx.beginPath();
+                    ctx.arc(x, y, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+            };
+
+            drawLine(sends, '#2563eb');
+            drawLine(replies, '#10b981');
+            drawLine(calls, '#ef4444');
+
+            // Legend
+            const legendY = height - 15;
+            ctx.font = '12px sans-serif';
+            ctx.textAlign = 'left';
+
+            ctx.fillStyle = '#2563eb';
+            ctx.fillRect(40, legendY, 12, 12);
+            ctx.fillStyle = '#1f2937';
+            ctx.fillText('Sends', 56, legendY + 10);
+
+            ctx.fillStyle = '#10b981';
+            ctx.fillRect(120, legendY, 12, 12);
+            ctx.fillStyle = '#1f2937';
+            ctx.fillText('Replies', 136, legendY + 10);
+
+            ctx.fillStyle = '#ef4444';
+            ctx.fillRect(200, legendY, 12, 12);
+            ctx.fillStyle = '#1f2937';
+            ctx.fillText('Calls', 216, legendY + 10);
+        }
+
+        // ============================================
+        // MODAL FUNCTIONS
+        // ============================================
+
+        function openModal(title, content, onSubmit) {
+            const container = document.getElementById('modal-container');
+            container.innerHTML = `
+                <div class="modal active">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title">${title}</h2>
+                        </div>
+                        <form id="modal-form">
+                            ${content}
+                            <div class="flex flex-gap mt-20" style="justify-content: flex-end;">
+                                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('modal-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                onSubmit(new FormData(e.target));
+                closeModal();
+            });
+        }
+
+        function closeModal() {
+            document.getElementById('modal-container').innerHTML = '';
+        }
+
+        window.openNewClientModal = () => {
+            openModal('New Client', `
+                <div class="form-group">
+                    <label class="form-label">Client Name *</label>
+                    <input type="text" name="name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">ICP Notes</label>
+                    <textarea name="icpNotes" class="form-textarea"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Offer Notes</label>
+                    <textarea name="offerNotes" class="form-textarea"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Calendar URL</label>
+                    <input type="url" name="calendarUrl" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Geography</label>
+                    <input type="text" name="geo" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Deal Size</label>
+                    <input type="text" name="dealSize" class="form-input">
+                </div>
+            `, (formData) => {
+                DB.addClient({
+                    name: formData.get('name'),
+                    icpNotes: formData.get('icpNotes'),
+                    offerNotes: formData.get('offerNotes'),
+                    calendarUrl: formData.get('calendarUrl'),
+                    geo: formData.get('geo'),
+                    dealSize: formData.get('dealSize')
+                });
+                location.hash = 'clients';
+            });
+        };
+
+        window.openEditSettingsModal = (clientId) => {
+            const client = DB.getClient(clientId);
+            const s = client.campaignSettings;
+
+            openModal('Edit Campaign Settings', `
+                <div class="form-group">
+                    <label class="form-label">Daily Sends</label>
+                    <input type="number" name="dailySends" class="form-input" value="${s.dailySends}">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Inbox Count</label>
+                    <input type="number" name="inboxCount" class="form-input" value="${s.inboxCount}">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Follow-up Count</label>
+                    <input type="number" name="followUpCount" class="form-input" value="${s.followUpCount}">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" name="stopOnReply" class="form-checkbox" ${s.stopOnReply ? 'checked' : ''}>
+                        Stop on Reply
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Exclusions (comma-separated)</label>
+                    <textarea name="exclusions" class="form-textarea">${s.exclusions}</textarea>
+                </div>
+            `, (formData) => {
+                DB.updateClient(clientId, {
+                    campaignSettings: {
+                        dailySends: parseInt(formData.get('dailySends')),
+                        inboxCount: parseInt(formData.get('inboxCount')),
+                        followUpCount: parseInt(formData.get('followUpCount')),
+                        stopOnReply: formData.get('stopOnReply') === 'on',
+                        exclusions: formData.get('exclusions')
+                    }
+                });
+                location.hash = `client=${clientId}`;
+            });
+        };
+
+        window.openAddEventModal = (clientId = '') => {
+            const clients = DB.getClients();
+
+            openModal('Add Event', `
+                <div class="form-group">
+                    <label class="form-label">Client *</label>
+                    <select name="clientId" class="form-select" required>
+                        <option value="">Select client...</option>
+                        ${clients.map(c => `
+                            <option value="${c.id}" ${c.id === clientId ? 'selected' : ''}>${c.name}</option>
+                        `).join('')}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Event Type *</label>
+                    <select name="type" class="form-select" required>
+                        <option value="LeadsImported">Leads Imported</option>
+                        <option value="EmailSent">Email Sent</option>
+                        <option value="ReplyPositive">Reply Positive</option>
+                        <option value="ReplyNeutral">Reply Neutral</option>
+                        <option value="ReplyNegative">Reply Negative</option>
+                        <option value="CallBooked">Call Booked</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Timestamp</label>
+                    <input type="datetime-local" name="timestamp" class="form-input" value="${new Date().toISOString().slice(0, 16)}">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Details</label>
+                    <textarea name="meta" class="form-textarea"></textarea>
+                </div>
+            `, (formData) => {
+                DB.addEvent({
+                    clientId: formData.get('clientId'),
+                    type: formData.get('type'),
+                    timestamp: formData.get('timestamp') ? new Date(formData.get('timestamp')).toISOString() : new Date().toISOString(),
+                    meta: formData.get('meta')
+                });
+
+                if (clientId) {
+                    location.hash = `client=${clientId}`;
+                } else {
+                    location.hash = 'events';
+                }
+            });
+        };
+
+        // ============================================
+        // ACTION FUNCTIONS
+        // ============================================
+
+        window.toggleClientStatus = (clientId) => {
+            const client = DB.getClient(clientId);
+            const newStatus = client.status === 'Active' ? 'Paused' : 'Active';
+            DB.updateClient(clientId, { status: newStatus });
+            location.hash = `client=${clientId}`;
+        };
+
+        window.copyShareLink = (clientId) => {
+            const input = document.getElementById(`share-url-${clientId}`);
+            input.select();
+            document.execCommand('copy');
+            alert('Share link copied to clipboard!');
+        };
+
+        window.generateWeeklySummary = (clientId) => {
+            const client = DB.getClient(clientId);
+            const events7d = filterEventsByRange(DB.getClientEvents(clientId), 7);
+            const metrics = computeMetrics(events7d);
+
+            const summary = `
+                <div style="background: var(--gray-50); padding: 20px; border-radius: 8px; margin-top: 10px;">
+                    <h3>Weekly Performance Summary - ${client.name}</h3>
+                    <p><strong>Period:</strong> ${formatDate(getRangeDates(7).start)} - ${formatDate(new Date())}</p>
+
+                    <h4 style="margin-top: 20px;">Key Metrics:</h4>
+                    <ul>
+                        <li><strong>${metrics.sends}</strong> emails sent to qualified prospects</li>
+                        <li><strong>${metrics.replies}</strong> total replies received (${metrics.replyRate}% reply rate)</li>
+                        <li><strong>${metrics.positiveReplies}</strong> positive/interested responses</li>
+                        <li><strong>${metrics.calls}</strong> calls booked on your calendar</li>
+                    </ul>
+
+                    <h4 style="margin-top: 20px;">Insights:</h4>
+                    <p>
+                        ${metrics.calls > 0 ?
+                            `Great week! We successfully booked ${metrics.calls} qualified call${metrics.calls > 1 ? 's' : ''} for you. ` :
+                            `We're actively reaching out and tracking responses. `}
+                        ${metrics.replyRate > 5 ?
+                            `Your ${metrics.replyRate}% reply rate is strong and above industry average. ` :
+                            `We're optimizing messaging to improve engagement. `}
+                        Campaign is running on ${client.campaignSettings.dailySends} sends per day across ${client.campaignSettings.inboxCount} inboxes.
+                    </p>
+
+                    <h4 style="margin-top: 20px;">Next Steps:</h4>
+                    <ul>
+                        <li>Continue monitoring reply quality and adjusting messaging</li>
+                        <li>Prepare for scheduled calls and follow-ups</li>
+                        <li>Review and update ICP based on response patterns</li>
+                    </ul>
+                </div>
+            `;
+
+            document.getElementById(`weekly-summary-${clientId}`).innerHTML = summary;
+        };
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            seedDataIfEmpty();
+            Router.init();
+        });
+    </script>
+</body>
+</html>
