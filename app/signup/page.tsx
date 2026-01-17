@@ -1,146 +1,148 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { signIn } from 'next-auth/react'
 
-export default function Signup() {
-  const router = useRouter();
+export default function SignupPage() {
+  const router = useRouter()
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    businessName: "",
-  });
+    email: '',
+    password: '',
+    displayName: '',
+  })
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // For demo purposes, just redirect to dashboard
-    // In production, implement proper authentication
-    router.push("/dashboard");
-  };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+    try {
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Signup failed')
+      }
+
+      // Auto-login after signup
+      const signInResult = await signIn('credentials', {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      })
+
+      if (signInResult?.error) {
+        throw new Error('Signup successful but login failed. Please log in manually.')
+      }
+
+      router.push('/dashboard')
+    } catch (err: any) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-medieval-ink via-gray-900 to-medieval-forest flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md">
-        <Link href="/" className="flex items-center justify-center gap-2 mb-8">
-          <span className="text-4xl">🏰</span>
-          <h1 className="pixel-text text-2xl text-medieval-gold">Frame Fables</h1>
-        </Link>
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4">
+      <div className="max-w-md w-full">
+        <div className="text-center mb-8">
+          <Link href="/" className="inline-flex items-center gap-2 mb-8">
+            <span className="text-4xl">🏈</span>
+            <span className="text-2xl font-bold text-emerald-400">
+              Pay-to-Draft Fantasy
+            </span>
+          </Link>
+          <h1 className="text-3xl font-bold text-white mt-4">Create Account</h1>
+          <p className="text-slate-400 mt-2">Join the fantasy football revolution</p>
+        </div>
 
-        <div className="pixel-border medieval-shadow bg-medieval-stone/10 p-8">
-          <h2 className="pixel-text text-2xl text-medieval-gold mb-2 text-center">
-            🏰 Build Your Kingdom 🏰
-          </h2>
-          <p className="font-pixel text-sm text-medieval-stone text-center mb-6">
-            Start your 7-day free quest
-          </p>
+        <div className="bg-slate-800 border border-slate-700 rounded-xl p-8 shadow-xl">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {error && (
+              <div className="bg-red-500/10 border border-red-500/50 rounded-lg p-4 text-red-400 text-sm">
+                {error}
+              </div>
+            )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="pixel-text text-xs text-medieval-parchment mb-2 block">
-                Your Name
+              <label htmlFor="displayName" className="block text-sm font-medium text-slate-300 mb-2">
+                Display Name
               </label>
               <input
+                id="displayName"
                 type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full pixel-border bg-medieval-ink/50 text-medieval-parchment font-pixel text-lg p-3 focus:outline-none focus:border-medieval-gold"
-                placeholder="Sir/Lady..."
                 required
+                value={formData.displayName}
+                onChange={(e) =>
+                  setFormData({ ...formData, displayName: e.target.value })
+                }
+                className="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none"
+                placeholder="Your name"
               />
             </div>
 
             <div>
-              <label className="pixel-text text-xs text-medieval-parchment mb-2 block">
-                Email Scroll
+              <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
+                Email
               </label>
               <input
+                id="email"
                 type="email"
-                name="email"
+                required
                 value={formData.email}
-                onChange={handleChange}
-                className="w-full pixel-border bg-medieval-ink/50 text-medieval-parchment font-pixel text-lg p-3 focus:outline-none focus:border-medieval-gold"
-                placeholder="your@email.com"
-                required
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+                className="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none"
+                placeholder="you@example.com"
               />
             </div>
 
             <div>
-              <label className="pixel-text text-xs text-medieval-parchment mb-2 block">
-                Business Name
+              <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-2">
+                Password
               </label>
               <input
-                type="text"
-                name="businessName"
-                value={formData.businessName}
-                onChange={handleChange}
-                className="w-full pixel-border bg-medieval-ink/50 text-medieval-parchment font-pixel text-lg p-3 focus:outline-none focus:border-medieval-gold"
-                placeholder="Your Kingdom..."
-                required
-              />
-            </div>
-
-            <div>
-              <label className="pixel-text text-xs text-medieval-parchment mb-2 block">
-                Secret Password
-              </label>
-              <input
+                id="password"
                 type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full pixel-border bg-medieval-ink/50 text-medieval-parchment font-pixel text-lg p-3 focus:outline-none focus:border-medieval-gold"
-                placeholder="••••••••"
                 required
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+                className="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none"
+                placeholder="••••••••"
+                minLength={6}
               />
             </div>
 
             <button
               type="submit"
-              className="w-full pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-6 py-3 pixel-text text-sm hover:bg-medieval-bronze transition-all"
+              disabled={loading}
+              className="w-full bg-emerald-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              ⚡ Start Free Quest
+              {loading ? 'Creating Account...' : 'Sign Up'}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <Link
-              href="/login"
-              className="font-pixel text-sm text-medieval-stone hover:text-medieval-gold"
-            >
-              Already have a kingdom? Enter here →
+          <p className="text-center text-slate-400 mt-6">
+            Already have an account?{' '}
+            <Link href="/login" className="text-emerald-400 hover:text-emerald-300 font-semibold">
+              Log in
             </Link>
-          </div>
-
-          <div className="mt-6 pt-6 border-t-2 border-medieval-stone/30">
-            <p className="font-pixel text-xs text-medieval-stone text-center">
-              By creating a kingdom, you agree to our Terms of Service and Privacy
-              Policy
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-6 text-center space-y-2">
-          <p className="font-pixel text-sm text-medieval-gold">
-            ✓ No credit card required
-          </p>
-          <p className="font-pixel text-sm text-medieval-gold">
-            ✓ 7-day free trial
-          </p>
-          <p className="font-pixel text-sm text-medieval-gold">
-            ✓ Cancel anytime
           </p>
         </div>
       </div>
     </div>
-  );
+  )
 }

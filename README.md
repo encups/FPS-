@@ -1,234 +1,338 @@
-# 🏰 Frame Fables - AI Marketing for Small Businesses
+# Pay-to-Draft Fantasy Football Platform
 
-A fully automated AI marketing tool with a medieval 8-bit theme. Built for small businesses to quickly generate marketing content with storytelling flair.
+A production-ready fantasy football web application where league members **must pay league dues** before they can draft. Built with Next.js, TypeScript, Prisma, NextAuth, and Stripe.
 
-## ⚔️ Features
+## 🏆 Overview
 
-- **Social Media Quest** - Generate engaging social media posts
-- **Email Scrolls** - Craft compelling email campaigns
-- **Ad Campaigns** - Create conversion-focused ad copy
-- **Blog Chronicles** - Write SEO-friendly blog posts
-- **Medieval 8-bit Theme** - Unique pixel art aesthetic
-- **AI-Powered** - Uses OpenAI GPT-4 for content generation
+**Pay-to-Draft Fantasy** enforces payment before drafting through server-side validation. No payment = no draft picks. All payments are processed via Stripe Checkout with webhook verification.
+
+### Key Features
+
+- **🔒 Strict Payment Gating**: Server-side enforcement prevents unpaid users from drafting
+- **⚡ Real-time Draft**: Live snake draft with WebSocket updates and pick timer
+- **💳 Secure Payments**: Stripe Checkout + webhook verification (platform-collect model)
+- **🏈 Complete League Management**: Create leagues, invite members, manage settings
+- **🚫 Refund Protection**: Automatic access revocation on refund via webhooks
+- **📝 Full Audit Trail**: Complete activity logging for transparency
+- **🎯 Auto-pick**: Best available player when timer expires
+
+---
+
+## 🏗️ Architecture
+
+### Tech Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Database**: PostgreSQL (via Prisma ORM)
+- **Authentication**: NextAuth.js (Credentials provider)
+- **Payments**: Stripe Checkout + Webhooks
+- **Real-time**: Socket.IO
+- **UI**: Tailwind CSS
+- **Deployment**: Vercel-ready
+
+### Database Schema
+
+```
+users
+├── id, email, passwordHash, displayName
+├── memberships (1:N)
+├── payments (1:N)
+└── commissioning leagues (1:N)
+
+leagues
+├── id, name, season, duesCents, inviteCode
+├── commissionerId → users
+├── settingsJson (team count, roster)
+├── memberships (1:N)
+└── draft (1:1)
+
+memberships
+├── id, userId, leagueId, teamName
+├── paidStatus ⚠️ CRITICAL - gates draft access
+├── paidAt, role (COMMISSIONER | MEMBER)
+└── draftPicks (1:N)
+
+payments
+├── id, stripeSessionId, stripePaymentIntentId
+├── status (PENDING | COMPLETED | FAILED | REFUNDED)
+└── Tracks all payment events
+
+drafts
+├── id, leagueId, status, startsAt
+├── orderJson (snake order as JSON)
+├── currentPickIndex, rounds
+└── picks (1:N)
+
+draft_picks
+├── id, draftId, playerId, membershipId
+├── pickNumber, round, autoPicked
+└── unique constraints prevent double-picking
+
+players
+├── id, name, position, nflTeam, ranking
+└── 200+ NFL players seeded
+
+audit_logs
+└── Tracks all critical actions
+```
+
+---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 18+ installed
-- OpenAI API key (optional for demo mode)
+- Node.js 18+
+- PostgreSQL database (Neon, Supabase, or local)
+- Stripe account
 
-### Installation
+### 1. Clone & Install
 
 ```bash
-# Install dependencies
+git clone <your-repo-url>
+cd pay-to-draft-fantasy
 npm install
-
-# Copy environment file
-cp .env.example .env
-
-# Add your OpenAI API key to .env (optional - works in demo mode without it)
-# OPENAI_API_KEY=your_key_here
-
-# Run development server
-npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+### 2. Environment Setup
 
-## 📦 Tech Stack
-
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **AI**: OpenAI GPT-4 API
-- **Deployment**: Vercel (recommended)
-
-## 🎨 Pages
-
-- `/` - Landing page with pricing
-- `/dashboard` - Main content generation interface
-- `/login` - User login (demo mode)
-- `/signup` - User registration (demo mode)
-
-## 🔧 Configuration
-
-### Environment Variables
-
-Create a `.env` file with:
+Create `.env` file:
 
 ```env
-# Required for production
-OPENAI_API_KEY=your_openai_api_key_here
+# Database (use Neon, Supabase, or local PostgreSQL)
+DATABASE_URL="postgresql://user:password@host:5432/fantasy_football"
 
-# Optional - for Anthropic Claude
-ANTHROPIC_API_KEY=your_anthropic_api_key_here
+# NextAuth (generate secret: openssl rand -base64 32)
+NEXTAUTH_SECRET="your-generated-secret-here"
+NEXTAUTH_URL="http://localhost:3000"
 
-# Future: Stripe integration
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_key
-STRIPE_SECRET_KEY=your_stripe_secret
+# Stripe (get from dashboard.stripe.com)
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_..."
+STRIPE_SECRET_KEY="sk_test_..."
+STRIPE_WEBHOOK_SECRET="whsec_..."
+
+# App
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ```
 
-## 🚢 Deployment
-
-### Deploy to Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Import project to Vercel
-3. Add environment variables
-4. Deploy!
+### 3. Database Setup
 
 ```bash
-# Or use Vercel CLI
-npm i -g vercel
-vercel
+# Push schema to database
+npm run db:push
+
+# Seed 200 NFL players
+npm run db:seed
 ```
 
-### Deploy to Other Platforms
-
-Works with any platform that supports Next.js:
-- Netlify
-- AWS Amplify
-- Railway
-- Render
-
-## 💰 Monetization
-
-The app includes three pricing tiers:
-
-1. **Squire** - $29/month (Basic features)
-2. **Knight** - $79/month (Popular, full features)
-3. **King** - $199/month (Enterprise)
-
-To enable payments:
-1. Create a Stripe account
-2. Add Stripe API keys to `.env`
-3. Implement Stripe checkout (webhook handlers included)
-
-## 🎯 Content Types
-
-### Social Media
-- Engagement posts
-- Product announcements
-- Customer testimonials
-- Behind-the-scenes
-
-### Email Campaigns
-- Welcome sequences
-- Product promotions
-- Newsletters
-- Re-engagement
-
-### Ad Copy
-- Facebook ads
-- Google search ads
-- Instagram stories
-- Landing pages
-
-### Blog Posts
-- How-to guides
-- Industry trends
-- Success stories
-- Comparisons
-
-## 🛠️ Development
+### 4. Stripe Webhook Setup (Local Development)
 
 ```bash
-# Development mode
+# Install Stripe CLI
+brew install stripe/stripe-cli/stripe  # or download from stripe.com/docs/stripe-cli
+
+# Login to Stripe
+stripe login
+
+# Forward webhooks to local server
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+
+# Copy the webhook signing secret (whsec_...) to your .env file
+```
+
+### 5. Run Development Server
+
+```bash
 npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
-
-# Lint code
-npm run lint
 ```
 
-## 📝 Customization
+Open [http://localhost:3000](http://localhost:3000)
 
-### Change Theme Colors
+---
 
-Edit `tailwind.config.ts`:
+## 📋 Core Flows
 
-```typescript
-colors: {
-  medieval: {
-    gold: "#D4AF37",      // Primary color
-    bronze: "#CD7F32",    // Secondary
-    stone: "#8B8680",     // Tertiary
-    // ... add more
+### 1. Commissioner Creates League
+
+**API**: `POST /api/leagues/create`
+
+```json
+{
+  "name": "Championship League",
+  "season": 2026,
+  "duesCents": 5000,
+  "teamCount": 10,
+  "draftDate": "2026-09-01T18:00:00Z",
+  "pickTimerSeconds": 90,
+  "rosterSettings": {
+    "QB": 1, "RB": 2, "WR": 2, "TE": 1,
+    "FLEX": 1, "K": 1, "DEF": 1, "BENCH": 7
   }
 }
 ```
 
-### Add New Content Types
+### 2. Member Joins League
 
-1. Add type to `app/dashboard/page.tsx`
-2. Add system prompt to `app/api/generate/route.ts`
-3. Add demo content template
+**API**: `POST /api/leagues/join`
 
-### Customize AI Behavior
-
-Edit system prompts in `app/api/generate/route.ts`:
-
-```typescript
-const SYSTEM_PROMPTS = {
-  social: `Your custom prompt here...`,
-  // ...
+```json
+{
+  "inviteCode": "abc123xyz",
+  "teamName": "My Team"
 }
 ```
 
-## 🔐 Security Notes
+### 3. Member Pays Dues
 
-- Never commit `.env` files
-- Use environment variables for all secrets
-- Implement proper authentication before production
-- Add rate limiting to API routes
-- Validate all user inputs
+**API**: `POST /api/payments/create-checkout`
 
-## 📈 Future Features
+Flow:
+1. Creates Stripe Checkout Session
+2. Redirects to Stripe-hosted payment page
+3. Webhook fires on success: `checkout.session.completed`
+4. Server sets `membership.paidStatus = true`
+5. User can now draft!
 
-- [ ] User authentication (NextAuth.js)
-- [ ] Stripe payment integration
-- [ ] Content scheduling
-- [ ] Analytics dashboard
-- [ ] Team collaboration
-- [ ] Custom brand voice training
-- [ ] Image generation (DALL-E)
-- [ ] Social media auto-posting
-- [ ] Content calendar
-- [ ] A/B testing tools
+### 4. Draft Pick
 
-## 🤝 Contributing
+**API**: `POST /api/draft/pick`
 
-This is a commercial project, but suggestions are welcome!
-
-## 📄 License
-
-Proprietary - All rights reserved
-
-## 🆘 Support
-
-For issues or questions:
-- Check the documentation
-- Review the code comments
-- Test in demo mode first
-
-## 🎮 Demo Mode
-
-The app works without API keys for testing:
-- Uses pre-written demo content
-- All features visible
-- No API costs
-- Perfect for development
-
-Add your OpenAI key to unlock real AI generation!
+Server validates:
+- User authenticated ✓
+- User in league ✓
+- **User has paid** ✓ ⚠️ CRITICAL
+- User's turn ✓
+- Draft live ✓
+- Player available ✓
 
 ---
 
-Built with ⚔️ by Frame Fables
+## 🔐 Payment Security
 
-*May your conversions be plentiful and your engagement legendary!*
+### Critical Rules
+
+1. **Never trust client**: `paidStatus` ONLY set by webhooks
+2. **Verify signatures**: Prevents fake payment events
+3. **Use transactions**: Atomic payment + membership updates
+4. **Audit everything**: Log all payment events
+
+### Webhook Handlers
+
+```typescript
+checkout.session.completed → paidStatus = true
+payment_intent.payment_failed → paidStatus = false
+charge.refunded → revoke access
+```
+
+---
+
+## 📡 API Reference
+
+### Authentication
+- `POST /api/auth/signup` - Create account
+- `POST /api/auth/[...nextauth]` - Login
+
+### Leagues
+- `POST /api/leagues/create` - Create league
+- `POST /api/leagues/join` - Join via invite
+- `GET /api/leagues/[id]` - Get details
+
+### Payments
+- `POST /api/payments/create-checkout` - Create Stripe session
+- `POST /api/webhooks/stripe` - Webhook handler ⚠️
+
+### Draft
+- `POST /api/draft/pick` - Make pick ⚠️
+- `POST /api/draft/[id]/start` - Start draft
+- `POST /api/draft/[id]/lock` - Lock draft
+- `GET /api/draft/[id]/players` - Available players
+
+---
+
+## 🌐 Deployment (Vercel)
+
+1. Push to GitHub
+2. Import to Vercel
+3. Add environment variables
+4. Set up Stripe webhook:
+   - URL: `https://your-app.vercel.app/api/webhooks/stripe`
+   - Events: `checkout.session.completed`, `payment_intent.payment_failed`, `charge.refunded`
+5. Run migrations: `npx prisma migrate deploy && npx prisma db seed`
+
+---
+
+## 🧪 Testing
+
+```bash
+# Terminal 1: App
+npm run dev
+
+# Terminal 2: Stripe webhooks
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+
+# Test cards
+Success: 4242 4242 4242 4242
+Decline: 4000 0000 0000 0002
+```
+
+---
+
+## 📁 Project Structure
+
+```
+├── app/api/          # API routes
+│   ├── auth/         # Signup, NextAuth
+│   ├── leagues/      # Create, join, get
+│   ├── payments/     # Checkout, webhooks ⚠️
+│   └── draft/        # Pick, start, lock ⚠️
+├── lib/              # Prisma, auth, Stripe
+├── prisma/           # Schema, seed
+└── types/            # TypeScript definitions
+```
+
+---
+
+## ⚠️ Critical Notes
+
+- **Payment verification**: Only webhooks set `paidStatus`
+- **Draft validation**: All checks in server transaction
+- **Snake order**: Regenerate on roster changes
+- **Webhook signatures**: Always verify Stripe events
+
+---
+
+## 🐛 Troubleshooting
+
+**"Webhook verification failed"**
+→ Check `STRIPE_WEBHOOK_SECRET` matches CLI/dashboard
+
+**"Must pay to draft" after paying**
+→ Check webhook fired, verify `paidStatus` in DB
+
+**No players**
+→ Run `npm run db:seed`
+
+---
+
+## 📊 Production Checklist
+
+- [ ] Database hosted (Neon/Supabase)
+- [ ] All env vars in Vercel
+- [ ] Stripe webhook configured
+- [ ] Database seeded
+- [ ] Test full flow
+
+---
+
+## 🔒 Security
+
+✅ Server-side payment verification
+✅ Transaction-safe picks
+✅ Audit logs
+✅ Password hashing
+✅ No card storage
+
+---
+
+**Built with Next.js, Prisma, Stripe, NextAuth, Socket.IO 🏈**
