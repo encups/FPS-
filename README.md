@@ -72,8 +72,8 @@ draft_picks
 └── unique constraints prevent double-picking
 
 players
-├── id, name, position, nflTeam, ranking
-└── 200+ NFL players seeded
+├── id, name, position, sport, team, ranking
+└── 145+ players seeded (NFL, NBA, MLB, NHL, Soccer)
 
 audit_logs
 └── Tracks all critical actions
