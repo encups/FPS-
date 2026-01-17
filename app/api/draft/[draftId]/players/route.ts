@@ -52,10 +52,10 @@ export async function GET(
     }
 
     // Get drafted player IDs
-    const draftedPlayerIds = draft.picks.map((p) => p.playerId)
+    const draftedPlayerIds = draft.picks.map((p: { playerId: string }) => p.playerId)
 
     // Get available players
-    const where: any = {
+    const where: Record<string, any> = {
       id: {
         notIn: draftedPlayerIds,
       },

@@ -47,7 +47,7 @@ export async function GET(
 
     // Check if user is a member
     const userMembership = league.memberships.find(
-      (m) => m.userId === session.user.id
+      (m: any) => m.userId === session.user.id
     )
 
     if (!userMembership) {
@@ -66,7 +66,7 @@ export async function GET(
         inviteCode: league.inviteCode,
         settings,
         commissioner: league.commissioner,
-        memberships: league.memberships.map((m) => ({
+        memberships: league.memberships.map((m: any) => ({
           id: m.id,
           userId: m.userId,
           teamName: m.teamName,

@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     const passwordHash = password ? await hash(password, 12) : null
 
     // Create league with commissioner membership and draft
-    const league = await prisma.$transaction(async (tx) => {
+    const league = await prisma.$transaction(async (tx: typeof prisma) => {
       // Create league
       const newLeague = await tx.league.create({
         data: {

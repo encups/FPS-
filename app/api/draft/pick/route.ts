@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Use transaction to ensure pick integrity
-    const result = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async (tx: typeof prisma) => {
       // Get draft with lock
       const draft = await tx.draft.findUnique({
         where: { id: draftId },
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
 
       // Get current user's membership
       const membership = draft.league.memberships.find(
-        (m) => m.userId === session.user.id
+        (m: any) => m.userId === session.user.id
       )
 
       if (!membership) {
@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
       }
 
       // Verify player hasn't been drafted
-      const alreadyDrafted = draft.picks.some((p) => p.playerId === playerId)
+      const alreadyDrafted = draft.picks.some((p: any) => p.playerId === playerId)
       if (alreadyDrafted) {
         throw new Error('Player already drafted')
       }

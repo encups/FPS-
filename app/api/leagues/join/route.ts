@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
 
     // Check if user already in league
     const existingMembership = league.memberships.find(
-      (m) => m.userId === session.user.id
+      (m: any) => m.userId === session.user.id
     )
 
     if (existingMembership) {
@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Create membership and update draft order
-    const result = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async (tx: typeof prisma) => {
       // Create membership
       const membership = await tx.membership.create({
         data: {
