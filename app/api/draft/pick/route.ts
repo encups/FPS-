@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Use transaction to ensure pick integrity
-    const result = await prisma.$transaction(async (tx: typeof prisma) => {
+    const result = await prisma.$transaction(async (tx) => {
       // Get draft with lock
       const draft = await tx.draft.findUnique({
         where: { id: draftId },

@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Create membership and update draft order
-    const result = await prisma.$transaction(async (tx: typeof prisma) => {
+    const result = await prisma.$transaction(async (tx) => {
       // Create membership
       const membership = await tx.membership.create({
         data: {
