@@ -114,6 +114,7 @@ model Player {
   // Relations
   draftPicks    DraftPick[]
 
+  @@unique([name, position])
   @@map("players")
 }
 

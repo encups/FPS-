@@ -234,7 +234,12 @@ async function main() {
 
   for (const player of players) {
     await prisma.player.upsert({
-      where: { ranking: player.ranking },
+      where: {
+        name_position: {
+          name: player.name,
+          position: player.position,
+        }
+      },
       update: player,
       create: player,
     })
