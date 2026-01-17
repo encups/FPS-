@@ -7,38 +7,50 @@ export default function Home() {
   const { data: session } = useSession()
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-700 to-green-900 relative overflow-hidden">
+      {/* Animated football field lines */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-white"></div>
+        <div className="absolute top-1/4 left-0 right-0 h-1 bg-white"></div>
+        <div className="absolute top-1/2 left-0 right-0 h-2 bg-white"></div>
+        <div className="absolute top-3/4 left-0 right-0 h-1 bg-white"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-white"></div>
+      </div>
+
       {/* Navigation */}
-      <nav className="border-b border-slate-700 bg-slate-900/50 backdrop-blur">
+      <nav className="relative border-b-4 border-yellow-400 bg-gradient-to-r from-blue-600 to-blue-700 shadow-2xl">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="text-3xl">🏈</span>
-              <h1 className="text-2xl font-bold text-emerald-400">
-                Pay-to-Draft Fantasy
-              </h1>
+              <div className="text-5xl animate-bounce">🔒</div>
+              <div>
+                <h1 className="text-3xl font-black text-yellow-300 tracking-tight transform -skew-x-6 drop-shadow-lg">
+                  LEAGUE LOCKER
+                </h1>
+                <p className="text-xs text-blue-200 font-bold">LOCK IT. DRAFT IT. WIN IT!</p>
+              </div>
             </div>
             <div className="flex gap-4">
               {session ? (
                 <Link
                   href="/dashboard"
-                  className="bg-emerald-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-emerald-600 transition-colors"
+                  className="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-6 py-3 rounded-full font-black text-lg hover:from-yellow-300 hover:to-orange-400 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 border-4 border-yellow-600"
                 >
-                  Dashboard
+                  🎮 MY LOCKER
                 </Link>
               ) : (
                 <>
                   <Link
                     href="/login"
-                    className="text-slate-300 hover:text-white transition-colors px-4 py-2"
+                    className="text-yellow-300 hover:text-yellow-100 transition-colors px-4 py-2 font-bold text-lg"
                   >
                     Login
                   </Link>
                   <Link
                     href="/signup"
-                    className="bg-emerald-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-emerald-600 transition-colors"
+                    className="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-6 py-3 rounded-full font-black text-lg hover:from-yellow-300 hover:to-orange-400 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 border-4 border-yellow-600"
                   >
-                    Sign Up
+                    Join Free! 🚀
                   </Link>
                 </>
               )}
@@ -47,139 +59,118 @@ export default function Home() {
         </div>
       </nav>
 
-      <main>
+      <main className="relative">
         {/* Hero Section */}
         <section className="container mx-auto px-4 py-20 text-center">
           <div className="mb-8">
-            <div className="inline-block bg-emerald-500/10 border border-emerald-500/50 rounded-full px-6 py-2 mb-6">
-              <span className="text-sm text-emerald-400 font-semibold">
-                ⚡ Pay to Play, Draft to Win ⚡
+            <div className="inline-block bg-yellow-400 text-gray-900 rounded-full px-8 py-3 mb-6 border-4 border-yellow-600 shadow-2xl animate-pulse">
+              <span className="text-lg font-black">
+                ⚡ PAY TO PLAY • DRAFT TO WIN ⚡
               </span>
             </div>
           </div>
-          <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-            Fantasy Football
+
+          <h2 className="text-6xl md:text-8xl font-black text-white mb-6 leading-tight drop-shadow-2xl">
+            <span className="bg-gradient-to-r from-yellow-300 via-orange-400 to-red-500 bg-clip-text text-transparent">
+              LOCK YOUR ROSTER
+            </span>
             <br />
-            <span className="text-emerald-400">With Real Stakes</span>
+            <span className="text-yellow-300 transform inline-block -skew-x-12">
+              SECURE YOUR VICTORY! 🏆
+            </span>
           </h2>
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-12 leading-relaxed">
-            Create competitive fantasy football leagues where members must pay league dues before they can draft.
-            No payment, no draft picks. Fair, secure, and transparent.
+
+          <p className="text-2xl text-green-100 max-w-3xl mx-auto mb-12 leading-relaxed font-bold drop-shadow-lg">
+            The <span className="text-yellow-300 font-black">ULTIMATE</span> fantasy football platform where
+            <span className="text-yellow-300 font-black"> payment unlocks the draft</span>.
+            <br/>No pay? <span className="text-red-400 font-black text-3xl">NO PLAY!</span> 💰🔒
           </p>
-          <div className="flex gap-4 justify-center flex-wrap">
+
+          <div className="flex gap-6 justify-center flex-wrap">
             <Link
               href="/leagues/create"
-              className="bg-emerald-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-emerald-600 transition-all shadow-lg hover:shadow-xl"
+              className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-10 py-5 rounded-full font-black text-2xl hover:from-orange-400 hover:to-red-500 transition-all shadow-2xl hover:shadow-3xl transform hover:scale-110 border-4 border-orange-700 animate-bounce"
             >
-              🏈 Create League
+              🏈 CREATE LEAGUE
             </Link>
             <Link
               href="/leagues/join"
-              className="bg-slate-700 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-slate-600 transition-all"
+              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-10 py-5 rounded-full font-black text-2xl hover:from-blue-400 hover:to-purple-500 transition-all shadow-2xl border-4 border-blue-700"
             >
-              Join League
+              🎯 JOIN LEAGUE
             </Link>
           </div>
         </section>
 
-        {/* Features */}
+        {/* How It Works */}
         <section className="container mx-auto px-4 py-20">
-          <h3 className="text-4xl font-bold text-center text-white mb-16">
-            How It Works
+          <h3 className="text-5xl font-black text-center text-yellow-300 mb-16 drop-shadow-lg transform -skew-x-6">
+            ⚡ HOW IT WORKS ⚡
           </h3>
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {[
               {
-                icon: '🏆',
-                title: 'Commissioner Creates League',
-                description:
-                  'Set league dues, team count, roster settings, and draft date. Generate an invite code.',
+                icon: '👑',
+                title: 'COMMISH CREATES',
+                description: 'Set league dues, roster rules, and draft date. Get your unique invite code!',
+                color: 'from-purple-500 to-pink-600',
+                borderColor: 'border-purple-700'
               },
               {
                 icon: '💳',
-                title: 'Members Pay Dues',
-                description:
-                  'Members join via invite code and pay league dues securely through Stripe. Only paid members can draft.',
+                title: 'MEMBERS PAY UP',
+                description: 'Join with invite code. Pay dues via Stripe. LOCKED until paid! 🔒',
+                color: 'from-yellow-500 to-orange-600',
+                borderColor: 'border-yellow-700'
               },
               {
                 icon: '🎯',
-                title: 'Draft & Compete',
-                description:
-                  'Real-time snake draft with timer. Paid members draft their team. Unpaid members can only watch.',
+                title: 'DRAFT & DOMINATE',
+                description: 'Live snake draft with timer. Only PAID members can pick. Crush it! 💪',
+                color: 'from-green-500 to-teal-600',
+                borderColor: 'border-green-700'
               },
-            ].map((feature, index) => (
+            ].map((step, index) => (
               <div
                 key={index}
-                className="bg-slate-800/50 border border-slate-700 rounded-xl p-8 hover:border-emerald-500/50 transition-all"
+                className={`bg-gradient-to-br ${step.color} rounded-3xl p-8 border-6 ${step.borderColor} shadow-2xl transform hover:scale-105 transition-all hover:rotate-2`}
               >
-                <div className="text-6xl mb-4">{feature.icon}</div>
-                <h4 className="text-2xl font-bold text-emerald-400 mb-3">
-                  {feature.title}
+                <div className="text-8xl mb-4 animate-bounce">{step.icon}</div>
+                <h4 className="text-3xl font-black text-white mb-4 drop-shadow-lg">
+                  {step.title}
                 </h4>
-                <p className="text-slate-300 text-lg">{feature.description}</p>
+                <p className="text-white text-xl font-bold leading-relaxed">{step.description}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Key Features */}
-        <section className="bg-slate-800/30 py-20">
+        <section className="bg-gradient-to-r from-blue-800 to-purple-900 py-20 border-y-8 border-yellow-400">
           <div className="container mx-auto px-4">
-            <h3 className="text-4xl font-bold text-center text-white mb-16">
-              Platform Features
+            <h3 className="text-5xl font-black text-center text-yellow-300 mb-16 drop-shadow-lg">
+              🔥 LEGENDARY FEATURES 🔥
             </h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
               {[
-                {
-                  icon: '🔒',
-                  title: 'Secure Payments',
-                  description: 'Stripe-powered checkout with webhook verification',
-                },
-                {
-                  icon: '⚡',
-                  title: 'Real-time Draft',
-                  description: 'Live draft room with WebSocket updates',
-                },
-                {
-                  icon: '🚫',
-                  title: 'Draft Gating',
-                  description: 'Server-side enforcement - unpaid users cannot draft',
-                },
-                {
-                  icon: '🐍',
-                  title: 'Snake Draft',
-                  description: 'Automated snake order with pick timer',
-                },
-                {
-                  icon: '🤖',
-                  title: 'Auto-Pick',
-                  description: 'Best available player when timer expires',
-                },
-                {
-                  icon: '📊',
-                  title: 'Roster Management',
-                  description: 'Customizable roster settings per league',
-                },
-                {
-                  icon: '💰',
-                  title: 'Refund Protection',
-                  description: 'Automatic draft access revocation on refund',
-                },
-                {
-                  icon: '📝',
-                  title: 'Audit Logs',
-                  description: 'Complete activity tracking for transparency',
-                },
+                { icon: '🔒', title: 'PAYMENT LOCK', description: 'No pay = No draft picks!' },
+                { icon: '⚡', title: 'LIVE DRAFT', description: 'Real-time snake draft action' },
+                { icon: '🚫', title: 'GATE KEEPER', description: 'Server blocks unpaid users' },
+                { icon: '🐍', title: 'SNAKE DRAFT', description: 'Auto snake order & timer' },
+                { icon: '🤖', title: 'AUTO-PICK', description: 'Timer runs out? We got you!' },
+                { icon: '📊', title: 'CUSTOM ROSTERS', description: 'Your league, your rules' },
+                { icon: '💰', title: 'REFUND GUARD', description: 'Refund = Access revoked' },
+                { icon: '🎮', title: 'AUDIT LOGS', description: 'Track EVERYTHING' },
               ].map((feature, index) => (
                 <div
                   key={index}
-                  className="bg-slate-800 border border-slate-700 rounded-lg p-6"
+                  className="bg-gradient-to-br from-gray-800 to-gray-900 border-4 border-yellow-500 rounded-2xl p-6 text-center transform hover:scale-105 transition-all shadow-xl"
                 >
-                  <div className="text-4xl mb-3">{feature.icon}</div>
-                  <h4 className="text-lg font-bold text-emerald-400 mb-2">
+                  <div className="text-6xl mb-3">{feature.icon}</div>
+                  <h4 className="text-xl font-black text-yellow-300 mb-2">
                     {feature.title}
                   </h4>
-                  <p className="text-slate-400 text-sm">{feature.description}</p>
+                  <p className="text-gray-300 text-sm font-bold">{feature.description}</p>
                 </div>
               ))}
             </div>
@@ -187,38 +178,39 @@ export default function Home() {
         </section>
 
         {/* CTA */}
-        <section className="container mx-auto px-4 py-20">
-          <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl p-12 text-center max-w-4xl mx-auto shadow-2xl">
-            <h3 className="text-4xl font-bold text-white mb-6">
-              Ready to Start Your League?
+        <section className="container mx-auto px-4 py-24">
+          <div className="bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 rounded-3xl p-16 text-center max-w-5xl mx-auto shadow-2xl border-8 border-yellow-400 transform hover:scale-105 transition-all">
+            <div className="text-8xl mb-6 animate-bounce">🏆</div>
+            <h3 className="text-6xl font-black text-white mb-6 drop-shadow-2xl">
+              READY TO DOMINATE?
             </h3>
-            <p className="text-xl text-emerald-50 mb-8">
-              Create a competitive fantasy football league in minutes
+            <p className="text-3xl text-yellow-100 mb-10 font-bold">
+              Lock your league. Draft your squad. WIN IT ALL! 💪
             </p>
             <Link
               href="/signup"
-              className="inline-block bg-white text-emerald-600 px-10 py-4 rounded-lg font-bold text-lg hover:bg-emerald-50 transition-all shadow-lg"
+              className="inline-block bg-gradient-to-r from-yellow-300 to-yellow-500 text-gray-900 px-12 py-6 rounded-full font-black text-3xl hover:from-yellow-200 hover:to-yellow-400 transition-all shadow-2xl transform hover:scale-110 border-6 border-yellow-700"
             >
-              Get Started Free
+              🚀 START FOR FREE
             </Link>
-            <p className="text-emerald-100 mt-4">
-              No monthly fees • Pay only league dues to draft
+            <p className="text-yellow-100 mt-6 text-xl font-bold">
+              No monthly fees • Only pay league dues to unlock draft
             </p>
           </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-700 bg-slate-900 py-12">
+      <footer className="relative border-t-4 border-yellow-400 bg-gradient-to-r from-gray-900 to-black py-12">
         <div className="container mx-auto px-4 text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <span className="text-3xl">🏈</span>
-            <span className="text-xl font-bold text-emerald-400">
-              Pay-to-Draft Fantasy
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="text-5xl">🔒</span>
+            <span className="text-3xl font-black text-yellow-300 transform -skew-x-6">
+              LEAGUE LOCKER
             </span>
           </div>
-          <p className="text-slate-400">
-            © 2026 Pay-to-Draft Fantasy Football. All rights reserved.
+          <p className="text-gray-400 font-bold">
+            © 2026 League Locker. Lock it. Draft it. Win it! 🏆
           </p>
         </div>
       </footer>

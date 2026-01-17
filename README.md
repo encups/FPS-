@@ -1,10 +1,12 @@
-# Pay-to-Draft Fantasy Football Platform
+# League Locker 🔒
+
+**Lock It. Draft It. Win It!**
 
 A production-ready fantasy football web application where league members **must pay league dues** before they can draft. Built with Next.js, TypeScript, Prisma, NextAuth, and Stripe.
 
 ## 🏆 Overview
 
-**Pay-to-Draft Fantasy** enforces payment before drafting through server-side validation. No payment = no draft picks. All payments are processed via Stripe Checkout with webhook verification.
+**League Locker** enforces payment before drafting through server-side validation. No payment = no draft picks. All payments are processed via Stripe Checkout with webhook verification.
 
 ### Key Features
 
@@ -91,7 +93,7 @@ audit_logs
 
 ```bash
 git clone <your-repo-url>
-cd pay-to-draft-fantasy
+cd league-locker
 npm install
 ```
 
@@ -335,4 +337,6 @@ Decline: 4000 0000 0000 0002
 
 ---
 
-**Built with Next.js, Prisma, Stripe, NextAuth, Socket.IO 🏈**
+**League Locker 🔒 - Built with Next.js, Prisma, Stripe, NextAuth, Socket.IO**
+
+Lock it. Draft it. Win it! 🏆

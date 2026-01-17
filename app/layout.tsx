@@ -3,8 +3,8 @@ import "./globals.css";
 import { Providers } from './providers'
 
 export const metadata: Metadata = {
-  title: "Pay-to-Draft Fantasy Football",
-  description: "Fantasy football leagues where you must pay to draft",
+  title: "League Locker - Lock Your Roster, Secure Your Victory! 🏆",
+  description: "The ultimate fantasy football draft platform where payment unlocks the draft. No pay, no play!",
 };
 
 export default function RootLayout({
