@@ -2,250 +2,238 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-// Top 200 NFL players for 2024 fantasy season (PPR scoring)
+// Multi-sport player database
 const players = [
+  // ========== NFL (Football) ==========
   // Quarterbacks
-  { name: 'Patrick Mahomes', position: 'QB', nflTeam: 'KC', ranking: 1, bye: 6 },
-  { name: 'Josh Allen', position: 'QB', nflTeam: 'BUF', ranking: 2, bye: 12 },
-  { name: 'Jalen Hurts', position: 'QB', nflTeam: 'PHI', ranking: 3, bye: 5 },
-  { name: 'Lamar Jackson', position: 'QB', nflTeam: 'BAL', ranking: 4, bye: 14 },
-  { name: 'Joe Burrow', position: 'QB', nflTeam: 'CIN', ranking: 5, bye: 7 },
-  { name: 'Justin Herbert', position: 'QB', nflTeam: 'LAC', ranking: 6, bye: 5 },
-  { name: 'Dak Prescott', position: 'QB', nflTeam: 'DAL', ranking: 7, bye: 7 },
-  { name: 'Trevor Lawrence', position: 'QB', nflTeam: 'JAX', ranking: 8, bye: 9 },
-  { name: 'Tua Tagovailoa', position: 'QB', nflTeam: 'MIA', ranking: 9, bye: 6 },
-  { name: 'Anthony Richardson', position: 'QB', nflTeam: 'IND', ranking: 10, bye: 14 },
-  { name: 'CJ Stroud', position: 'QB', nflTeam: 'HOU', ranking: 11, bye: 14 },
-  { name: 'Jordan Love', position: 'QB', nflTeam: 'GB', ranking: 12, bye: 10 },
-  { name: 'Brock Purdy', position: 'QB', nflTeam: 'SF', ranking: 13, bye: 9 },
-  { name: 'Geno Smith', position: 'QB', nflTeam: 'SEA', ranking: 14, bye: 10 },
-  { name: 'Kirk Cousins', position: 'QB', nflTeam: 'ATL', ranking: 15, bye: 12 },
+  { name: 'Patrick Mahomes', position: 'QB', sport: 'NFL', team: 'Chiefs', ranking: 1, bye: 6 },
+  { name: 'Josh Allen', position: 'QB', sport: 'NFL', team: 'Bills', ranking: 2, bye: 12 },
+  { name: 'Jalen Hurts', position: 'QB', sport: 'NFL', team: 'Eagles', ranking: 3, bye: 5 },
+  { name: 'Lamar Jackson', position: 'QB', sport: 'NFL', team: 'Ravens', ranking: 4, bye: 14 },
+  { name: 'Joe Burrow', position: 'QB', sport: 'NFL', team: 'Bengals', ranking: 5, bye: 7 },
 
   // Running Backs
-  { name: 'Christian McCaffrey', position: 'RB', nflTeam: 'SF', ranking: 16, bye: 9 },
-  { name: 'Bijan Robinson', position: 'RB', nflTeam: 'ATL', ranking: 17, bye: 12 },
-  { name: 'Breece Hall', position: 'RB', nflTeam: 'NYJ', ranking: 18, bye: 12 },
-  { name: 'Jonathan Taylor', position: 'RB', nflTeam: 'IND', ranking: 19, bye: 14 },
-  { name: 'Saquon Barkley', position: 'RB', nflTeam: 'PHI', ranking: 20, bye: 5 },
-  { name: 'Jahmyr Gibbs', position: 'RB', nflTeam: 'DET', ranking: 21, bye: 5 },
-  { name: 'Travis Etienne', position: 'RB', nflTeam: 'JAX', ranking: 22, bye: 9 },
-  { name: 'Derrick Henry', position: 'RB', nflTeam: 'BAL', ranking: 23, bye: 14 },
-  { name: 'Josh Jacobs', position: 'RB', nflTeam: 'GB', ranking: 24, bye: 10 },
-  { name: 'Kenneth Walker', position: 'RB', nflTeam: 'SEA', ranking: 25, bye: 10 },
-  { name: 'Alvin Kamara', position: 'RB', nflTeam: 'NO', ranking: 26, bye: 12 },
-  { name: 'De\'Von Achane', position: 'RB', nflTeam: 'MIA', ranking: 27, bye: 6 },
-  { name: 'Kyren Williams', position: 'RB', nflTeam: 'LAR', ranking: 28, bye: 6 },
-  { name: 'Isiah Pacheco', position: 'RB', nflTeam: 'KC', ranking: 29, bye: 6 },
-  { name: 'Rachaad White', position: 'RB', nflTeam: 'TB', ranking: 30, bye: 11 },
-  { name: 'Rhamondre Stevenson', position: 'RB', nflTeam: 'NE', ranking: 31, bye: 14 },
-  { name: 'Aaron Jones', position: 'RB', nflTeam: 'MIN', ranking: 32, bye: 6 },
-  { name: 'David Montgomery', position: 'RB', nflTeam: 'DET', ranking: 33, bye: 5 },
-  { name: 'James Cook', position: 'RB', nflTeam: 'BUF', ranking: 34, bye: 12 },
-  { name: 'Joe Mixon', position: 'RB', nflTeam: 'HOU', ranking: 35, bye: 14 },
-  { name: 'Najee Harris', position: 'RB', nflTeam: 'PIT', ranking: 36, bye: 9 },
-  { name: 'Tony Pollard', position: 'RB', nflTeam: 'TEN', ranking: 37, bye: 5 },
-  { name: 'James Conner', position: 'RB', nflTeam: 'ARI', ranking: 38, bye: 11 },
-  { name: 'Zamir White', position: 'RB', nflTeam: 'LV', ranking: 39, bye: 10 },
-  { name: 'Javonte Williams', position: 'RB', nflTeam: 'DEN', ranking: 40, bye: 14 },
+  { name: 'Christian McCaffrey', position: 'RB', sport: 'NFL', team: '49ers', ranking: 6, bye: 9 },
+  { name: 'Bijan Robinson', position: 'RB', sport: 'NFL', team: 'Falcons', ranking: 7, bye: 12 },
+  { name: 'Breece Hall', position: 'RB', sport: 'NFL', team: 'Jets', ranking: 8, bye: 12 },
+  { name: 'Saquon Barkley', position: 'RB', sport: 'NFL', team: 'Eagles', ranking: 9, bye: 5 },
+  { name: 'Derrick Henry', position: 'RB', sport: 'NFL', team: 'Ravens', ranking: 10, bye: 14 },
 
   // Wide Receivers
-  { name: 'Tyreek Hill', position: 'WR', nflTeam: 'MIA', ranking: 41, bye: 6 },
-  { name: 'CeeDee Lamb', position: 'WR', nflTeam: 'DAL', ranking: 42, bye: 7 },
-  { name: 'Justin Jefferson', position: 'WR', nflTeam: 'MIN', ranking: 43, bye: 6 },
-  { name: 'Ja\'Marr Chase', position: 'WR', nflTeam: 'CIN', ranking: 44, bye: 7 },
-  { name: 'Amon-Ra St. Brown', position: 'WR', nflTeam: 'DET', ranking: 45, bye: 5 },
-  { name: 'AJ Brown', position: 'WR', nflTeam: 'PHI', ranking: 46, bye: 5 },
-  { name: 'Garrett Wilson', position: 'WR', nflTeam: 'NYJ', ranking: 47, bye: 12 },
-  { name: 'Puka Nacua', position: 'WR', nflTeam: 'LAR', ranking: 48, bye: 6 },
-  { name: 'Davante Adams', position: 'WR', nflTeam: 'LV', ranking: 49, bye: 10 },
-  { name: 'Cooper Kupp', position: 'WR', nflTeam: 'LAR', ranking: 50, bye: 6 },
-  { name: 'Stefon Diggs', position: 'WR', nflTeam: 'HOU', ranking: 51, bye: 14 },
-  { name: 'DeVonta Smith', position: 'WR', nflTeam: 'PHI', ranking: 52, bye: 5 },
-  { name: 'Chris Olave', position: 'WR', nflTeam: 'NO', ranking: 53, bye: 12 },
-  { name: 'DK Metcalf', position: 'WR', nflTeam: 'SEA', ranking: 54, bye: 10 },
-  { name: 'Deebo Samuel', position: 'WR', nflTeam: 'SF', ranking: 55, bye: 9 },
-  { name: 'Brandon Aiyuk', position: 'WR', nflTeam: 'SF', ranking: 56, bye: 9 },
-  { name: 'Michael Pittman Jr', position: 'WR', nflTeam: 'IND', ranking: 57, bye: 14 },
-  { name: 'DJ Moore', position: 'WR', nflTeam: 'CHI', ranking: 58, bye: 7 },
-  { name: 'Mike Evans', position: 'WR', nflTeam: 'TB', ranking: 59, bye: 11 },
-  { name: 'Amari Cooper', position: 'WR', nflTeam: 'CLE', ranking: 60, bye: 10 },
-  { name: 'Chris Godwin', position: 'WR', nflTeam: 'TB', ranking: 61, bye: 11 },
-  { name: 'Drake London', position: 'WR', nflTeam: 'ATL', ranking: 62, bye: 12 },
-  { name: 'Keenan Allen', position: 'WR', nflTeam: 'CHI', ranking: 63, bye: 7 },
-  { name: 'Marquise Brown', position: 'WR', nflTeam: 'KC', ranking: 64, bye: 6 },
-  { name: 'Terry McLaurin', position: 'WR', nflTeam: 'WAS', ranking: 65, bye: 14 },
-  { name: 'Calvin Ridley', position: 'WR', nflTeam: 'TEN', ranking: 66, bye: 5 },
-  { name: 'Christian Watson', position: 'WR', nflTeam: 'GB', ranking: 67, bye: 10 },
-  { name: 'Jaylen Waddle', position: 'WR', nflTeam: 'MIA', ranking: 68, bye: 6 },
-  { name: 'Tee Higgins', position: 'WR', nflTeam: 'CIN', ranking: 69, bye: 7 },
-  { name: 'George Pickens', position: 'WR', nflTeam: 'PIT', ranking: 70, bye: 9 },
-  { name: 'Christian Kirk', position: 'WR', nflTeam: 'JAX', ranking: 71, bye: 9 },
-  { name: 'Zay Flowers', position: 'WR', nflTeam: 'BAL', ranking: 72, bye: 14 },
-  { name: 'Jordan Addison', position: 'WR', nflTeam: 'MIN', ranking: 73, bye: 6 },
-  { name: 'Jakobi Meyers', position: 'WR', nflTeam: 'LV', ranking: 74, bye: 10 },
-  { name: 'Tyler Lockett', position: 'WR', nflTeam: 'SEA', ranking: 75, bye: 10 },
+  { name: 'Tyreek Hill', position: 'WR', sport: 'NFL', team: 'Dolphins', ranking: 11, bye: 6 },
+  { name: 'CeeDee Lamb', position: 'WR', sport: 'NFL', team: 'Cowboys', ranking: 12, bye: 7 },
+  { name: 'Justin Jefferson', position: 'WR', sport: 'NFL', team: 'Vikings', ranking: 13, bye: 6 },
+  { name: 'Ja\'Marr Chase', position: 'WR', sport: 'NFL', team: 'Bengals', ranking: 14, bye: 7 },
+  { name: 'Amon-Ra St. Brown', position: 'WR', sport: 'NFL', team: 'Lions', ranking: 15, bye: 5 },
 
   // Tight Ends
-  { name: 'Travis Kelce', position: 'TE', nflTeam: 'KC', ranking: 76, bye: 6 },
-  { name: 'Sam LaPorta', position: 'TE', nflTeam: 'DET', ranking: 77, bye: 5 },
-  { name: 'Mark Andrews', position: 'TE', nflTeam: 'BAL', ranking: 78, bye: 14 },
-  { name: 'TJ Hockenson', position: 'TE', nflTeam: 'MIN', ranking: 79, bye: 6 },
-  { name: 'Evan Engram', position: 'TE', nflTeam: 'JAX', ranking: 80, bye: 9 },
-  { name: 'Dallas Goedert', position: 'TE', nflTeam: 'PHI', ranking: 81, bye: 5 },
-  { name: 'Kyle Pitts', position: 'TE', nflTeam: 'ATL', ranking: 82, bye: 12 },
-  { name: 'George Kittle', position: 'TE', nflTeam: 'SF', ranking: 83, bye: 9 },
-  { name: 'Trey McBride', position: 'TE', nflTeam: 'ARI', ranking: 84, bye: 11 },
-  { name: 'David Njoku', position: 'TE', nflTeam: 'CLE', ranking: 85, bye: 10 },
-  { name: 'Dalton Kincaid', position: 'TE', nflTeam: 'BUF', ranking: 86, bye: 12 },
-  { name: 'Jake Ferguson', position: 'TE', nflTeam: 'DAL', ranking: 87, bye: 7 },
-  { name: 'Pat Freiermuth', position: 'TE', nflTeam: 'PIT', ranking: 88, bye: 9 },
-  { name: 'Cole Kmet', position: 'TE', nflTeam: 'CHI', ranking: 89, bye: 7 },
-  { name: 'Tyler Conklin', position: 'TE', nflTeam: 'NYJ', ranking: 90, bye: 12 },
+  { name: 'Travis Kelce', position: 'TE', sport: 'NFL', team: 'Chiefs', ranking: 16, bye: 6 },
+  { name: 'Sam LaPorta', position: 'TE', sport: 'NFL', team: 'Lions', ranking: 17, bye: 5 },
+  { name: 'Mark Andrews', position: 'TE', sport: 'NFL', team: 'Ravens', ranking: 18, bye: 14 },
+  { name: 'George Kittle', position: 'TE', sport: 'NFL', team: '49ers', ranking: 19, bye: 9 },
+  { name: 'TJ Hockenson', position: 'TE', sport: 'NFL', team: 'Vikings', ranking: 20, bye: 6 },
 
-  // Kickers
-  { name: 'Justin Tucker', position: 'K', nflTeam: 'BAL', ranking: 91, bye: 14 },
-  { name: 'Harrison Butker', position: 'K', nflTeam: 'KC', ranking: 92, bye: 6 },
-  { name: 'Tyler Bass', position: 'K', nflTeam: 'BUF', ranking: 93, bye: 12 },
-  { name: 'Jake Elliott', position: 'K', nflTeam: 'PHI', ranking: 94, bye: 5 },
-  { name: 'Brandon Aubrey', position: 'K', nflTeam: 'DAL', ranking: 95, bye: 7 },
-  { name: 'Evan McPherson', position: 'K', nflTeam: 'CIN', ranking: 96, bye: 7 },
-  { name: 'Cameron Dicker', position: 'K', nflTeam: 'LAC', ranking: 97, bye: 5 },
-  { name: 'Daniel Carlson', position: 'K', nflTeam: 'LV', ranking: 98, bye: 10 },
-  { name: 'Jake Moody', position: 'K', nflTeam: 'SF', ranking: 99, bye: 9 },
-  { name: 'Jason Sanders', position: 'K', nflTeam: 'MIA', ranking: 100, bye: 6 },
+  // Kickers & Defense
+  { name: 'Justin Tucker', position: 'K', sport: 'NFL', team: 'Ravens', ranking: 21, bye: 14 },
+  { name: 'Harrison Butker', position: 'K', sport: 'NFL', team: 'Chiefs', ranking: 22, bye: 6 },
+  { name: '49ers Defense', position: 'DEF', sport: 'NFL', team: '49ers', ranking: 23, bye: 9 },
+  { name: 'Cowboys Defense', position: 'DEF', sport: 'NFL', team: 'Cowboys', ranking: 24, bye: 7 },
+  { name: 'Ravens Defense', position: 'DEF', sport: 'NFL', team: 'Ravens', ranking: 25, bye: 14 },
 
-  // Defenses
-  { name: '49ers Defense', position: 'DEF', nflTeam: 'SF', ranking: 101, bye: 9 },
-  { name: 'Cowboys Defense', position: 'DEF', nflTeam: 'DAL', ranking: 102, bye: 7 },
-  { name: 'Browns Defense', position: 'DEF', nflTeam: 'CLE', ranking: 103, bye: 10 },
-  { name: 'Bills Defense', position: 'DEF', nflTeam: 'BUF', ranking: 104, bye: 12 },
-  { name: 'Ravens Defense', position: 'DEF', nflTeam: 'BAL', ranking: 105, bye: 14 },
-  { name: 'Jets Defense', position: 'DEF', nflTeam: 'NYJ', ranking: 106, bye: 12 },
-  { name: 'Chiefs Defense', position: 'DEF', nflTeam: 'KC', ranking: 107, bye: 6 },
-  { name: 'Eagles Defense', position: 'DEF', nflTeam: 'PHI', ranking: 108, bye: 5 },
-  { name: 'Steelers Defense', position: 'DEF', nflTeam: 'PIT', ranking: 109, bye: 9 },
-  { name: 'Dolphins Defense', position: 'DEF', nflTeam: 'MIA', ranking: 110, bye: 6 },
+  // ========== NBA (Basketball) ==========
+  // Point Guards
+  { name: 'Luka Doncic', position: 'PG', sport: 'NBA', team: 'Mavericks', ranking: 1 },
+  { name: 'Shai Gilgeous-Alexander', position: 'PG', sport: 'NBA', team: 'Thunder', ranking: 2 },
+  { name: 'Stephen Curry', position: 'PG', sport: 'NBA', team: 'Warriors', ranking: 3 },
+  { name: 'Trae Young', position: 'PG', sport: 'NBA', team: 'Hawks', ranking: 4 },
+  { name: 'Damian Lillard', position: 'PG', sport: 'NBA', team: 'Bucks', ranking: 5 },
 
-  // More depth players (WR/RB/QB)
-  { name: 'Diontae Johnson', position: 'WR', nflTeam: 'CAR', ranking: 111, bye: 11 },
-  { name: 'DeAndre Hopkins', position: 'WR', nflTeam: 'TEN', ranking: 112, bye: 5 },
-  { name: 'Courtland Sutton', position: 'WR', nflTeam: 'DEN', ranking: 113, bye: 14 },
-  { name: 'Brandin Cooks', position: 'WR', nflTeam: 'DAL', ranking: 114, bye: 7 },
-  { name: 'Romeo Doubs', position: 'WR', nflTeam: 'GB', ranking: 115, bye: 10 },
-  { name: 'Jaxon Smith-Njigba', position: 'WR', nflTeam: 'SEA', ranking: 116, bye: 10 },
-  { name: 'Rashee Rice', position: 'WR', nflTeam: 'KC', ranking: 117, bye: 6 },
-  { name: 'Josh Downs', position: 'WR', nflTeam: 'IND', ranking: 118, bye: 14 },
-  { name: 'Rashid Shaheed', position: 'WR', nflTeam: 'NO', ranking: 119, bye: 12 },
-  { name: 'Curtis Samuel', position: 'WR', nflTeam: 'BUF', ranking: 120, bye: 12 },
+  // Shooting Guards
+  { name: 'Donovan Mitchell', position: 'SG', sport: 'NBA', team: 'Cavaliers', ranking: 6 },
+  { name: 'Devin Booker', position: 'SG', sport: 'NBA', team: 'Suns', ranking: 7 },
+  { name: 'Anthony Edwards', position: 'SG', sport: 'NBA', team: 'Timberwolves', ranking: 8 },
+  { name: 'Kyrie Irving', position: 'SG', sport: 'NBA', team: 'Mavericks', ranking: 9 },
+  { name: 'Jaylen Brown', position: 'SG', sport: 'NBA', team: 'Celtics', ranking: 10 },
 
-  { name: 'Zack Moss', position: 'RB', nflTeam: 'CIN', ranking: 121, bye: 7 },
-  { name: 'Gus Edwards', position: 'RB', nflTeam: 'LAC', ranking: 122, bye: 5 },
-  { name: 'Jerome Ford', position: 'RB', nflTeam: 'CLE', ranking: 123, bye: 10 },
-  { name: 'Tyler Allgeier', position: 'RB', nflTeam: 'ATL', ranking: 124, bye: 12 },
-  { name: 'AJ Dillon', position: 'RB', nflTeam: 'GB', ranking: 125, bye: 10 },
-  { name: 'Tyjae Spears', position: 'RB', nflTeam: 'TEN', ranking: 126, bye: 5 },
-  { name: 'Jaylen Warren', position: 'RB', nflTeam: 'PIT', ranking: 127, bye: 9 },
-  { name: 'Khalil Herbert', position: 'RB', nflTeam: 'CHI', ranking: 128, bye: 7 },
-  { name: 'Samaje Perine', position: 'RB', nflTeam: 'DEN', ranking: 129, bye: 14 },
-  { name: 'Elijah Mitchell', position: 'RB', nflTeam: 'SF', ranking: 130, bye: 9 },
+  // Small Forwards
+  { name: 'LeBron James', position: 'SF', sport: 'NBA', team: 'Lakers', ranking: 11 },
+  { name: 'Kevin Durant', position: 'SF', sport: 'NBA', team: 'Suns', ranking: 12 },
+  { name: 'Jayson Tatum', position: 'SF', sport: 'NBA', team: 'Celtics', ranking: 13 },
+  { name: 'Kawhi Leonard', position: 'SF', sport: 'NBA', team: 'Clippers', ranking: 14 },
+  { name: 'Jimmy Butler', position: 'SF', sport: 'NBA', team: 'Heat', ranking: 15 },
 
-  { name: 'Aaron Rodgers', position: 'QB', nflTeam: 'NYJ', ranking: 131, bye: 12 },
-  { name: 'Deshaun Watson', position: 'QB', nflTeam: 'CLE', ranking: 132, bye: 10 },
-  { name: 'Matthew Stafford', position: 'QB', nflTeam: 'LAR', ranking: 133, bye: 6 },
-  { name: 'Russell Wilson', position: 'QB', nflTeam: 'PIT', ranking: 134, bye: 9 },
-  { name: 'Derek Carr', position: 'QB', nflTeam: 'NO', ranking: 135, bye: 12 },
-  { name: 'Baker Mayfield', position: 'QB', nflTeam: 'TB', ranking: 136, bye: 11 },
-  { name: 'Jared Goff', position: 'QB', nflTeam: 'DET', ranking: 137, bye: 5 },
-  { name: 'Daniel Jones', position: 'QB', nflTeam: 'NYG', ranking: 138, bye: 11 },
-  { name: 'Kyler Murray', position: 'QB', nflTeam: 'ARI', ranking: 139, bye: 11 },
-  { name: 'Justin Fields', position: 'QB', nflTeam: 'CHI', ranking: 140, bye: 7 },
+  // Power Forwards
+  { name: 'Giannis Antetokounmpo', position: 'PF', sport: 'NBA', team: 'Bucks', ranking: 16 },
+  { name: 'Nikola Jokic', position: 'PF', sport: 'NBA', team: 'Nuggets', ranking: 17 },
+  { name: 'Anthony Davis', position: 'PF', sport: 'NBA', team: 'Lakers', ranking: 18 },
+  { name: 'Paolo Banchero', position: 'PF', sport: 'NBA', team: 'Magic', ranking: 19 },
+  { name: 'Zion Williamson', position: 'PF', sport: 'NBA', team: 'Pelicans', ranking: 20 },
 
-  // Additional depth
-  { name: 'Quentin Johnston', position: 'WR', nflTeam: 'LAC', ranking: 141, bye: 5 },
-  { name: 'Elijah Moore', position: 'WR', nflTeam: 'CLE', ranking: 142, bye: 10 },
-  { name: 'Wan\'Dale Robinson', position: 'WR', nflTeam: 'NYG', ranking: 143, bye: 11 },
-  { name: 'Tutu Atwell', position: 'WR', nflTeam: 'LAR', ranking: 144, bye: 6 },
-  { name: 'Marvin Mims', position: 'WR', nflTeam: 'DEN', ranking: 145, bye: 14 },
-  { name: 'Tank Dell', position: 'WR', nflTeam: 'HOU', ranking: 146, bye: 14 },
-  { name: 'Michael Wilson', position: 'WR', nflTeam: 'ARI', ranking: 147, bye: 11 },
-  { name: 'Darnell Mooney', position: 'WR', nflTeam: 'ATL', ranking: 148, bye: 12 },
-  { name: 'Kadarius Toney', position: 'WR', nflTeam: 'KC', ranking: 149, bye: 6 },
-  { name: 'Jameson Williams', position: 'WR', nflTeam: 'DET', ranking: 150, bye: 5 },
+  // Centers
+  { name: 'Joel Embiid', position: 'C', sport: 'NBA', team: '76ers', ranking: 21 },
+  { name: 'Victor Wembanyama', position: 'C', sport: 'NBA', team: 'Spurs', ranking: 22 },
+  { name: 'Nikola Vucevic', position: 'C', sport: 'NBA', team: 'Bulls', ranking: 23 },
+  { name: 'Domantas Sabonis', position: 'C', sport: 'NBA', team: 'Kings', ranking: 24 },
+  { name: 'Bam Adebayo', position: 'C', sport: 'NBA', team: 'Heat', ranking: 25 },
 
-  { name: 'Rico Dowdle', position: 'RB', nflTeam: 'DAL', ranking: 151, bye: 7 },
-  { name: 'Clyde Edwards-Helaire', position: 'RB', nflTeam: 'KC', ranking: 152, bye: 6 },
-  { name: 'Roschon Johnson', position: 'RB', nflTeam: 'CHI', ranking: 153, bye: 7 },
-  { name: 'Ty Chandler', position: 'RB', nflTeam: 'MIN', ranking: 154, bye: 6 },
-  { name: 'Kenneth Gainwell', position: 'RB', nflTeam: 'PHI', ranking: 155, bye: 5 },
-  { name: 'Justice Hill', position: 'RB', nflTeam: 'BAL', ranking: 156, bye: 14 },
-  { name: 'Chuba Hubbard', position: 'RB', nflTeam: 'CAR', ranking: 157, bye: 11 },
-  { name: 'Michael Carter', position: 'RB', nflTeam: 'ARI', ranking: 158, bye: 11 },
-  { name: 'Dameon Pierce', position: 'RB', nflTeam: 'HOU', ranking: 159, bye: 14 },
-  { name: 'Raheem Mostert', position: 'RB', nflTeam: 'MIA', ranking: 160, bye: 6 },
+  // ========== MLB (Baseball) ==========
+  // Catchers
+  { name: 'Will Smith', position: 'C', sport: 'MLB', team: 'Dodgers', ranking: 1 },
+  { name: 'Salvador Perez', position: 'C', sport: 'MLB', team: 'Royals', ranking: 2 },
+  { name: 'J.T. Realmuto', position: 'C', sport: 'MLB', team: 'Phillies', ranking: 3 },
+  { name: 'Adley Rutschman', position: 'C', sport: 'MLB', team: 'Orioles', ranking: 4 },
+  { name: 'Sean Murphy', position: 'C', sport: 'MLB', team: 'Braves', ranking: 5 },
 
-  { name: 'Hunter Henry', position: 'TE', nflTeam: 'NE', ranking: 161, bye: 14 },
-  { name: 'Chigoziem Okonkwo', position: 'TE', nflTeam: 'TEN', ranking: 162, bye: 5 },
-  { name: 'Juwan Johnson', position: 'TE', nflTeam: 'NO', ranking: 163, bye: 12 },
-  { name: 'Luke Musgrave', position: 'TE', nflTeam: 'GB', ranking: 164, bye: 10 },
-  { name: 'Gerald Everett', position: 'TE', nflTeam: 'CHI', ranking: 165, bye: 7 },
-  { name: 'Taysom Hill', position: 'TE', nflTeam: 'NO', ranking: 166, bye: 12 },
-  { name: 'Noah Fant', position: 'TE', nflTeam: 'SEA', ranking: 167, bye: 10 },
-  { name: 'Dawson Knox', position: 'TE', nflTeam: 'BUF', ranking: 168, bye: 12 },
-  { name: 'Michael Mayer', position: 'TE', nflTeam: 'LV', ranking: 169, bye: 10 },
-  { name: 'Jonnu Smith', position: 'TE', nflTeam: 'MIA', ranking: 170, bye: 6 },
+  // First Base
+  { name: 'Freddie Freeman', position: '1B', sport: 'MLB', team: 'Dodgers', ranking: 6 },
+  { name: 'Matt Olson', position: '1B', sport: 'MLB', team: 'Braves', ranking: 7 },
+  { name: 'Vladimir Guerrero Jr', position: '1B', sport: 'MLB', team: 'Blue Jays', ranking: 8 },
+  { name: 'Pete Alonso', position: '1B', sport: 'MLB', team: 'Mets', ranking: 9 },
+  { name: 'Paul Goldschmidt', position: '1B', sport: 'MLB', team: 'Cardinals', ranking: 10 },
 
-  { name: 'Will Lutz', position: 'K', nflTeam: 'DEN', ranking: 171, bye: 14 },
-  { name: 'Younghoe Koo', position: 'K', nflTeam: 'ATL', ranking: 172, bye: 12 },
-  { name: 'Greg Joseph', position: 'K', nflTeam: 'GB', ranking: 173, bye: 10 },
-  { name: 'Ka\'imi Fairbairn', position: 'K', nflTeam: 'HOU', ranking: 174, bye: 14 },
-  { name: 'Matt Gay', position: 'K', nflTeam: 'IND', ranking: 175, bye: 14 },
-  { name: 'Jake Bates', position: 'K', nflTeam: 'DET', ranking: 176, bye: 5 },
-  { name: 'Cairo Santos', position: 'K', nflTeam: 'CHI', ranking: 177, bye: 7 },
-  { name: 'Chase McLaughlin', position: 'K', nflTeam: 'TB', ranking: 178, bye: 11 },
-  { name: 'Greg Zuerlein', position: 'K', nflTeam: 'NYJ', ranking: 179, bye: 12 },
-  { name: 'Chris Boswell', position: 'K', nflTeam: 'PIT', ranking: 180, bye: 9 },
+  // Second Base
+  { name: 'Jose Altuve', position: '2B', sport: 'MLB', team: 'Astros', ranking: 11 },
+  { name: 'Marcus Semien', position: '2B', sport: 'MLB', team: 'Rangers', ranking: 12 },
+  { name: 'Gleyber Torres', position: '2B', sport: 'MLB', team: 'Yankees', ranking: 13 },
+  { name: 'Ozzie Albies', position: '2B', sport: 'MLB', team: 'Braves', ranking: 14 },
+  { name: 'Jazz Chisholm Jr', position: '2B', sport: 'MLB', team: 'Marlins', ranking: 15 },
 
-  { name: 'Packers Defense', position: 'DEF', nflTeam: 'GB', ranking: 181, bye: 10 },
-  { name: 'Saints Defense', position: 'DEF', nflTeam: 'NO', ranking: 182, bye: 12 },
-  { name: 'Chargers Defense', position: 'DEF', nflTeam: 'LAC', ranking: 183, bye: 5 },
-  { name: 'Seahawks Defense', position: 'DEF', nflTeam: 'SEA', ranking: 184, bye: 10 },
-  { name: 'Bengals Defense', position: 'DEF', nflTeam: 'CIN', ranking: 185, bye: 7 },
-  { name: 'Commanders Defense', position: 'DEF', nflTeam: 'WAS', ranking: 186, bye: 14 },
-  { name: 'Lions Defense', position: 'DEF', nflTeam: 'DET', ranking: 187, bye: 5 },
-  { name: 'Rams Defense', position: 'DEF', nflTeam: 'LAR', ranking: 188, bye: 6 },
-  { name: 'Colts Defense', position: 'DEF', nflTeam: 'IND', ranking: 189, bye: 14 },
-  { name: 'Falcons Defense', position: 'DEF', nflTeam: 'ATL', ranking: 190, bye: 12 },
+  // Shortstops
+  { name: 'Bobby Witt Jr', position: 'SS', sport: 'MLB', team: 'Royals', ranking: 16 },
+  { name: 'Trea Turner', position: 'SS', sport: 'MLB', team: 'Phillies', ranking: 17 },
+  { name: 'Corey Seager', position: 'SS', sport: 'MLB', team: 'Rangers', ranking: 18 },
+  { name: 'Francisco Lindor', position: 'SS', sport: 'MLB', team: 'Mets', ranking: 19 },
+  { name: 'Dansby Swanson', position: 'SS', sport: 'MLB', team: 'Cubs', ranking: 20 },
 
-  // Last 10 for 200 total
-  { name: 'Will Levis', position: 'QB', nflTeam: 'TEN', ranking: 191, bye: 5 },
-  { name: 'Bryce Young', position: 'QB', nflTeam: 'CAR', ranking: 192, bye: 11 },
-  { name: 'Sam Howell', position: 'QB', nflTeam: 'WAS', ranking: 193, bye: 14 },
-  { name: 'Aidan O\'Connell', position: 'QB', nflTeam: 'LV', ranking: 194, bye: 10 },
-  { name: 'Joshua Palmer', position: 'WR', nflTeam: 'LAC', ranking: 195, bye: 5 },
-  { name: 'KJ Osborn', position: 'WR', nflTeam: 'NE', ranking: 196, bye: 14 },
-  { name: 'Jaleel McLaughlin', position: 'RB', nflTeam: 'DEN', ranking: 197, bye: 14 },
-  { name: 'Kareem Hunt', position: 'RB', nflTeam: 'CLE', ranking: 198, bye: 10 },
-  { name: 'Texans Defense', position: 'DEF', nflTeam: 'HOU', ranking: 199, bye: 14 },
-  { name: 'Jaguars Defense', position: 'DEF', nflTeam: 'JAX', ranking: 200, bye: 9 },
+  // Outfielders
+  { name: 'Mookie Betts', position: 'OF', sport: 'MLB', team: 'Dodgers', ranking: 21 },
+  { name: 'Aaron Judge', position: 'OF', sport: 'MLB', team: 'Yankees', ranking: 22 },
+  { name: 'Ronald Acuna Jr', position: 'OF', sport: 'MLB', team: 'Braves', ranking: 23 },
+  { name: 'Mike Trout', position: 'OF', sport: 'MLB', team: 'Angels', ranking: 24 },
+  { name: 'Kyle Tucker', position: 'OF', sport: 'MLB', team: 'Astros', ranking: 25 },
+  { name: 'Juan Soto', position: 'OF', sport: 'MLB', team: 'Yankees', ranking: 26 },
+  { name: 'Julio Rodriguez', position: 'OF', sport: 'MLB', team: 'Mariners', ranking: 27 },
+
+  // Starting Pitchers
+  { name: 'Gerrit Cole', position: 'SP', sport: 'MLB', team: 'Yankees', ranking: 28 },
+  { name: 'Spencer Strider', position: 'SP', sport: 'MLB', team: 'Braves', ranking: 29 },
+  { name: 'Zac Gallen', position: 'SP', sport: 'MLB', team: 'Diamondbacks', ranking: 30 },
+  { name: 'Blake Snell', position: 'SP', sport: 'MLB', team: 'Padres', ranking: 31 },
+  { name: 'Corbin Burnes', position: 'SP', sport: 'MLB', team: 'Orioles', ranking: 32 },
+
+  // Relief Pitchers
+  { name: 'Josh Hader', position: 'RP', sport: 'MLB', team: 'Astros', ranking: 33 },
+  { name: 'Emmanuel Clase', position: 'RP', sport: 'MLB', team: 'Guardians', ranking: 34 },
+  { name: 'Edwin Diaz', position: 'RP', sport: 'MLB', team: 'Mets', ranking: 35 },
+
+  // ========== NHL (Hockey) ==========
+  // Centers
+  { name: 'Connor McDavid', position: 'C', sport: 'NHL', team: 'Oilers', ranking: 1 },
+  { name: 'Nathan MacKinnon', position: 'C', sport: 'NHL', team: 'Avalanche', ranking: 2 },
+  { name: 'Auston Matthews', position: 'C', sport: 'NHL', team: 'Maple Leafs', ranking: 3 },
+  { name: 'Sidney Crosby', position: 'C', sport: 'NHL', team: 'Penguins', ranking: 4 },
+  { name: 'Leon Draisaitl', position: 'C', sport: 'NHL', team: 'Oilers', ranking: 5 },
+
+  // Left Wing
+  { name: 'Artemi Panarin', position: 'LW', sport: 'NHL', team: 'Rangers', ranking: 6 },
+  { name: 'Alex Ovechkin', position: 'LW', sport: 'NHL', team: 'Capitals', ranking: 7 },
+  { name: 'Matthew Tkachuk', position: 'LW', sport: 'NHL', team: 'Panthers', ranking: 8 },
+  { name: 'Brad Marchand', position: 'LW', sport: 'NHL', team: 'Bruins', ranking: 9 },
+  { name: 'Kirill Kaprizov', position: 'LW', sport: 'NHL', team: 'Wild', ranking: 10 },
+
+  // Right Wing
+  { name: 'Nikita Kucherov', position: 'RW', sport: 'NHL', team: 'Lightning', ranking: 11 },
+  { name: 'David Pastrnak', position: 'RW', sport: 'NHL', team: 'Bruins', ranking: 12 },
+  { name: 'Mitch Marner', position: 'RW', sport: 'NHL', team: 'Maple Leafs', ranking: 13 },
+  { name: 'Mikko Rantanen', position: 'RW', sport: 'NHL', team: 'Avalanche', ranking: 14 },
+  { name: 'Tim Stutzle', position: 'RW', sport: 'NHL', team: 'Senators', ranking: 15 },
+
+  // Defense
+  { name: 'Cale Makar', position: 'D', sport: 'NHL', team: 'Avalanche', ranking: 16 },
+  { name: 'Quinn Hughes', position: 'D', sport: 'NHL', team: 'Canucks', ranking: 17 },
+  { name: 'Adam Fox', position: 'D', sport: 'NHL', team: 'Rangers', ranking: 18 },
+  { name: 'Roman Josi', position: 'D', sport: 'NHL', team: 'Predators', ranking: 19 },
+  { name: 'Rasmus Dahlin', position: 'D', sport: 'NHL', team: 'Sabres', ranking: 20 },
+
+  // Goalies
+  { name: 'Connor Hellebuyck', position: 'G', sport: 'NHL', team: 'Jets', ranking: 21 },
+  { name: 'Igor Shesterkin', position: 'G', sport: 'NHL', team: 'Rangers', ranking: 22 },
+  { name: 'Andrei Vasilevskiy', position: 'G', sport: 'NHL', team: 'Lightning', ranking: 23 },
+  { name: 'Juuse Saros', position: 'G', sport: 'NHL', team: 'Predators', ranking: 24 },
+  { name: 'Ilya Sorokin', position: 'G', sport: 'NHL', team: 'Islanders', ranking: 25 },
+
+  // ========== SOCCER (Premier League) ==========
+  // Goalkeepers
+  { name: 'Alisson Becker', position: 'GK', sport: 'SOCCER', team: 'Liverpool', ranking: 1 },
+  { name: 'Ederson', position: 'GK', sport: 'SOCCER', team: 'Man City', ranking: 2 },
+  { name: 'David Raya', position: 'GK', sport: 'SOCCER', team: 'Arsenal', ranking: 3 },
+  { name: 'Aaron Ramsdale', position: 'GK', sport: 'SOCCER', team: 'Arsenal', ranking: 4 },
+  { name: 'Nick Pope', position: 'GK', sport: 'SOCCER', team: 'Newcastle', ranking: 5 },
+
+  // Defenders
+  { name: 'Trent Alexander-Arnold', position: 'DEF', sport: 'SOCCER', team: 'Liverpool', ranking: 6 },
+  { name: 'Virgil van Dijk', position: 'DEF', sport: 'SOCCER', team: 'Liverpool', ranking: 7 },
+  { name: 'Ruben Dias', position: 'DEF', sport: 'SOCCER', team: 'Man City', ranking: 8 },
+  { name: 'William Saliba', position: 'DEF', sport: 'SOCCER', team: 'Arsenal', ranking: 9 },
+  { name: 'Ben White', position: 'DEF', sport: 'SOCCER', team: 'Arsenal', ranking: 10 },
+  { name: 'Kieran Trippier', position: 'DEF', sport: 'SOCCER', team: 'Newcastle', ranking: 11 },
+  { name: 'Reece James', position: 'DEF', sport: 'SOCCER', team: 'Chelsea', ranking: 12 },
+
+  // Midfielders
+  { name: 'Kevin De Bruyne', position: 'MID', sport: 'SOCCER', team: 'Man City', ranking: 13 },
+  { name: 'Martin Odegaard', position: 'MID', sport: 'SOCCER', team: 'Arsenal', ranking: 14 },
+  { name: 'Bruno Fernandes', position: 'MID', sport: 'SOCCER', team: 'Man United', ranking: 15 },
+  { name: 'Mohamed Salah', position: 'MID', sport: 'SOCCER', team: 'Liverpool', ranking: 16 },
+  { name: 'Bukayo Saka', position: 'MID', sport: 'SOCCER', team: 'Arsenal', ranking: 17 },
+  { name: 'Phil Foden', position: 'MID', sport: 'SOCCER', team: 'Man City', ranking: 18 },
+  { name: 'James Maddison', position: 'MID', sport: 'SOCCER', team: 'Tottenham', ranking: 19 },
+  { name: 'Cole Palmer', position: 'MID', sport: 'SOCCER', team: 'Chelsea', ranking: 20 },
+
+  // Forwards
+  { name: 'Erling Haaland', position: 'FWD', sport: 'SOCCER', team: 'Man City', ranking: 21 },
+  { name: 'Harry Kane', position: 'FWD', sport: 'SOCCER', team: 'Bayern Munich', ranking: 22 },
+  { name: 'Son Heung-min', position: 'FWD', sport: 'SOCCER', team: 'Tottenham', ranking: 23 },
+  { name: 'Alexander Isak', position: 'FWD', sport: 'SOCCER', team: 'Newcastle', ranking: 24 },
+  { name: 'Ollie Watkins', position: 'FWD', sport: 'SOCCER', team: 'Aston Villa', ranking: 25 },
 ]
 
 async function main() {
-  console.log('Start seeding players...')
+  console.log('🚀 Starting multi-sport player seeding...')
+
+  let nflCount = 0
+  let nbaCount = 0
+  let mlbCount = 0
+  let nhlCount = 0
+  let soccerCount = 0
 
   for (const player of players) {
     await prisma.player.upsert({
       where: {
-        name_position: {
+        name_position_sport: {
           name: player.name,
           position: player.position,
+          sport: player.sport,
         }
       },
       update: player,
       create: player,
     })
+
+    // Count by sport
+    if (player.sport === 'NFL') nflCount++
+    else if (player.sport === 'NBA') nbaCount++
+    else if (player.sport === 'MLB') mlbCount++
+    else if (player.sport === 'NHL') nhlCount++
+    else if (player.sport === 'SOCCER') soccerCount++
   }
 
-  console.log('Seeding finished.')
+  console.log('\n✅ Seeding complete!')
+  console.log(`🏈 NFL Players: ${nflCount}`)
+  console.log(`🏀 NBA Players: ${nbaCount}`)
+  console.log(`⚾ MLB Players: ${mlbCount}`)
+  console.log(`🏒 NHL Players: ${nhlCount}`)
+  console.log(`⚽ Soccer Players: ${soccerCount}`)
+  console.log(`📊 Total: ${players.length} players\n`)
 }
 
 main()

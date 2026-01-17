@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
 
     const {
       name,
+      sport,
       season,
       duesCents,
       teamCount,
@@ -25,9 +26,18 @@ export async function POST(req: NextRequest) {
     } = await req.json()
 
     // Validation
-    if (!name || !season || duesCents === undefined || !teamCount || !draftDate) {
+    if (!name || !sport || !season || duesCents === undefined || !teamCount || !draftDate) {
       return NextResponse.json(
         { error: 'Missing required fields' },
+        { status: 400 }
+      )
+    }
+
+    // Validate sport
+    const validSports = ['NFL', 'NBA', 'MLB', 'NHL', 'SOCCER']
+    if (!validSports.includes(sport)) {
+      return NextResponse.json(
+        { error: 'Invalid sport. Must be one of: NFL, NBA, MLB, NHL, SOCCER' },
         { status: 400 }
       )
     }
@@ -44,6 +54,7 @@ export async function POST(req: NextRequest) {
       const newLeague = await tx.league.create({
         data: {
           name,
+          sport,
           season: parseInt(season),
           duesCents: parseInt(duesCents),
           inviteCode,

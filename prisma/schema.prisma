@@ -30,6 +30,7 @@ model League {
   id                String       @id @default(cuid())
   commissionerId    String
   name              String
+  sport             String       @default("NFL") // NFL, NBA, MLB, NHL, SOCCER
   season            Int
   duesCents         Int
   inviteCode        String       @unique
@@ -104,17 +105,18 @@ model Player {
   id            String       @id @default(cuid())
   name          String
   position      String
-  nflTeam       String
+  sport         String       @default("NFL") // NFL, NBA, MLB, NHL, SOCCER
+  team          String       // Team name (e.g., "Chiefs", "Lakers", "Yankees")
   ranking       Int
   externalId    String?
-  bye           Int?
+  bye           Int?         // Only for NFL
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
 
   // Relations
   draftPicks    DraftPick[]
 
-  @@unique([name, position])
+  @@unique([name, position, sport])
   @@map("players")
 }
 

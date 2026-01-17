@@ -80,11 +80,22 @@ export default function Home() {
             </span>
           </h2>
 
-          <p className="text-2xl text-green-100 max-w-3xl mx-auto mb-12 leading-relaxed font-bold drop-shadow-lg">
-            The <span className="text-yellow-300 font-black">ULTIMATE</span> fantasy football platform where
+          <p className="text-2xl text-green-100 max-w-3xl mx-auto mb-8 leading-relaxed font-bold drop-shadow-lg">
+            The <span className="text-yellow-300 font-black">ULTIMATE</span> multi-sport fantasy platform where
             <span className="text-yellow-300 font-black"> payment unlocks the draft</span>.
             <br/>No pay? <span className="text-red-400 font-black text-3xl">NO PLAY!</span> 💰🔒
           </p>
+
+          <div className="flex gap-4 justify-center flex-wrap mb-12">
+            {['🏈 NFL', '🏀 NBA', '⚾ MLB', '🏒 NHL', '⚽ Soccer'].map((sport, index) => (
+              <div
+                key={index}
+                className="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-6 py-3 rounded-full font-black text-lg shadow-lg border-4 border-yellow-600 transform hover:scale-110 transition-all"
+              >
+                {sport}
+              </div>
+            ))}
+          </div>
 
           <div className="flex gap-6 justify-center flex-wrap">
             <Link
@@ -111,8 +122,8 @@ export default function Home() {
             {[
               {
                 icon: '👑',
-                title: 'COMMISH CREATES',
-                description: 'Set league dues, roster rules, and draft date. Get your unique invite code!',
+                title: 'CHOOSE YOUR SPORT',
+                description: 'Pick NFL, NBA, MLB, NHL, or Soccer! Set dues, roster rules, and draft date. Get your invite code!',
                 color: 'from-purple-500 to-pink-600',
                 borderColor: 'border-purple-700'
               },
