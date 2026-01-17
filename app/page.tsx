@@ -130,7 +130,7 @@ export default function Home() {
               {
                 icon: '💳',
                 title: 'MEMBERS PAY UP',
-                description: 'Join with invite code. Pay dues via Stripe. LOCKED until paid! 🔒',
+                description: 'Join with invite code. Pay dues via Stripe (1% admin fee). LOCKED until paid! 🔒',
                 color: 'from-yellow-500 to-orange-600',
                 borderColor: 'border-yellow-700'
               },
@@ -207,22 +207,41 @@ export default function Home() {
             <p className="text-yellow-100 mt-6 text-xl font-bold">
               No monthly fees • Only pay league dues to unlock draft
             </p>
+            <p className="text-yellow-200 mt-3 text-sm font-semibold opacity-90">
+              * League Locker charges a 1% admin fee on all league dues for secure payment processing,<br/>
+              platform maintenance, and league administration before and after league completion.
+            </p>
           </div>
         </section>
       </main>
 
       {/* Footer */}
       <footer className="relative border-t-4 border-yellow-400 bg-gradient-to-r from-gray-900 to-black py-12">
-        <div className="container mx-auto px-4 text-center">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="text-5xl">🔒</span>
-            <span className="text-3xl font-black text-yellow-300 transform -skew-x-6">
-              LEAGUE LOCKER
-            </span>
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-6">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <span className="text-5xl">🔒</span>
+              <span className="text-3xl font-black text-yellow-300 transform -skew-x-6">
+                LEAGUE LOCKER
+              </span>
+            </div>
+            <p className="text-gray-400 font-bold">
+              © 2026 League Locker. Lock it. Draft it. Win it! 🏆
+            </p>
           </div>
-          <p className="text-gray-400 font-bold">
-            © 2026 League Locker. Lock it. Draft it. Win it! 🏆
-          </p>
+
+          {/* Fine Print */}
+          <div className="border-t border-gray-700 pt-6 mt-6 max-w-4xl mx-auto">
+            <p className="text-gray-500 text-xs leading-relaxed text-center">
+              <strong className="text-gray-400">Admin Fee Disclosure:</strong> League Locker charges a 1% administrative fee on all league dues collected.
+              This fee covers secure payment processing via Stripe, platform hosting and maintenance, data storage,
+              league administration services, and funds management before and after league completion.
+              The admin fee is automatically calculated and collected at the time of payment.
+              Example: For $100 league dues, members pay $101 total ($100 dues + $1 admin fee).
+              All payments are processed securely through Stripe. No refunds on admin fees.
+              For questions about fees or payments, please contact support.
+            </p>
+          </div>
         </div>
       </footer>
     </div>

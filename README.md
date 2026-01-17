@@ -227,6 +227,17 @@ payment_intent.payment_failed → paidStatus = false
 charge.refunded → revoke access
 ```
 
+### Admin Fee Structure
+
+League Locker charges a **1% administrative fee** on all league dues:
+
+- **Purpose**: Covers payment processing, platform hosting, data storage, and league administration
+- **Calculation**: Automatically added at checkout
+- **Example**: $100 dues = $101 total ($100 league dues + $1 admin fee)
+- **Collection**: Admin fee collected at time of payment via Stripe
+- **Refunds**: No refunds on admin fees (only league dues are refundable)
+- **Transparency**: Fee clearly disclosed on landing page, signup, and checkout
+
 ---
 
 ## 📡 API Reference

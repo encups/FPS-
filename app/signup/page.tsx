@@ -155,9 +155,12 @@ export default function SignupPage() {
           </p>
         </div>
 
-        <div className="mt-6 text-center">
-          <p className="text-green-200 font-bold text-sm">
+        <div className="mt-6 text-center max-w-lg mx-auto">
+          <p className="text-green-200 font-bold text-sm mb-3">
             🏆 Free to join • No credit card needed
+          </p>
+          <p className="text-green-300 text-xs opacity-80 leading-relaxed">
+            * When joining a league, a 1% admin fee applies to league dues for secure payment processing and league administration.
           </p>
         </div>
       </div>
