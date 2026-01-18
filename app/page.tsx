@@ -1,303 +1,249 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import Link from "next/link";
+import Link from 'next/link'
+import { useSession } from 'next-auth/react'
 
 export default function Home() {
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
-
-  const features = [
-    {
-      icon: "⚔️",
-      title: "Social Media Quests",
-      description: "Generate epic social media posts that engage your followers",
-    },
-    {
-      icon: "📜",
-      title: "Scroll of Emails",
-      description: "Craft compelling email campaigns with storytelling magic",
-    },
-    {
-      icon: "🏰",
-      title: "Ad Campaign Castle",
-      description: "Build fortress-strong ad copy that converts",
-    },
-    {
-      icon: "🎨",
-      title: "Banner Creation",
-      description: "Design pixel-perfect marketing visuals",
-    },
-    {
-      icon: "📖",
-      title: "Blog Chronicles",
-      description: "Write engaging blog posts with medieval flair",
-    },
-    {
-      icon: "🎯",
-      title: "Strategy Guild",
-      description: "AI-powered marketing strategies for your kingdom",
-    },
-  ];
-
-  const pricingPlans = [
-    {
-      name: "Squire",
-      price: "$29",
-      period: "/month",
-      features: [
-        "10 AI-generated posts/month",
-        "Basic email campaigns",
-        "Medieval-themed templates",
-        "Community support",
-      ],
-      cta: "Start Your Quest",
-    },
-    {
-      name: "Knight",
-      price: "$79",
-      period: "/month",
-      popular: true,
-      features: [
-        "50 AI-generated posts/month",
-        "Advanced email automation",
-        "Custom brand storytelling",
-        "Priority support",
-        "Ad copy generation",
-        "Analytics dashboard",
-      ],
-      cta: "Join the Order",
-    },
-    {
-      name: "King",
-      price: "$199",
-      period: "/month",
-      features: [
-        "Unlimited AI content",
-        "Full marketing automation",
-        "Dedicated account manager",
-        "Custom integrations",
-        "White-label options",
-        "24/7 Royal support",
-      ],
-      cta: "Rule Your Market",
-    },
-  ];
+  const { data: session } = useSession()
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-medieval-ink via-gray-900 to-medieval-forest">
-      {/* Hero Section */}
-      <nav className="border-b-4 border-medieval-gold bg-black/50 backdrop-blur">
+    <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-700 to-green-900 relative overflow-hidden">
+      {/* Animated football field lines */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-white"></div>
+        <div className="absolute top-1/4 left-0 right-0 h-1 bg-white"></div>
+        <div className="absolute top-1/2 left-0 right-0 h-2 bg-white"></div>
+        <div className="absolute top-3/4 left-0 right-0 h-1 bg-white"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-white"></div>
+      </div>
+
+      {/* Navigation */}
+      <nav className="relative border-b-4 border-yellow-400 bg-gradient-to-r from-blue-600 to-blue-700 shadow-2xl">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-3xl">🏰</span>
-              <h1 className="pixel-text text-xl text-medieval-gold">Frame Fables</h1>
+            <div className="flex items-center gap-3">
+              <div className="text-5xl animate-bounce">🔒</div>
+              <div>
+                <h1 className="text-3xl font-black text-yellow-300 tracking-tight transform -skew-x-6 drop-shadow-lg">
+                  LEAGUE LOCKER
+                </h1>
+                <p className="text-xs text-blue-200 font-bold">LOCK IT. DRAFT IT. WIN IT!</p>
+              </div>
             </div>
             <div className="flex gap-4">
-              <Link
-                href="/login"
-                className="pixel-text text-sm text-medieval-parchment hover:text-medieval-gold transition-colors"
-              >
-                Login
-              </Link>
-              <Link
-                href="/signup"
-                className="pixel-border pixel-text bg-medieval-gold text-medieval-ink px-4 py-2 text-sm hover:bg-medieval-bronze transition-colors"
-              >
-                Start Free
-              </Link>
+              {session ? (
+                <Link
+                  href="/dashboard"
+                  className="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-6 py-3 rounded-full font-black text-lg hover:from-yellow-300 hover:to-orange-400 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 border-4 border-yellow-600"
+                >
+                  🎮 MY LOCKER
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="text-yellow-300 hover:text-yellow-100 transition-colors px-4 py-2 font-bold text-lg"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/signup"
+                    className="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-6 py-3 rounded-full font-black text-lg hover:from-yellow-300 hover:to-orange-400 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 border-4 border-yellow-600"
+                  >
+                    Join Free! 🚀
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
       </nav>
 
-      <main>
-        {/* Hero */}
+      <main className="relative">
+        {/* Hero Section */}
         <section className="container mx-auto px-4 py-20 text-center">
           <div className="mb-8">
-            <div className="inline-block pixel-border bg-medieval-gold/10 px-4 py-2 mb-6">
-              <span className="pixel-text text-sm text-medieval-gold">
-                ⚡ AI-Powered Marketing Magic ⚡
+            <div className="inline-block bg-yellow-400 text-gray-900 rounded-full px-8 py-3 mb-6 border-4 border-yellow-600 shadow-2xl animate-pulse">
+              <span className="text-lg font-black">
+                ⚡ PAY TO PLAY • DRAFT TO WIN ⚡
               </span>
             </div>
           </div>
-          <h2 className="pixel-text text-4xl md:text-6xl text-medieval-gold mb-6 leading-relaxed">
-            Conquer Your Market
-            <br />
-            <span className="text-medieval-parchment">One Fable at a Time</span>
-          </h2>
-          <p className="font-pixel text-2xl text-medieval-stone max-w-3xl mx-auto mb-12 leading-relaxed">
-            Automated AI marketing tools for small businesses, wrapped in medieval charm.
-            Generate content, run campaigns, and grow your kingdom... err, business!
-          </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <button className="pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-8 py-4 pixel-text text-sm hover:bg-medieval-bronze transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none">
-              🗡️ Start Your Quest
-            </button>
-            <button className="pixel-border medieval-shadow bg-transparent text-medieval-parchment px-8 py-4 pixel-text text-sm hover:bg-medieval-parchment/10 transition-all">
-              📖 View Demo
-            </button>
-          </div>
-        </section>
 
-        {/* Features */}
-        <section className="container mx-auto px-4 py-20">
-          <h3 className="pixel-text text-3xl text-center text-medieval-gold mb-16">
-            ⚔️ Your Marketing Arsenal ⚔️
-          </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
+          <h2 className="text-6xl md:text-8xl font-black text-white mb-6 leading-tight drop-shadow-2xl">
+            <span className="bg-gradient-to-r from-yellow-300 via-orange-400 to-red-500 bg-clip-text text-transparent">
+              LOCK YOUR ROSTER
+            </span>
+            <br />
+            <span className="text-yellow-300 transform inline-block -skew-x-12">
+              SECURE YOUR VICTORY! 🏆
+            </span>
+          </h2>
+
+          <p className="text-2xl text-green-100 max-w-3xl mx-auto mb-8 leading-relaxed font-bold drop-shadow-lg">
+            The <span className="text-yellow-300 font-black">ULTIMATE</span> multi-sport fantasy platform where
+            <span className="text-yellow-300 font-black"> payment unlocks the draft</span>.
+            <br/>No pay? <span className="text-red-400 font-black text-3xl">NO PLAY!</span> 💰🔒
+          </p>
+
+          <div className="flex gap-4 justify-center flex-wrap mb-12">
+            {['🏈 NFL', '🏀 NBA', '⚾ MLB', '🏒 NHL', '⚽ Soccer'].map((sport, index) => (
               <div
                 key={index}
-                className="pixel-border medieval-shadow bg-medieval-stone/10 p-6 hover:bg-medieval-stone/20 transition-all hover:translate-x-2 hover:translate-y-2 hover:shadow-none"
+                className="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-6 py-3 rounded-full font-black text-lg shadow-lg border-4 border-yellow-600 transform hover:scale-110 transition-all"
               >
-                <div className="text-5xl mb-4">{feature.icon}</div>
-                <h4 className="pixel-text text-lg text-medieval-gold mb-3">
-                  {feature.title}
-                </h4>
-                <p className="font-pixel text-xl text-medieval-parchment">
-                  {feature.description}
-                </p>
+                {sport}
               </div>
             ))}
+          </div>
+
+          <div className="flex gap-6 justify-center flex-wrap">
+            <Link
+              href="/leagues/create"
+              className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-10 py-5 rounded-full font-black text-2xl hover:from-orange-400 hover:to-red-500 transition-all shadow-2xl hover:shadow-3xl transform hover:scale-110 border-4 border-orange-700 animate-bounce"
+            >
+              🏈 CREATE LEAGUE
+            </Link>
+            <Link
+              href="/leagues/join"
+              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-10 py-5 rounded-full font-black text-2xl hover:from-blue-400 hover:to-purple-500 transition-all shadow-2xl border-4 border-blue-700"
+            >
+              🎯 JOIN LEAGUE
+            </Link>
           </div>
         </section>
 
         {/* How It Works */}
         <section className="container mx-auto px-4 py-20">
-          <h3 className="pixel-text text-3xl text-center text-medieval-gold mb-16">
-            🗺️ The Quest Begins 🗺️
+          <h3 className="text-5xl font-black text-center text-yellow-300 mb-16 drop-shadow-lg transform -skew-x-6">
+            ⚡ HOW IT WORKS ⚡
           </h3>
-          <div className="max-w-4xl mx-auto space-y-8">
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {[
               {
-                step: "1",
-                title: "Enter Your Kingdom",
-                desc: "Tell us about your business and brand",
+                icon: '👑',
+                title: 'CHOOSE YOUR SPORT',
+                description: 'Pick NFL, NBA, MLB, NHL, or Soccer! Set dues, roster rules, and draft date. Get your invite code!',
+                color: 'from-purple-500 to-pink-600',
+                borderColor: 'border-purple-700'
               },
               {
-                step: "2",
-                title: "Choose Your Weapons",
-                desc: "Select marketing tools and templates",
+                icon: '💳',
+                title: 'MEMBERS PAY UP',
+                description: 'Join with invite code. Pay dues via Stripe (1% admin fee). LOCKED until paid! 🔒',
+                color: 'from-yellow-500 to-orange-600',
+                borderColor: 'border-yellow-700'
               },
               {
-                step: "3",
-                title: "AI Crafts Your Tale",
-                desc: "Our AI generates content in seconds",
+                icon: '🎯',
+                title: 'DRAFT & DOMINATE',
+                description: 'Live snake draft with timer. Only PAID members can pick. Crush it! 💪',
+                color: 'from-green-500 to-teal-600',
+                borderColor: 'border-green-700'
               },
-              {
-                step: "4",
-                title: "Conquer the Market",
-                desc: "Deploy campaigns and watch results",
-              },
-            ].map((item, index) => (
+            ].map((step, index) => (
               <div
                 key={index}
-                className="flex items-start gap-6 pixel-border bg-black/30 p-6"
+                className={`bg-gradient-to-br ${step.color} rounded-3xl p-8 border-6 ${step.borderColor} shadow-2xl transform hover:scale-105 transition-all hover:rotate-2`}
               >
-                <div className="pixel-border bg-medieval-gold text-medieval-ink w-16 h-16 flex items-center justify-center flex-shrink-0">
-                  <span className="pixel-text text-2xl">{item.step}</span>
-                </div>
-                <div>
-                  <h4 className="pixel-text text-xl text-medieval-gold mb-2">
-                    {item.title}
-                  </h4>
-                  <p className="font-pixel text-xl text-medieval-parchment">
-                    {item.desc}
-                  </p>
-                </div>
+                <div className="text-8xl mb-4 animate-bounce">{step.icon}</div>
+                <h4 className="text-3xl font-black text-white mb-4 drop-shadow-lg">
+                  {step.title}
+                </h4>
+                <p className="text-white text-xl font-bold leading-relaxed">{step.description}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Pricing */}
-        <section className="container mx-auto px-4 py-20">
-          <h3 className="pixel-text text-3xl text-center text-medieval-gold mb-4">
-            💰 Choose Your Path 💰
-          </h3>
-          <p className="font-pixel text-xl text-center text-medieval-stone mb-16">
-            All plans include 7-day free trial. Cancel anytime.
-          </p>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {pricingPlans.map((plan, index) => (
-              <div
-                key={index}
-                className={`pixel-border medieval-shadow p-8 transition-all hover:translate-x-2 hover:translate-y-2 hover:shadow-none ${
-                  plan.popular
-                    ? "bg-medieval-gold/20 border-medieval-gold"
-                    : "bg-medieval-stone/10"
-                }`}
-              >
-                {plan.popular && (
-                  <div className="pixel-border bg-medieval-gold text-medieval-ink px-4 py-2 mb-4 text-center">
-                    <span className="pixel-text text-xs">⭐ MOST POPULAR ⭐</span>
-                  </div>
-                )}
-                <h4 className="pixel-text text-2xl text-medieval-gold mb-4">
-                  {plan.name}
-                </h4>
-                <div className="mb-6">
-                  <span className="pixel-text text-4xl text-medieval-parchment">
-                    {plan.price}
-                  </span>
-                  <span className="font-pixel text-xl text-medieval-stone">
-                    {plan.period}
-                  </span>
-                </div>
-                <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature, idx) => (
-                    <li
-                      key={idx}
-                      className="font-pixel text-lg text-medieval-parchment flex items-start gap-2"
-                    >
-                      <span className="text-medieval-gold">✓</span>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  onClick={() => setSelectedPlan(plan.name)}
-                  className="w-full pixel-border bg-medieval-gold text-medieval-ink px-6 py-3 pixel-text text-sm hover:bg-medieval-bronze transition-colors"
+        {/* Key Features */}
+        <section className="bg-gradient-to-r from-blue-800 to-purple-900 py-20 border-y-8 border-yellow-400">
+          <div className="container mx-auto px-4">
+            <h3 className="text-5xl font-black text-center text-yellow-300 mb-16 drop-shadow-lg">
+              🔥 LEGENDARY FEATURES 🔥
+            </h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+              {[
+                { icon: '🔒', title: 'PAYMENT LOCK', description: 'No pay = No draft picks!' },
+                { icon: '⚡', title: 'LIVE DRAFT', description: 'Real-time snake draft action' },
+                { icon: '🚫', title: 'GATE KEEPER', description: 'Server blocks unpaid users' },
+                { icon: '🐍', title: 'SNAKE DRAFT', description: 'Auto snake order & timer' },
+                { icon: '🤖', title: 'AUTO-PICK', description: 'Timer runs out? We got you!' },
+                { icon: '📊', title: 'CUSTOM ROSTERS', description: 'Your league, your rules' },
+                { icon: '💰', title: 'REFUND GUARD', description: 'Refund = Access revoked' },
+                { icon: '🎮', title: 'AUDIT LOGS', description: 'Track EVERYTHING' },
+              ].map((feature, index) => (
+                <div
+                  key={index}
+                  className="bg-gradient-to-br from-gray-800 to-gray-900 border-4 border-yellow-500 rounded-2xl p-6 text-center transform hover:scale-105 transition-all shadow-xl"
                 >
-                  {plan.cta}
-                </button>
-              </div>
-            ))}
+                  <div className="text-6xl mb-3">{feature.icon}</div>
+                  <h4 className="text-xl font-black text-yellow-300 mb-2">
+                    {feature.title}
+                  </h4>
+                  <p className="text-gray-300 text-sm font-bold">{feature.description}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
         {/* CTA */}
-        <section className="container mx-auto px-4 py-20">
-          <div className="pixel-border medieval-shadow bg-gradient-to-r from-medieval-gold/20 to-medieval-bronze/20 p-12 text-center max-w-4xl mx-auto">
-            <h3 className="pixel-text text-3xl text-medieval-gold mb-6">
-              🏰 Ready to Build Your Empire? 🏰
+        <section className="container mx-auto px-4 py-24">
+          <div className="bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 rounded-3xl p-16 text-center max-w-5xl mx-auto shadow-2xl border-8 border-yellow-400 transform hover:scale-105 transition-all">
+            <div className="text-8xl mb-6 animate-bounce">🏆</div>
+            <h3 className="text-6xl font-black text-white mb-6 drop-shadow-2xl">
+              READY TO DOMINATE?
             </h3>
-            <p className="font-pixel text-2xl text-medieval-parchment mb-8">
-              Join thousands of small businesses conquering their markets with AI
+            <p className="text-3xl text-yellow-100 mb-10 font-bold">
+              Lock your league. Draft your squad. WIN IT ALL! 💪
             </p>
-            <button className="pixel-border medieval-shadow bg-medieval-gold text-medieval-ink px-10 py-4 pixel-text text-sm hover:bg-medieval-bronze transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none">
-              Start Free Trial
-            </button>
-            <p className="font-pixel text-lg text-medieval-stone mt-4">
-              No credit card required • 7-day free trial
+            <Link
+              href="/signup"
+              className="inline-block bg-gradient-to-r from-yellow-300 to-yellow-500 text-gray-900 px-12 py-6 rounded-full font-black text-3xl hover:from-yellow-200 hover:to-yellow-400 transition-all shadow-2xl transform hover:scale-110 border-6 border-yellow-700"
+            >
+              🚀 START FOR FREE
+            </Link>
+            <p className="text-yellow-100 mt-6 text-xl font-bold">
+              No monthly fees • Only pay league dues to unlock draft
+            </p>
+            <p className="text-yellow-200 mt-3 text-sm font-semibold opacity-90">
+              * League Locker charges a 1% admin fee on all league dues for secure payment processing,<br/>
+              platform maintenance, and league administration before and after league completion.
             </p>
           </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="border-t-4 border-medieval-gold bg-black/50 py-12">
-        <div className="container mx-auto px-4 text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <span className="text-3xl">🏰</span>
-            <span className="pixel-text text-xl text-medieval-gold">Frame Fables</span>
+      <footer className="relative border-t-4 border-yellow-400 bg-gradient-to-r from-gray-900 to-black py-12">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-6">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <span className="text-5xl">🔒</span>
+              <span className="text-3xl font-black text-yellow-300 transform -skew-x-6">
+                LEAGUE LOCKER
+              </span>
+            </div>
+            <p className="text-gray-400 font-bold">
+              © 2026 League Locker. Lock it. Draft it. Win it! 🏆
+            </p>
           </div>
-          <p className="font-pixel text-lg text-medieval-stone">
-            © 2024 Frame Fables. All rights reserved to the realm.
-          </p>
+
+          {/* Fine Print */}
+          <div className="border-t border-gray-700 pt-6 mt-6 max-w-4xl mx-auto">
+            <p className="text-gray-500 text-xs leading-relaxed text-center">
+              <strong className="text-gray-400">Admin Fee Disclosure:</strong> League Locker charges a 1% administrative fee on all league dues collected.
+              This fee covers secure payment processing via Stripe, platform hosting and maintenance, data storage,
+              league administration services, and funds management before and after league completion.
+              The admin fee is automatically calculated and collected at the time of payment.
+              Example: For $100 league dues, members pay $101 total ($100 dues + $1 admin fee).
+              All payments are processed securely through Stripe. No refunds on admin fees.
+              For questions about fees or payments, please contact support.
+            </p>
+          </div>
         </div>
       </footer>
     </div>
-  );
+  )
 }

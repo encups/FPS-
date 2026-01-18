@@ -1,0 +1,183 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String       @id @default(cuid())
+  email         String       @unique
+  passwordHash  String
+  displayName   String
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  // Relations
+  memberships   Membership[]
+  payments      Payment[]
+  commissioning League[]     @relation("CommissionerLeagues")
+
+  @@map("users")
+}
+
+model League {
+  id                String       @id @default(cuid())
+  commissionerId    String
+  name              String
+  sport             String       @default("NFL") // NFL, NBA, MLB, NHL, SOCCER
+  season            Int
+  duesCents         Int
+  inviteCode        String       @unique
+  password          String?
+  settingsJson      String       @default("{}")
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  // Relations
+  commissioner      User         @relation("CommissionerLeagues", fields: [commissionerId], references: [id], onDelete: Cascade)
+  memberships       Membership[]
+  payments          Payment[]
+  draft             Draft?
+
+  @@map("leagues")
+}
+
+model Membership {
+  id            String       @id @default(cuid())
+  leagueId      String
+  userId        String
+  teamName      String
+  avatarUrl     String?
+  paidStatus    Boolean      @default(false)
+  paidAt        DateTime?
+  role          MemberRole   @default(MEMBER)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  // Relations
+  league        League       @relation(fields: [leagueId], references: [id], onDelete: Cascade)
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  draftPicks    DraftPick[]
+
+  @@unique([leagueId, userId])
+  @@map("memberships")
+}
+
+enum MemberRole {
+  COMMISSIONER
+  MEMBER
+}
+
+model Payment {
+  id                    String       @id @default(cuid())
+  leagueId              String
+  userId                String
+  stripeSessionId       String       @unique
+  stripePaymentIntentId String?
+  amountCents           Int
+  currency              String       @default("usd")
+  status                PaymentStatus @default(PENDING)
+  metadata              String?
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+
+  // Relations
+  league                League       @relation(fields: [leagueId], references: [id], onDelete: Cascade)
+  user                  User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+model Player {
+  id            String       @id @default(cuid())
+  name          String
+  position      String
+  sport         String       @default("NFL") // NFL, NBA, MLB, NHL, SOCCER
+  team          String       // Team name (e.g., "Chiefs", "Lakers", "Yankees")
+  ranking       Int
+  externalId    String?
+  bye           Int?         // Only for NFL
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  // Relations
+  draftPicks    DraftPick[]
+
+  @@unique([name, position, sport])
+  @@map("players")
+}
+
+model Draft {
+  id                String       @id @default(cuid())
+  leagueId          String       @unique
+  status            DraftStatus  @default(SCHEDULED)
+  startsAt          DateTime
+  pickTimerSeconds  Int          @default(90)
+  rounds            Int          @default(16)
+  orderJson         String       // JSON array of membership IDs in snake order
+  currentPickIndex  Int          @default(0)
+  lockedAt          DateTime?
+  startedAt         DateTime?
+  completedAt       DateTime?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  // Relations
+  league            League       @relation(fields: [leagueId], references: [id], onDelete: Cascade)
+  picks             DraftPick[]
+
+  @@map("drafts")
+}
+
+enum DraftStatus {
+  SCHEDULED
+  LOCKED
+  LIVE
+  PAUSED
+  COMPLETE
+}
+
+model DraftPick {
+  id            String       @id @default(cuid())
+  draftId       String
+  pickNumber    Int
+  round         Int
+  membershipId  String
+  playerId      String
+  autoPicked    Boolean      @default(false)
+  pickedAt      DateTime     @default(now())
+
+  // Relations
+  draft         Draft        @relation(fields: [draftId], references: [id], onDelete: Cascade)
+  membership    Membership   @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  player        Player       @relation(fields: [playerId], references: [id])
+
+  @@unique([draftId, playerId])
+  @@unique([draftId, pickNumber])
+  @@map("draft_picks")
+}
+
+model AuditLog {
+  id            String       @id @default(cuid())
+  entityType    String
+  entityId      String
+  action        String
+  userId        String?
+  metadata      String?
+  createdAt     DateTime     @default(now())
+
+  @@map("audit_logs")
+}
